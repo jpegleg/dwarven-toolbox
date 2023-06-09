@@ -1,0 +1,58 @@
+[package]
+name = "dwarven-toolbox"
+version = "0.1.0"
+edition = "2021"
+
+[[ bin ]]
+name = "uidgen"
+path = "src/uidgen.rs"
+
+[[ bin ]]
+name = "armore"
+path = "src/armore.rs"
+
+[[ bin ]]
+name = "darmore"
+path = "src/darmore.rs"
+
+[[ bin ]]
+name = "axor"
+path = "src/axor.rs"
+
+[[ bin ]]
+name = "shielda"
+path = "src/shielda.rs"
+
+[[ bin ]]
+name = "dshielda"
+path = "src/dshielda.rs"
+
+[[ bin ]]
+name = "magick"
+path = "src/magick.rs"
+
+[[ bin ]]
+name = "antimagick"
+path = "src/antimagick.rs"
+
+[[ bin ]]
+name = "hammeron"
+path = "src/hammeron.rs"
+
+[[ bin ]]
+name = "hammeroff"
+path = "src/hammeroff.rs"
+
+[[ bin ]]
+name = "anvil"
+path = "src/anvil.rs"
+
+[dependencies]
+uuid = { version = "0.4", features = ["serde", "v4"] }
+base64 = "0.21"
+bs58 = { version="0.4.0", features=["check"] }
+aes = "0.7.5"
+hex = "0.4.3"
+block-modes = "0.8.1"
+hex-literal = "0.3.3"
+rand = "0.8"
