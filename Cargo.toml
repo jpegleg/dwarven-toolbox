@@ -4,6 +4,18 @@ version = "0.1.0"
 edition = "2021"
 
 [[ bin ]]
+name = "iron"
+path = "src/iron.rs"
+
+[[ bin ]]
+name = "silver"
+path = "src/silver.rs"
+
+[[ bin ]]
+name = "gold"
+path = "src/gold.rs"
+
+[[ bin ]]
 name = "uidgen"
 path = "src/uidgen.rs"
 
