@@ -1,4 +1,5 @@
 use std::env;
+mod maxarg;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -21,6 +22,9 @@ fn main() {
             return;
         }
     };
+
+    maxarg::chkarg(&number1);
+    maxarg::chkarg(&number2);
 
     let result = number1 + number2;
     println!("{}", result);
