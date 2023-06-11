@@ -96,7 +96,7 @@ fi
 
 inlen=${#1}
 
-if [[ "$inlen" > 192 ]]; then
+if [[ "$inlen" -gt 192 ]]; then
     echo "Input larger than 192 bytes, output truncated to 192 bytes!"
 else
     :
