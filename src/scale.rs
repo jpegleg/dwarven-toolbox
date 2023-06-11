@@ -1,4 +1,5 @@
 use std::env;
+mod maxarg;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -13,6 +14,7 @@ fn main() {
     for i in 1..args.len() {
         if let Ok(num) = args[i].parse::<f64>() {
             numbers.push(num);
+            maxarg::chkarg(&num);
         } else {
             println!("Error: '{}' is not a valid number.", args[i]);
         }
