@@ -28,6 +28,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - crossbow - f64 multiplication
 - stack - f64 addition
 - smash - f64 subtraction
+- scale - average, mean, median, softmax, lowest value, highest value, range, and sum
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use (hammeron|hammeroff|misc) for (educational|research) purposes unless you really know what you are doing.</b>
 
