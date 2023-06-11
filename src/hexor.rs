@@ -1,6 +1,7 @@
 fn axor(string1: &str, string2: &str) -> String {
-    let bytes1 = string1.as_bytes();
-    let bytes2 = string2.as_bytes();
+    let bytes1 = hex::decode(string1).unwrap();
+    let bytes2 = hex::decode(string2).unwrap();
+
     let result_bytes: Vec<u8> = bytes1
         .iter()
         .zip(bytes2.iter())
