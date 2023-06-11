@@ -21,7 +21,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
 - antimagick - hex decode
-- crown - BLAKE2, BLAKE3, SHA3, SHA2 hash of an input string
+- crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of an text (string/s) input
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use (hammeron|hammeroff|misc) for (educational|research) purposes unless you really know what you are doing.</b>
 
