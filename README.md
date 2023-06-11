@@ -149,3 +149,62 @@ Malware might use only base58 encoding or XOR in a weak attempt to obscure infor
 $ dshielda NZ1USWfjfFYuJ5wetRMLxtv6vjWn8p
 Oh this was something!
 ```
+
+#### Maths!
+
+There are a number of basic math operations as individual utilities. The program `scale` takes any number of arguments and reports on several properties.
+
+```
+$ scale 234 3 23 43 235 23 0.343 0.12 0 199999
+Average: 20056.04630000
+Mean: 20056.04630000
+Median: 23.00000000
+Softmax: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, NaN]
+Lowest value: 0.00000000
+Highest value: 199999.00000000
+Range: 199999.00000000
+Sum of all values: 200560.46300000
+```
+
+The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two arguments.
+
+<b>Warning: current with regular rust maths, after 16 digits, we'll start to get some funny behavior:</b>
+
+```
+11111111111111111111111111111.99999 + 1
+11111111111111112000000000000
+```
+
+Because of this behavior, and not wanting/needing to pull in special handling for that, we have `smash`, `stack`, `scale` and `axe` are set to print an error message if an argument is long enough to trigger this behavior:
+
+```
+$ stack 11111111111111111111111111111.99999 1
+Error: Argument longer than 16 bytes not supported!
+```
+
+Here is an example script using some of them together:
+
+```
+#!/usr/bin/env bash
+
+costs=$1
+income=$2
+account=$3
+
+for months in {1..62}; do
+    pay=$(stack $account $income)
+    account=$(smash $pay $costs)
+    account=$account
+    echo "End of month $months total: $account"
+done 
+```
+
+While regular BASH functionality could be used instead for this last example, and can be faster for some tasks, math in BASH has some odd behavior we may want to avoid.
+
+```
+$ x=$((11111111111111111111111111 + 1))
+$ echo $x
+-8480526731661512248
+```
+We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolkit. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
+
