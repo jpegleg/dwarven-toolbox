@@ -182,6 +182,8 @@ $ stack 11111111111111111111111111111.99999 1
 Error: Argument longer than 16 bytes not supported!
 ```
 
+Note that `saw`, `catapult`, and `crossbow` can handle the longer math arguments.
+
 Here is an example script using some of them together:
 
 ```
@@ -206,5 +208,4 @@ $ x=$((11111111111111111111111111 + 1))
 $ echo $x
 -8480526731661512248
 ```
-We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolkit. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
-
+We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolbox. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
