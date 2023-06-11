@@ -83,6 +83,22 @@ path = "src/amuletoff.rs"
 name = "crown"
 path = "src/crown.rs"
 
+[[ bin ]]
+name = "crossbow"
+path = "src/crossbow.rs"
+
+[[ bin ]]
+name = "saw"
+path = "src/saw.rs"
+
+[[ bin ]]
+name = "catapult"
+path ="src/catapult.rs"
+
+[[ bin ]]
+name = "axe"
+path ="src/axe.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
