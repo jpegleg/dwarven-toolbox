@@ -107,6 +107,10 @@ path ="src/stack.rs"
 name = "smash"
 path ="src/smash.rs"
 
+[[ bin ]]
+name = "scale"
+path = "src/scale.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
