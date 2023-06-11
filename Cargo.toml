@@ -36,6 +36,14 @@ name = "hexor"
 path = "src/hexor.rs"
 
 [[ bin ]]
+name = "swordleft"
+path = "src/swordleft.rs"
+
+[[ bin ]]
+name = "swordright"
+path = "src/swordright.rs"
+
+[[ bin ]]
 name = "shielda"
 path = "src/shielda.rs"
 
