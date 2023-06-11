@@ -40,6 +40,21 @@ The hammer tools also can only take 127 bytes of data as input to encrypt at a t
 
 The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files directly, however subshell concatenation aka "$(cat mything.txt)" can be used effectively in some cases.  The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
 
+
+## Installation example
+
+This script will compile all of the utilities and copy them to /usr/local/bin/ then clean up.
+
+```
+cargo build --release --all
+for x in $(grep ^- README.md | grep -v 84 | cut -d'-' -f2); do
+    echo "Installing $x"
+    sudo cp target/release/$x /usr/local/bin/ 
+done
+cargo clean
+
+```
+
 ## Usage 
 
 We can compile each target: `cargo build --release all` and then install the resulting target/release/ binaries to /usr/local/bin/ 
@@ -155,15 +170,15 @@ Oh this was something!
 There are a number of basic math operations as individual utilities. The program `scale` takes any number of arguments and reports on several properties.
 
 ```
-$ scale 234 3 23 43 235 23 0.343 0.12 0 199999
-Average: 20056.04630000
-Mean: 20056.04630000
-Median: 23.00000000
-Softmax: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, NaN]
-Lowest value: 0.00000000
-Highest value: 199999.00000000
-Range: 199999.00000000
-Sum of all values: 200560.46300000
+$ scale 234 3 23 43 
+Average: 75.75000000
+Mean: 75.75000000
+Median: 33.00000000
+Softmax: [0.17487770452710943, 0.17487770452710943, 0.17487770452710943, 0.4753668864186717]
+Lowest value: 3.00000000
+Highest value: 234.00000000
+Range: 231.00000000
+Sum of all values: 303.00000000
 ```
 
 The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two arguments.
