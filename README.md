@@ -81,8 +81,8 @@ $ hexor 65595411564354504511415e465443115e57115546504347545f115c5856594510 31313
 The great power of dwarven might!
 ```
 
-We can combine XOR and bitshift in interesting ways with `swordleft`, `swordright`, `hexor`, `magick`, and `antimagick` in interesting ways.
-We'll add in `gold` to generate a key which we'll XOR against, shift, and XOR again.  Example:
+We can combine XOR and bitshift in interesting ways with `swordleft`, `swordright`, `hexor`, `magick`, and `antimagick`.
+We'll add in `gold` to generate a key which we'll XOR against, shift, and XOR again, for demonstration purposes.  Example:
 
 ```
 #!/usr/bin/env bash
