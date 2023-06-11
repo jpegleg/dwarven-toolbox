@@ -1,6 +1,6 @@
 # dwarven-toolbox 🧰
 
-The dwarven-toolbox is a collection of small and simple CLI programs written in Rust.
+The dwarven-toolbox is a collection of small and simple programs.
 
 - iron - 32 byte string generate
 - silver - 64 byte string generate
