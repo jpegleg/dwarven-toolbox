@@ -1,17 +1,12 @@
-fn axor(string1: &str, string2: &str) -> String {
+fn hexor(string1: &str, string2: &str) -> String {
     let bytes1 = hex::decode(string1).unwrap();
     let bytes2 = hex::decode(string2).unwrap();
-
     let result_bytes: Vec<u8> = bytes1
         .iter()
         .zip(bytes2.iter())
         .map(|(&byte1, &byte2)| byte1 ^ byte2)
         .collect();
-    let hex_string: String = result_bytes
-        .iter()
-        .map(|byte| format!("{:X}", byte))
-        .collect();
-    
+    let hex_string = hex::encode(result_bytes);    
     hex_string
 }
 
@@ -23,6 +18,6 @@ fn main() {
     }
     let string1 = args[1].clone();
     let string2 = args[2].clone();
-    let hexout = axor(&string1, &string2);
+    let hexout = hexor(&string1, &string2);
     println!("{}", hexout);
 }
