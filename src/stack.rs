@@ -3,10 +3,12 @@ mod maxarg;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    
     if args.len() != 3 {
         println!("Usage: stack <number1> <number2>");
         return;
     }
+    
     let number1: f64 = match args[1].parse() {
         Ok(num) => num,
         Err(_) => {
