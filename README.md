@@ -70,6 +70,15 @@ SHA3-384: 131d5c1116e0bba5e73c48e13d2c61979c416d8a741d6bb2b5def6b51da141d909df9e
 SHA2: 67fc5dcc7bf595385699e9a10be5f7a8f2a4b881607632361741a1cfb5d96a8f
 ```
 
+#### Hex magick!
+
+The program `hexor` works well with `magick` and `antimagick` in this example:
+
+```
+$ hexor 65595411564354504511415e465443115e57115546504347545f115c5856594510 313131313131313131313131313131313131313131313131313131313131313131 | xargs antimagick
+The great power of dwarven might!
+```
+
 #### Forensic and research power!
 
 There are real situations when reverse engineering, researching, and performing ad-hoc operations where we may need to do some quick data butchery. The dwarven-toolbox is built to assist with such tasks. 
