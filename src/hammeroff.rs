@@ -8,6 +8,10 @@ type Aes128Cbc = Cbc<Aes128, Pkcs7>;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    if args.len() != 4 {
+        println!("The first argument is the 16 byte hex IV, the second is the ciphertext, and the third is the 32 byte hex key. \n\nUsage example: hammeroff 5EC4E2032363E027 8de9e8e397c8cd15bfb088dd714f4b88bbd2e78ca6606f71604ddbb6300fcb27  28083A716B0BA8A85F9E0A116FF2EDB7 ");
+        std::process::exit(1);
+    }
     let siv = args[1].clone();
     let binding = String::from(siv);
     let iv = binding.as_bytes();
