@@ -31,7 +31,7 @@ The hammer tools also can only take 127 bytes of data as input to encrypt at a t
 
 (Use "rage" https://github.com/str4d/rage instead for more normal file encryption operations, or at least another tool designed for file encryption.)
 
-The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files, however subshell concatenation aka "$(cat mything.txt)" can be used effectively in some cases. 
+The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files directly, however subshell concatenation aka "$(cat mything.txt)" can be used effectively in some cases.  The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
 
 ## Usage 
 
