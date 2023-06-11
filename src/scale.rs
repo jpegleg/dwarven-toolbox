@@ -34,7 +34,8 @@ fn main() {
         println!("Median: {:.8}", median);
 
         let softmax = calculate_softmax(&numbers);
-        println!("Softmax: {:?}", softmax);
+        let softmax_normalized = normalize_softmax(&softmax);
+        println!("Softmax: {:?}", softmax_normalized);
 
         let min_value = numbers.iter().min_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
         println!("Lowest value: {:.8}", min_value);
@@ -65,4 +66,10 @@ fn calculate_median(numbers: &mut Vec<f64>) -> f64 {
 fn calculate_softmax(numbers: &[f64]) -> Vec<f64> {
     let exp_sum: f64 = numbers.iter().map(|x| x.exp()).sum();
     numbers.iter().map(|x| x.exp() / exp_sum).collect()
+}
+
+fn normalize_softmax(softmax: &[f64]) -> Vec<f64> {
+    let max_val = *softmax.iter().max_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
+    let exp_sum: f64 = softmax.iter().map(|x| (x - max_val).exp()).sum();
+    softmax.iter().map(|x| (x - max_val).exp() / exp_sum).collect()
 }
