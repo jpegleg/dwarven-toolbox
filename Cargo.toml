@@ -32,8 +32,8 @@ name = "axor"
 path = "src/axor.rs"
 
 [[ bin ]]
-name = "hxor"
-path = "src/hxor.rs"
+name = "hexor"
+path = "src/hexor.rs"
 
 [[ bin ]]
 name = "shielda"
