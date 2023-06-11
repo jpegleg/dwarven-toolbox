@@ -1,4 +1,4 @@
-# dwarven-toolbox
+# dwarven-toolbox 🧰
 
 The dwarven-toolbox is a collection of small and simple CLI programs written in Rust.
 
@@ -13,8 +13,8 @@ The dwarven-toolbox is a collection of small and simple CLI programs written in 
 - axor - XOR two integers
 - hexor - XOR each byte of two strings, output as hex
 - anvil - generate iv and key (for hammeron and hameroff, AES-128, etc)
-- hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat Hammers! 
-- hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat Hammers! 
+- hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat! 
+- hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
 - amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
@@ -25,11 +25,11 @@ The dwarven-toolbox is a collection of small and simple CLI programs written in 
 
 The hammer tools (hammeron and hammeroff) used directly on the CLI expose the key to the local system, like in history files and process lists.
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
-The hammer tools also can only take 127 bytes of data as input to encrypt at a time.
+The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for hammeron!
 
 (Use "rage" https://github.com/str4d/rage instead for more normal file encryption operations, or at least another tool designed for file encryption.)
 
-The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. 
+The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files, however subshell concatenation aka "$(cat mything.txt)" can be used effectively in some cases. 
 
 ## Usage 
 
