@@ -22,6 +22,10 @@ The dwarven-toolbox is a collection of small and simple programs.
 - magick - hex encode
 - antimagick - hex decode
 - crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of an text (string/s) input
+- saw - f64 log
+- axe - f64 division
+- catapult - f64 exponentiation
+- crossbow - f64 multiplication
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use (hammeron|hammeroff|misc) for (educational|research) purposes unless you really know what you are doing.</b>
 
