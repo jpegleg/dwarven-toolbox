@@ -12,6 +12,8 @@ The dwarven-toolbox is a collection of small and simple CLI programs written in 
 - dsheilda - base58 decode
 - axor - XOR two integers
 - hexor - XOR each byte of hex encoded strings, output as hex
+- swordleft - bitshift each byte left by 1, input as hex string
+- swordright - bitshift each byte right by 1, input as hex string
 - anvil - generate iv and key (for hammeron and hameroff, AES-128, etc)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat! 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
@@ -78,6 +80,49 @@ The program `hexor` works well with `magick` and `antimagick` in this example:
 $ hexor 65595411564354504511415e465443115e57115546504347545f115c5856594510 313131313131313131313131313131313131313131313131313131313131313131 | xargs antimagick
 The great power of dwarven might!
 ```
+
+We can combine XOR and bitshift in interesting ways with `swordleft`, `swordright`, `hexor`, `magick`, and `antimagick` in interesting ways.
+We'll add in `gold` to generate a key which we'll XOR against, shift, and XOR again.  Example:
+
+```
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]]; then
+   echo "Send in a single argument string!"
+   exit 1
+else
+   echo "Permutation result:"
+fi
+
+gold > gold.key
+
+key=$(magick "$(cat gold.key)") 
+plaintext=$(magick "$1")
+
+r1=$(hexor "$plaintext" "$key")
+
+rlength=${#r1}
+
+iseven=$(( rlength / 2))
+
+if [[ "$iseven" ]]; then
+   r1=$r1
+else
+   r1=0$r1
+fi
+
+r2=$(swordleft $r1)
+
+r3=$(hexor "$r2" "$key")
+
+echo $r3
+
+```
+
+Note that if the input to that script is longer than 192 bytes, data will be lost as the hex encoded key is 192 bytes long and hexor output is the length of the shortest input of either argument.
+
+Also note how we check to see if the hex is odd length before performing the bitshift. The hex output we use in dwarven-toolbox is raw, meaning that odd length values can occur. If we try to decode an odd length hex value, we'll get an error. The dwarven-toolbox utilties do not try to compensate for this, it is up to the higher level script or implementation to manage inputs in this way.
+
 
 #### Forensic and research power!
 
