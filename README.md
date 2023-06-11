@@ -94,6 +94,14 @@ else
    echo "Permutation result:"
 fi
 
+inlen=${#1}
+
+if [[ "$inlen" > 192 ]]; then
+    echo "Input larger than 192 bytes, output truncated to 192 bytes!"
+else
+    :
+fi
+
 gold > gold.key
 
 key=$(magick "$(cat gold.key)") 
@@ -106,7 +114,7 @@ rlength=${#r1}
 iseven=$(( rlength / 2))
 
 if [[ "$iseven" ]]; then
-   r1=$r1
+   :
 else
    r1=0$r1
 fi
@@ -118,8 +126,6 @@ r3=$(hexor "$r2" "$key")
 echo $r3
 
 ```
-
-Note that if the input to that script is longer than 192 bytes, data will be lost as the hex encoded key is 192 bytes long and hexor output is the length of the shortest input of either argument.
 
 Also note how we check to see if the hex is odd length before performing the bitshift. The hex output we use in dwarven-toolbox is raw, meaning that odd length values can occur. If we try to decode an odd length hex value, we'll get an error. The dwarven-toolbox utilties do not try to compensate for this, it is up to the higher level script or implementation to manage inputs in this way.
 
