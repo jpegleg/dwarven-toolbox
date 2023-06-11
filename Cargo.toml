@@ -99,6 +99,14 @@ path ="src/catapult.rs"
 name = "axe"
 path ="src/axe.rs"
 
+[[ bin ]]
+name = "stack"
+path ="src/stack.rs"
+
+[[ bin ]]
+name = "smash"
+path ="src/smash.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
