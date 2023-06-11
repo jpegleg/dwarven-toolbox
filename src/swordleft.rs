@@ -5,8 +5,7 @@ fn slash(string: String) -> String {
         .zip(bytes.iter())
         .map(|(&bytes, _self)| bytes << 1)
         .collect();
-    let hex_string = hex::encode(result_bytes);
-   
+    let hex_string = hex::encode(result_bytes);   
     hex_string
 }
 
@@ -20,8 +19,6 @@ fn main() {
         if let Ok(hexdata) = arg.parse::<String>() {
             let sword = slash(hexdata);
             println!("{}", sword);
-        } else {
-             println!("Invalid argument! The only argument is a hex encoded value to operate on.")
         }
     } 
 }
