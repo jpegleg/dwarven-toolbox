@@ -11,7 +11,7 @@ The dwarven-toolbox is a collection of small and simple CLI programs written in 
 - shielda - base58 encode
 - dsheilda - base58 decode
 - axor - XOR two integers
-- hexor - XOR each byte of two strings, output as hex
+- hexor - XOR each byte of hex encoded strings, output as hex
 - anvil - generate iv and key (for hammeron and hameroff, AES-128, etc)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat! 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
