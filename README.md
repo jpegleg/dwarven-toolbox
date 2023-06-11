@@ -9,7 +9,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - armore - base64 encode
 - darmore - base64 decode
 - shielda - base58 encode
-- dsheilda - base58 decode
+- dshielda - base58 decode
 - axor - XOR two integers
 - hexor - XOR each byte of hex encoded strings, output as hex
 - swordleft - bitshift each byte left by 1, input as hex string
