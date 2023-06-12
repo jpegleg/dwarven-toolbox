@@ -33,10 +33,6 @@ fn main() {
         let median = calculate_median(&mut numbers);
         println!("Median: {:.8}", median);
 
-        let softmax = calculate_softmax(&numbers);
-        let softmax_normalized = normalize_softmax(&softmax);
-        println!("Softmax: {:?}", softmax_normalized);
-
         let min_value = numbers.iter().min_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
         println!("Lowest value: {:.8}", min_value);
 
@@ -47,6 +43,11 @@ fn main() {
         println!("Range: {:.8}", range);
 
         println!("Sum of all values: {:.8}", sum);
+        
+        let softmax = calculate_softmax(&numbers);
+        let softmax_normalized = normalize_softmax(&softmax);
+        println!("Softmax: {:?}", softmax_normalized);
+
     } else {
         println!("No valid numbers provided.");
     }
