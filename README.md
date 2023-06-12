@@ -184,7 +184,7 @@ Sum of all values: 303.00000000
 Softmax: [0.17487770452710943, 0.17487770452710943, 0.17487770452710943, 0.4753668864186717]
 ```
 
-Note: `scale` currently can't take values greater than 709, larger values can result in a NaN during softmax normalization, which will result in a Panic.
+Note: `scale` softmax normalization currently can't take values greater than 709, larger values can result in a NaN during softmax normalization, which will result in a Panic.
 Removing the softmax functionality will lift the max up to the 16 byte length. I've moved the softmax to the last computation so that the others will complete before a normalization panic. If we know we are going to use `scale` with numbers larger than 709, we can tuck away the softmax panic like so:
 
 ```
