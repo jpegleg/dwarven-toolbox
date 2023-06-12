@@ -13,7 +13,7 @@ fn hexor(string1: &str, string2: &str) -> String {
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 3 {
-        println!("XOR two strings and print the resulting hex. Usage: hxor string1 string2");
+        println!("XOR two strings and print the resulting hex. Usage: hexor string1 string2");
         return;
     }
     let string1 = args[1].clone();
