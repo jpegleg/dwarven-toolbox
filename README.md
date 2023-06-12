@@ -168,6 +168,14 @@ $ dshielda NZ1USWfjfFYuJ5wetRMLxtv6vjWn8p
 Oh this was something!
 ```
 
+One of the interesting properties tof the encoding/decoding utilities in the dwarven-toolbox is that they refuse to output non-utf8 to STDOUT. This can be useful when examining malicous data, avoiding various scenarios where binary in STDOUT might do something such as attempt execute an exploit or trigger a bug/crash. While such an exploit is unlikely, another reason this property is useful is that only "successful" string decoding will output from our decode, which is what we want when we are hunting for plaintext. Normal utilities like base64 and xxd will just happily output whatever, while `darmore`,`antimagick`, and `dshielda` will intentionally panic:
+
+```
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Utf8Error { valid_up_to: 2, error_len: Some(1) }', src/dshielda.rs:7:57
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+This is a huge blessing during brutefoce/batch research tasks attempting to extract plaintext, because success will have a good exit code!
+
 #### Maths!
 
 There are a number of basic math operations as individual utilities. The program `scale` takes any number of arguments and reports on several properties.
