@@ -265,7 +265,7 @@ for months in {1..72}; do
 done 
 ```
 
-While pure BASH functionality could be used instead for this last example, and can be faster for some tasks, math in BASH has some odd behavior we may want to avoid.
+While pure BASH functionality could be used instead for this last example, and can be faster for some BASH tasks (what a surprise). But another aspect is that math in BASH has some odd behavior we may want to avoid.
 
 ```
 $ x=$((11111111111111111111111111 + 1))
@@ -273,7 +273,7 @@ $ echo $x
 -8480526731661512248
 ```
 
-Comparing time and CPU of our cost calculators, the pure BASH version outperforms significantly:
+Going back to our BASH examples, comparing time and CPU of our cost calculators, the pure BASH version outperforms significantly:
 
 toolbox'd bash cost calc: 0.2 seconds, 0.6 seconds CPU
 
