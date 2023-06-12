@@ -268,7 +268,7 @@ $ echo $x
 -8480526731661512248
 ```
 
-Commparing time and CPU of our cost calculators, the BASH version outperforms significantly:
+Comparing time and CPU of our cost calculators, the pure BASH version outperforms significantly:
 
 toolbox'd bash cost calc: 0.2 seconds, 0.6 seconds CPU
 
