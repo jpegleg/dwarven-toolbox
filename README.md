@@ -58,6 +58,7 @@ As of version 1.1, the full collection of utilities compiled for x86 compiled fo
 
 As of version 1.1, the full collection of utilities compiled for x86 compiled for Darwin (MacOS) is about 13MB. Each those compiled utilties is ~500KB.
 
+
 ## Usage 
 
 We can compile each target: `cargo build --release all` and then install the resulting target/release/ binaries to /usr/local/bin/ 
@@ -221,7 +222,8 @@ $ catapult 3243 33
 72652289731892430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 $
 ```
-That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843! But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
+That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843!
+ But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
 
 Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
 
@@ -242,11 +244,52 @@ for months in {1..72}; do
 done 
 ```
 
-While regular BASH functionality could be used instead for this last example, and can be faster for some tasks, math in BASH has some odd behavior we may want to avoid.
+Although pure BASH is much faster in this case:
+
+```
+#!/usr/bin/env bash
+
+costs=$1
+income=$2
+account=$3
+
+for months in {1..72}; do
+    pay=$(( $account + $income ))
+    account=$(( $pay - $costs ))
+    account=$account
+    echo "End of month $months total: $account"
+done 
+```
+
+While pure BASH functionality could be used instead for this last example, and can be faster for some tasks, math in BASH has some odd behavior we may want to avoid.
 
 ```
 $ x=$((11111111111111111111111111 + 1))
 $ echo $x
 -8480526731661512248
 ```
-We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolbox. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
+
+Commparing time and CPU of our cost calculators, the BASH version outperforms significantly:
+
+toolbox'd bash cost calc: 0.2 seconds, 0.6 seconds CPU
+
+pure bash cost calc example: less than 0.00 seconds, 0.01 seconds CPU
+
+This is the case because of the forking the bash is doing in the toolbox'd version that the pure version does not need to do.
+If we compare single operations, say just some addition, then they are much more comparable and our toolbox shines:
+
+```
+$ time bash echo $(( 111111111111111 + 111111111111111))
+/bin/echo: /bin/echo: cannot execute binary file
+bash echo $(( 111111111111111 + 111111111111111))  0.00s user 0.00s system 65% cpu 0.006 total
+$ time stack 111111111111111 111111111111111            
+222222222222222
+stack 111111111111111 111111111111111  0.00s user 0.00s system 58% cpu 0.005 total
+$ time python3 -c 'print(111111111111111 + 111111111111111)'
+222222222222222
+python3 -c 'print(111111111111111 + 111111111111111)'  0.03s user 0.01s system 85% cpu 0.046 total
+```
+Now we are seeing a different story, with the toolbox equal or slightly faster. I included python in this comparison to further illustrate the inefficiency of python in comparison as well.
+
+BASH math (which is in C) is actually very useful and we can of course write handling for those odd BASH cases if needed and use it just as we are with the argument length property in the dwarven-toolbox. Even so, having the snappy toolbox options to sanity check or escape the constraints and control the behavior more is part of why some of these simple math utilties are included here. While the standard math operations are often going to be superior in pure BASH within BASH, there are yet scenarios that benefit from the toolbox for simple math tasks.
+
