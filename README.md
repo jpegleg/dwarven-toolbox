@@ -226,7 +226,9 @@ That should be 72652289731892424036412098202541310209361726602796135670284698733
 
 Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
 
-Here is an example script using some of them together:
+#### Pure BASH vs toolbox'd BASH
+
+Here is an example script using some of the dwarven-toolbox math utilties together within BASH:
 
 ```
 #!/usr/bin/env bash
