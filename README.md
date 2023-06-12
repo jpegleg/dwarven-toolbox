@@ -107,7 +107,7 @@ The great power of dwarven might!
 ```
 
 We can combine XOR and bitshift in interesting ways with `swordleft`, `swordright`, `hexor`, `magick`, and `antimagick`.
-We'll add in `gold` to generate a key which we'll XOR against, shift, and XOR again, for demonstration purposes.  Example:
+We'll add in `gold` to generate a key which we'll XOR against, shift, hex encode, and XOR again, for demonstration purposes.  Example:
 
 ```
 #!/usr/bin/env bash
@@ -128,14 +128,10 @@ else
 fi
 
 gold > gold.key
-
 key=$(magick "$(cat gold.key)") 
 plaintext=$(magick "$1")
-
 r1=$(hexor "$plaintext" "$key")
-
 rlength=${#r1}
-
 iseven=$(( rlength / 2 ))
 
 if [[ -z "$iseven" ]]; then
@@ -144,17 +140,16 @@ else
    r1=0$r1
 fi
 
-r2=$(swordleft $r1)
-
+morph=$(magick $r1)
+r2=$(swordright $morph)
 r3=$(hexor "$r2" "$key")
 
 echo $r3
-
 ```
 
 Also note how we check to see if the hex is odd length before performing the bitshift. The hex output we use in dwarven-toolbox is raw, meaning that odd length values can occur. If we try to decode an odd length hex value, we'll get an error. The dwarven-toolbox utilties do not try to compensate for this, it is up to the higher level script or implementation to manage inputs in this way.
 
-To reverse this example permutation, we would perform an XOR against the same key, shift right, then XOR that result against the key, and then hex decode.
+To reverse this example permutation, we would perform an XOR against the same key, hex deocde, shift right, then XOR that result against the key, and then hex decode.
 
 
 #### Forensic and research power!
