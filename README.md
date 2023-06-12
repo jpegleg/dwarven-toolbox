@@ -184,6 +184,9 @@ Range: 231.00000000
 Sum of all values: 303.00000000
 ```
 
+Note: `scale` currently can't take values greater than 709, larger values can result in a NaN during softmax normalization, which will result in a Panic.
+Removing the softmax functionality will lift the max up to the 16 byte length.
+
 The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two arguments.
 
 <b>Warning: current with regular rust maths, after 16 digits, we'll start to get some funny behavior:</b>
