@@ -1,7 +1,7 @@
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 3 {
-        println!("XOR two numers and print the resulting hex. Usage: axor num1 num2");
+        println!("XOR two whole numers and print the resulting hex. Usage: axor num1 num2");
         return;
     }
     if let Some(arg) = std::env::args().nth(1) {
@@ -11,10 +11,10 @@ fn main() {
                     let axor = first ^ second;
                     println!("{}", axor);
                 } else {
-                    println!("Use two numbers for the arguments.");
+                    println!("Use two whole (u64) numbers for the arguments.");
                 }
             } else {
-                println!("Use two numbers for the arguments.");
+                println!("Use two whole (u64) numbers for the arguments.");
             }
         }
     }
