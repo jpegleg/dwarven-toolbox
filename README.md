@@ -288,9 +288,10 @@ This is the case because of the forking the bash is doing in the toolbox'd versi
 If we compare single operations, say just some addition, then they are much more comparable and our toolbox shines:
 
 ```
-$ time bash echo $(( 111111111111111 + 111111111111111 ))
-/bin/echo: /bin/echo: cannot execute binary file
-bash echo $(( 111111111111111 + 111111111111111 ))  0.00s user 0.00s system 65% cpu 0.006 total
+$ cat test
+echo "$(( 111111111111111 + 111111111111111 ))"
+$ time bash test
+bash test  0.00s user 0.00s system 75% cpu 0.005 total
 $ time stack 111111111111111 111111111111111            
 222222222222222
 stack 111111111111111 111111111111111  0.00s user 0.00s system 58% cpu 0.005 total
