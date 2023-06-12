@@ -78,8 +78,7 @@ echo $mercyv | xargs shielda | xargs armore | xargs magick
 echo $mercyk | xargs shielda | xargs armore | rev | xargs magick
 
 hammeron $mercyv "$iv $key" $mercyk
-iron > code.txt
-hammeron $iv "$(cat code.txt)" $key > code.txt.enc && cp /dev/null code.txt
+hammeron $iv "$(iron)" $key > code.txt.enc
 ```
 
 The example puts a 32 byte string into a file named code.txt, which it then encrypts. In order to decrypt it, we'll need the iv and key that were used to encrypt it. The example takes the iv and key and encrypts those with yet another iv and key, which are then printed out with a few layers of encoding as a dash of obfuscation.
@@ -279,9 +278,9 @@ This is the case because of the forking the bash is doing in the toolbox'd versi
 If we compare single operations, say just some addition, then they are much more comparable and our toolbox shines:
 
 ```
-$ time bash echo $(( 111111111111111 + 111111111111111))
+$ time bash echo $(( 111111111111111 + 111111111111111 ))
 /bin/echo: /bin/echo: cannot execute binary file
-bash echo $(( 111111111111111 + 111111111111111))  0.00s user 0.00s system 65% cpu 0.006 total
+bash echo $(( 111111111111111 + 111111111111111 ))  0.00s user 0.00s system 65% cpu 0.006 total
 $ time stack 111111111111111 111111111111111            
 222222222222222
 stack 111111111111111 111111111111111  0.00s user 0.00s system 58% cpu 0.005 total
@@ -291,5 +290,10 @@ python3 -c 'print(111111111111111 + 111111111111111)'  0.03s user 0.01s system 8
 ```
 Now we are seeing a different story, with the toolbox equal or slightly faster. I included python in this comparison to further illustrate the inefficiency of python in comparison as well.
 
-BASH math (which is in C) is actually very useful and we can of course write handling for those odd BASH cases if needed and use it just as we are with the argument length property in the dwarven-toolbox. Even so, having the snappy toolbox options to sanity check or escape the constraints and control the behavior more is part of why some of these simple math utilties are included here. While the standard math operations are often going to be superior in pure BASH within BASH, there are yet scenarios that benefit from the toolbox for simple math tasks.
+BASH math (which is in C) is actually very useful and we can of course write handling for those odd BASH cases if needed and use it just as we are with the argument length property in the dwarven-toolbox. Even so, having the snappy toolbox options to sanity check or escape the constraints and control the behavior more is part of why some of these simple math utilties are included here. While the standard math operations are often going to be superior in pure BASH within BASH, or just in C for that matter, there are yet scenarios that benefit from the toolbox for simple math tasks.
+
+### So, what is next here?
+
+The programs can still use improvement, they were made very quickly. Optimization and improved handling are TODOs.
+Additionally I'm likely to expand the utilties to include more encryption utilities and potentially compression utilities.
 
