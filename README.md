@@ -55,6 +55,7 @@ cargo clean
 
 ```
 As of version 1.1, the full collection of utilities compiled for x86 compiled for GNU/Linux is about 111MB. Each of those compiled utilities is currently ~4.1MB.
+
 As of version 1.1, the full collection of utilities compiled for x86 compiled for Darwin (MacOS) is about 13MB. Each those compiled utilties is ~500KB.
 
 ## Usage 
