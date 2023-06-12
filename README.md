@@ -203,7 +203,15 @@ $ stack 11111111111111111111111111111.99999 1
 Error: Argument longer than 16 bytes not supported!
 ```
 
-Note that `saw`, `catapult`, and `crossbow` can handle the longer math arguments.
+Note that `saw`, `catapult`, and `crossbow` can handle the longer math arguments, however can still run into issues with some output larger than 18446744073709551615.
+
+```
+$ catapult 3243 33
+72652289731892430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+$
+```
+That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843! But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
+
 
 Here is an example script using some of them together:
 
@@ -230,3 +238,5 @@ $ echo $x
 -8480526731661512248
 ```
 We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolbox. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
+
+Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
