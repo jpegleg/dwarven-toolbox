@@ -136,9 +136,9 @@ r1=$(hexor "$plaintext" "$key")
 
 rlength=${#r1}
 
-iseven=$(( rlength / 2))
+iseven=$(( rlength / 2 ))
 
-if [[ "$iseven" ]]; then
+if [[ -z "$iseven" ]]; then
    :
 else
    r1=0$r1
