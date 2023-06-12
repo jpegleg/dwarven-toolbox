@@ -177,15 +177,15 @@ $ scale 234 3 23 43
 Average: 75.75000000
 Mean: 75.75000000
 Median: 33.00000000
-Softmax: [0.17487770452710943, 0.17487770452710943, 0.17487770452710943, 0.4753668864186717]
 Lowest value: 3.00000000
 Highest value: 234.00000000
 Range: 231.00000000
 Sum of all values: 303.00000000
+Softmax: [0.17487770452710943, 0.17487770452710943, 0.17487770452710943, 0.4753668864186717]
 ```
 
 Note: `scale` currently can't take values greater than 709, larger values can result in a NaN during softmax normalization, which will result in a Panic.
-Removing the softmax functionality will lift the max up to the 16 byte length.
+Removing the softmax functionality will lift the max up to the 16 byte length. I've moved the softmax to the last computation so that the others will complete before a normalization panic.
 
 The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two arguments.
 
