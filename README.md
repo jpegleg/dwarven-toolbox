@@ -223,6 +223,7 @@ $
 ```
 That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843! But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
 
+Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
 
 Here is an example script using some of them together:
 
@@ -233,7 +234,7 @@ costs=$1
 income=$2
 account=$3
 
-for months in {1..62}; do
+for months in {1..72}; do
     pay=$(stack $account $income)
     account=$(smash $pay $costs)
     account=$account
@@ -249,5 +250,3 @@ $ echo $x
 -8480526731661512248
 ```
 We could of course add handling for this type of thing in BASH, just as we are with the argument length property in the dwarven-toolbox. Even so, not having to deal with that is part of why some of these simple math utilties are included here.
-
-Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
