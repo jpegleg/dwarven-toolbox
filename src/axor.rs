@@ -1,4 +1,9 @@
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 3 {
+        println!("XOR two numers and print the resulting hex. Usage: axor num1 num2");
+        return;
+    }
     if let Some(arg) = std::env::args().nth(1) {
         if let Ok(first) = arg.parse::<u64>() {
             if let Some(arg2) = std::env::args().nth(2) {
@@ -6,15 +11,11 @@ fn main() {
                     let axor = first ^ second;
                     println!("{}", axor);
                 } else {
-                    println!("Invalid argument! Use two integer arguments.");
+                    println!("Use two numbers for the arguments.");
                 }
             } else {
-                println!("Missing argument! Use two integer arguments.");
+                println!("Use two numbers for the arguments.");
             }
-        } else {
-            println!("Invalid argument! Use two integer arguments.");
         }
-    } else {
-        println!("No argument provided.\n\nUsage:\n\naxor 34 42\n\n");
     }
 }
