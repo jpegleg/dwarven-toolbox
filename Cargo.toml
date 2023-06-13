@@ -119,6 +119,14 @@ path = "src/box.rs"
 name = "unbox"
 path = "src/unbox.rs"
 
+[[ bin ]]
+name = "mattockon"
+path = "src/mattockon.rs"
+
+[[ bin ]]
+name = "mattockoff"
+path = "src/mattockoff.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
