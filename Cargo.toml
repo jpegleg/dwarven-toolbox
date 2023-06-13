@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 
 [[ bin ]]
@@ -111,6 +111,14 @@ path ="src/smash.rs"
 name = "scale"
 path = "src/scale.rs"
 
+[[ bin ]]
+name = "box"
+path = "src/box.rs"
+
+[[ bin ]]
+name = "unbox"
+path = "src/unbox.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
@@ -127,3 +135,4 @@ sha3 = "0.10.8"
 sha2 = "0.10.6"
 digest = "0.10.7"
 block-modes = "0.8.1"
+flate2 = "1.0"
