@@ -283,7 +283,11 @@ This is the case because of the forking the bash is doing in the toolbox'd versi
 If we compare single operations, say just some addition, then they are much more comparable and our toolbox shines:
 
 ```
-$ time bash -c echo "$(( 111111111111111 + 111111111111111 ))" 0.00s user 0.00s system 78% cpu 0.005 total
+$ cat test
+echo "$(( 111111111111111 + 111111111111111 ))"
+$ time bash test
+222222222222222
+bash test  0.00s user 0.00s system 75% cpu 0.005 total
 $ time stack 111111111111111 111111111111111            
 222222222222222
 stack 111111111111111 111111111111111  0.00s user 0.00s system 58% cpu 0.005 total
@@ -291,7 +295,8 @@ $ time python3 -c 'print(111111111111111 + 111111111111111)'
 222222222222222
 python3 -c 'print(111111111111111 + 111111111111111)'  0.03s user 0.01s system 85% cpu 0.046 total
 ```
-Now we are seeing a different story, with the toolbox equal or faster and with less CPU. Note that if BASH isn't invoked again and the shell is already BASH, the BASH math alone is so efficient "time" will measure it as free. I included python in this comparison to further illustrate the inefficiency of python in comparison as well.
+
+Now we are seeing a different story, with the toolbox equal or faster and with less CPU. Note that if BASH isn't invoked again and the shell is already BASH `echo "$(( 111111111111111 + 111111111111111 ))"`, the BASH math alone like that is extremely fast and the `time` program won't measure it or measure it as all 0s. I included python in this comparison to further illustrate the inefficiency of python in comparison as well.
 
 BASH math (which is in C) is actually very useful and we can of course write handling for those odd BASH cases if needed and use it just as we are with the argument length property in the dwarven-toolbox. Even so, having the snappy toolbox options to sanity check or escape the constraints and control the behavior more is part of why some of these simple math utilties are included here. While the standard math operations are often going to be superior in pure BASH within BASH, or just in C for that matter, there are yet scenarios that benefit from the toolbox for simple math tasks.
 
