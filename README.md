@@ -89,7 +89,25 @@ hammeron $iv "$(iron)" $key > code.txt.enc
 The example puts a 32 byte string into a file named code.txt, which it then encrypts. In order to decrypt it, we'll need the iv and key that were used to encrypt it. The example takes the iv and key and encrypts those with yet another iv and key, which are then printed out with a few layers of encoding as a dash of obfuscation.
 In order to decrypt, the secondary iv and key must hex decoded, the key reversed, both base64 decoded then base58 decoded, then those are used to decrypt the actual iv and key, which we then finally use to decrypt the code. This is just an example of some of the infinite possibilities of the dwarven-toolbox!
 
-#### A more normal example
+Here is another example that uses ChaCha20Poly1305 via `mattockon` instead of AES-128 from the `hammeron`. This example also uses `box` to compress data, and leverages rage to perform file encryption on the secret key afterwards.
+
+```
+#!/usr/bin/env bash
+sesh=$(uidgen)
+nonce=$(anvil | grep NONCE | cut -d':' -f2)
+plaintext=$(box "$(ps auxwww)")
+key=$(anvil | grep KEY | cut -d':' -f2)
+ciphertext=$(mattockon $nonce $plaintext $key)
+echo "$nonce $ciphertext" > "$sesh".asc
+shielda "$key" > "$sesh".key &&
+rage -p -o "$sesh".key.age "$sesh".key &&
+rm "$sesh".key
+```
+
+The mattock can process much larger chunks per encryption than the hammer, but they both have uses. If the hammer is to be used on larger data, the data can be broken up into smaller pieces and the encryption performed on each chunk, although in those cases the mattock is probably a better choice.
+
+
+#### A more simple direct usage
 
 We might use `crown` to quickly generate checksums.
 
@@ -101,6 +119,9 @@ SHA3-256: b7a0085f87df87bfbeb122eb1bafd6bf7387ac10b1673e94558d30a242a7fefc
 SHA3-384: 131d5c1116e0bba5e73c48e13d2c61979c416d8a741d6bb2b5def6b51da141d909df9ecdbbd14452774562d3ded52741
 SHA2: 67fc5dcc7bf595385699e9a10be5f7a8f2a4b881607632361741a1cfb5d96a8f
 ```
+
+This style with the cat piped to the xargs -0 will give us matching results to the standard utilities b2sum, sha256sum, etc.
+
 
 #### Hex magick!
 
