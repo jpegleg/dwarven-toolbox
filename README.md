@@ -40,9 +40,9 @@ The hammer tools (hammeron and hammeroff) used directly on the CLI expose the ke
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for hammeron!
 
-(Use "rage" https://github.com/str4d/rage instead for more normal file encryption operations, or at least another tool designed for file encryption.)
+Use "rage" https://github.com/str4d/rage instead for more normal file encryption operations, or at least another tool designed for file encryption. 
 
-The "dwarven-toolbox" technique with the hammers is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files directly, however subshell concatenation aka "$(cat mything.txt)" can be used effectively in some cases.  The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
+The "dwarven-toolbox" technique with the hammers and mattocks is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files directly, however subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
 
 
 ## Installation example
@@ -58,9 +58,10 @@ done
 cargo clean
 
 ```
-As of version 1.1, the full collection of utilities compiled for x86 compiled for GNU/Linux is about 111MB. Each of those compiled utilities is currently ~4.1MB.
 
-As of version 1.1, the full collection of utilities compiled for x86 compiled for Darwin (MacOS) is about 13MB. Each those compiled utilties is ~500KB.
+The full collection of utilities compiled for x86 compiled for GNU/Linux is roughly 111MB. Each of those compiled utilities is currently ~4.2MB.
+
+The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 13MB. Each those compiled utilties is ~500KB.
 
 
 ## Usage 
@@ -304,8 +305,59 @@ Now we are seeing a different story, with the toolbox equal or faster and with l
 
 BASH math (which is in C) is actually very useful and we can of course write handling for those odd BASH cases if needed and use it just as we are with the argument length property in the dwarven-toolbox. Even so, having the snappy toolbox options to sanity check or escape the constraints and control the behavior more is part of why some of these simple math utilties are included here. While the standard math operations are often going to be superior in pure BASH within BASH, or just in C for that matter, there are yet scenarios that benefit from the toolbox for simple math tasks.
 
-### So, what is next here?
+#### compression of strings
 
-The programs can still use improvement, they were made very quickly. Optimization and improved handling are TODOs.
-Additionally I'm likely to expand the utilties to include more encryption utilities and potentially compression utilities.
+We can perform gzip compression on strings with `box` and gzip decompression with `unbox`. The output is hex encoded, which may be much larger than the original. And of course, not all data will be smaller when compressed.
 
+```
+$ echo -n "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t.gz
+$ stat t
+  File: t
+  Size: 615             Blocks: 8          IO Block: 4096   regular file
+Device: 0,43    Inode: 446098      Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/adminx)   Gid: ( 1000/adminx)
+Access: 2023-06-13 18:40:17.348422483 -0400
+Modify: 2023-06-13 18:41:08.606949565 -0400
+Change: 2023-06-13 18:41:08.606949565 -0400
+ Birth: 2023-06-13 18:40:17.348422483 -0400
+$ box "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t.gz
+$ stat t.gz
+  File: t.gz
+  Size: 95              Blocks: 8          IO Block: 4096   regular file
+Device: 0,43    Inode: 446096      Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/adminx)   Gid: ( 1000/adminx)
+Access: 2023-06-13 18:39:59.337129516 -0400
+Modify: 2023-06-13 18:44:08.936967784 -0400
+Change: 2023-06-13 18:44:08.936967784 -0400
+ Birth: 2023-06-13 18:39:56.443171214 -0400
+```
+
+Here we observed the compression reducing the file size. Note how we used xxd to decode the hex produced by `box` to binary. Our `antimagick` hex decode is not for this purpose, as it will refuse to decode non-utf8. Even if we don't decode the hex of the gzip string, we still have size reduction in this case.
+
+```
+$  box "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t2.gz.hex
+# stat t2.gz.hex
+  File: t2.gz.hex
+  Size: 191             Blocks: 8          IO Block: 4096   regular file
+Device: 0,43    Inode: 446142      Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/unseenwork)   Gid: ( 1000/unseenwork)
+Access: 2023-06-13 18:47:53.587370312 -0400
+Modify: 2023-06-13 18:47:53.591367265 -0400
+Change: 2023-06-13 18:47:53.591367265 -0400
+ Birth: 2023-06-13 18:47:53.587370312 -0400
+```
+
+We can use `box` and `unbox` within our other programs to shrink some large variables in RAM.
+
+```
+bigpsout="$(ps auxwww)"
+gpsout=$(box "$BIGSTUFFS")
+unset bigpsout # empty the original
+# some time later when we need to inflate the data again
+obigpsout=$(unbox $COMPRESSEDSTUFFS | xargs antimagick)
+
+```
+
+We might also find forensic/IR use for `unbox`, such as when malware uses gzip compression or when we need to reverse engineer something and have to deal with ad-hoc gzip data. 
+
+TODO: add zlib versions, `zbox` and `zunbox`.
