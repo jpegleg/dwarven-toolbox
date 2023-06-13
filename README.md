@@ -10,13 +10,17 @@ The dwarven-toolbox is a collection of small and simple programs.
 - darmore - base64 decode
 - shielda - base58 encode
 - dshielda - base58 decode
+- box - gzip compress strings (output as hex)
+- unbox - gzip decompress (hex encoded gzip) strings (output as hex)
 - axor - XOR two integers
 - hexor - XOR each byte of hex encoded strings, output as hex
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
-- anvil - generate iv and key (for hammeron and hameroff, AES-128, etc)
+- anvil - generate nonce, iv, and key (iv and key hammeron and hameroff, AES-128, nonce and key for mattockon and mattockoff)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat! 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
+- mattockon - ChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
+- mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
 - amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
