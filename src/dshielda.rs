@@ -3,7 +3,7 @@ use bs58;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 2 {
-        println!("Base58 dencode some data. If there are spaces, surround in double quotes. Usage: dshielda base58data");
+        println!("Base58 decode some data. If there are spaces, surround in double quotes. Usage: dshielda base58data");
         return;
     }
     if let Some(arg) = std::env::args().nth(1) {
