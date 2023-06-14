@@ -381,7 +381,7 @@ Access: 2023-06-13 18:40:17.348422483 -0400
 Modify: 2023-06-13 18:41:08.606949565 -0400
 Change: 2023-06-13 18:41:08.606949565 -0400
  Birth: 2023-06-13 18:40:17.348422483 -0400
-$ box "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t.gz
+$ box "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." | xxd -r -p > t.gz
 $ stat t.gz
   File: t.gz
   Size: 95              Blocks: 8          IO Block: 4096   regular file
@@ -393,7 +393,7 @@ Change: 2023-06-13 18:44:08.936967784 -0400
  Birth: 2023-06-13 18:39:56.443171214 -0400
 ```
 
-Here we observed the compression reducing the file size. Note how we used xxd to decode the hex produced by `box` to binary. Our `antimagick` hex decode is not for this purpose, as it will refuse to decode non-utf8. Even if we don't decode the hex of the gzip string, we still have size reduction in this case.
+Here we observed the compression reducing the file size. Note how we used xxd to decode the hex produced by `box` to binary. Our `antimagick` hex decode is not for this purpose, as it will refuse to decode non-utf8. Even if we don't decode the hex of the gzip string like that, we still have size reduction in this case.
 
 ```
 $  box "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t2.gz.hex
