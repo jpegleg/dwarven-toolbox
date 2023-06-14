@@ -38,9 +38,9 @@ The dwarven-toolbox is a collection of small and simple programs.
 - smash - f64 subtraction
 - scale - average, mean, median, softmax, lowest value, highest value, range, and sum
 
-<b>Some of the included utilities do not ensure privacy, security, or quality. Use (hammeron|hammeroff|misc) for (educational|research) purposes unless you really know what you are doing.</b>
+<b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
-The hammer tools (hammeron and hammeroff) used directly on the CLI expose the key to the local system, like in history files and process lists.
+The encryption tools used directly on the CLI expose the key to the local system, like in history files and process lists.
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for hammeron!
 
@@ -67,6 +67,7 @@ The full collection of utilities compiled for x86 compiled for GNU/Linux is roug
 
 The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 13MB. Each those compiled utilties is ~500KB.
 
+Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If you the zlib compile fails, either install the required deps or remove zbox and zbox from the Cargo.toml, if you still want to use the "--all" approach.
 
 ## Usage 
 
