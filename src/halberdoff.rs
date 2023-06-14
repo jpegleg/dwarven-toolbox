@@ -33,7 +33,7 @@ fn decrypt_string(nonce: &[u8], cipher_hex: &str, key: &[u8; 32]) -> Result<Stri
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 4 {
-        println!("The first argument is the 24 byte hex nonce, the second is the hex encoded ciphertext, and the third is the 32 byte hex key. If there is whitespace in the message input, surround in doublequotes.\n\nUsage example: halberdoff 4450501658F5 3531353139364146344230383934353843354141423330429e2adfd32010e1519776b2abdf9e939af04ae0175af5b09cb1469ce5c035411f1b320fe0f06a6d37152720af85d77a2b3a706ceaededed 09578F03D7F3FBEB0769A7A8AC358936 \n\nNote: don't use the example nonce and key, use newly generated ones and never repeat the same! The \"anvil\" program can be used to generate a new nonce and key.");
+        println!("The first argument is the 24 byte hex nonce, the second is the hex encoded ciphertext, and the third is the 32 byte hex key. If there is whitespace in the message input, surround in doublequotes.\n\nUsage example: halberdoff 65E40574F31D51CF7F393F80 363545343035373446333144353143463746333933463830db9f7808904fea65e43c9af1de202c2c9dcd791120536d524087bcb56915fa4922f410952c59205814846c 8C56563D45D51DE1FA59D3BA81513AD8 \n\nNote: don't use the example nonce and key, use newly generated ones and never repeat the same! The \"anvil\" program can be used to generate a new nonce and key.");
         std::process::exit(1);
     }
 
