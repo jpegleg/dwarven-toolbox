@@ -69,30 +69,29 @@ cargo clean
 
 ```
 
-The full collection of utilities compiled for x86 compiled for GNU/Linux is roughly 129.6MB. Each of those compiled utilities is currently ~4.2MB.
+The full collection of utilities compiled for x86 compiled for GNU/Linux is roughly 137.6MB. Each of those compiled utilities is currently ~4.2MB.
 
 Using `scale` for some stats on the MB of each utility on x86 linux:
 
-Average: 4.18064516
-Mean: 4.18064516
+Average: 4.17575758
+Mean: 4.17575758
 Median: 4.20000000
 Lowest value: 4.10000000
 Highest value: 4.30000000
 Range: 0.20000000
-Sum of all values: 129.60000000
+Sum of all values: 137.80000000
 
-The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 18.89MB. Each those compiled utilties is ~500KB.
+The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
 
 Using `scale` for some stats on the KB of each utility on x86 darwin (MacOS Ventura):
 
-Average: 527.31428571
-Mean: 527.31428571
+Average: 525.72972973
+Mean: 525.72972973
 Median: 520.00000000
 Lowest value: 496.00000000
 Highest value: 628.00000000
 Range: 132.00000000
-Sum of all values: 18456.00000000
-
+Sum of all values: 19452.00000000
 
 
 Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If you the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
