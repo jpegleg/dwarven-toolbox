@@ -94,7 +94,9 @@ Range: 132.00000000
 Sum of all values: 19452.00000000
 
 
-Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If you the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
+Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
+
+Compile without zlib (and skip the zlib utilities) example:
 
 ```
 $ cp no-zlib_Cargo.toml Cargo.toml
