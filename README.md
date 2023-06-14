@@ -12,6 +12,8 @@ The dwarven-toolbox is a collection of small and simple programs.
 - dshielda - base58 decode
 - box - gzip compress strings (output as hex)
 - unbox - gzip decompress (hex encoded gzip) strings (output as hex)
+- zbox - zlib compress strings (output as hex)
+- zunbox - zlib decompress (hex encoded zlib) strings (output as hex)
 - axor - XOR two integers
 - hexor - XOR each byte of hex encoded strings, output as hex
 - swordleft - bitshift each byte left by 1, input as hex string
@@ -22,7 +24,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - mattockon - ChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
 - mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
 - halberdon - XChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
-- mhalberdoff - XChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
+- halberdoff - XChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
 - amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
@@ -108,6 +110,7 @@ rm "$sesh".key
 
 The mattock can process much larger chunks per encryption than the hammer, but they both have uses. If the hammer is to be used on larger data, the data can be broken up into smaller pieces and the encryption performed on each chunk, although in those cases the mattock is probably a better choice.
 
+The `halberdon` and `halberdoff` are stronger than the `mattockon` and `mattockoff` because the nonce is longer. The XNONCE output from `anvil` is the larger nonce used by XChaCha20Poly1305.
 
 #### A more simple direct usage
 
