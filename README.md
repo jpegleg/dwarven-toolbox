@@ -12,6 +12,8 @@ The dwarven-toolbox is a collection of small and simple programs.
 - darmore - base64 decode
 - shielda - base58 encode
 - dshielda - base58 decode
+- daggeron - hex to u64
+- daggeroff - u64 to hex
 - box - gzip compress strings (output as hex)
 - unbox - gzip decompress (hex encoded gzip) strings (output as hex)
 - zbox - zlib compress strings (output as hex)
