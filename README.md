@@ -21,6 +21,8 @@ The dwarven-toolbox is a collection of small and simple programs.
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
 - mattockon - ChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
 - mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
+- halberdon - XChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
+- mhalberdoff - XChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
 - amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
