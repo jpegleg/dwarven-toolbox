@@ -60,6 +60,14 @@ name = "antimagick"
 path = "src/antimagick.rs"
 
 [[ bin ]]
+name = "daggeron"
+path = "src/daggeron.rs"
+
+[[ bin ]]
+name = "daggeroff"
+path = "src/daggeroff.rs"
+
+[[ bin ]]
 name = "hammeron"
 path = "src/hammeron.rs"
 
