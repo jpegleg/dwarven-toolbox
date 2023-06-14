@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 
 [[ bin ]]
@@ -58,6 +58,14 @@ path = "src/magick.rs"
 [[ bin ]]
 name = "antimagick"
 path = "src/antimagick.rs"
+
+[[ bin ]]
+name = "daggeron"
+path = "src/daggeron.rs"
+
+[[ bin ]]
+name = "daggeroff"
+path = "src/daggeroff.rs"
 
 [[ bin ]]
 name = "hammeron"
