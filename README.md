@@ -22,7 +22,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - hexor - XOR each byte of hex encoded strings, output as hex
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
-- anvil - generate nonce, iv, and key (iv and key hammeron and hameroff, AES-128, nonce and key for mattockon and mattockoff)
+- anvil - generate nonce, iv, and key string generation (for the encryption utilities)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) 
 - warhammeron - AES-256 CBC encrypt (encrypt strings 127 bytes or less) 
