@@ -6,7 +6,7 @@ use zeroize::Zeroize;
 
 fn decrypt_string(nonce: &[u8], cipher_hex: &str, key: &[u8; 32]) -> Result<String, String> {
     let ciphertext = hex::decode(cipher_hex).map_err(|_| "Failed to decode ciphertext hex")?;
-    let nonce_size = 12;
+    let nonce_size = 24;
     if ciphertext.len() < nonce_size {
         return Err("Invalid ciphertext".to_string());
     }
