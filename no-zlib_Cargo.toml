@@ -1,0 +1,154 @@
+[package]
+name = "dwarven-toolbox"
+version = "0.1.2"
+edition = "2021"
+
+[[ bin ]]
+name = "iron"
+path = "src/iron.rs"
+
+[[ bin ]]
+name = "silver"
+path = "src/silver.rs"
+
+[[ bin ]]
+name = "gold"
+path = "src/gold.rs"
+
+[[ bin ]]
+name = "uidgen"
+path = "src/uidgen.rs"
+
+[[ bin ]]
+name = "armore"
+path = "src/armore.rs"
+
+[[ bin ]]
+name = "darmore"
+path = "src/darmore.rs"
+
+[[ bin ]]
+name = "axor"
+path = "src/axor.rs"
+
+[[ bin ]]
+name = "hexor"
+path = "src/hexor.rs"
+
+[[ bin ]]
+name = "swordleft"
+path = "src/swordleft.rs"
+
+[[ bin ]]
+name = "swordright"
+path = "src/swordright.rs"
+
+[[ bin ]]
+name = "shielda"
+path = "src/shielda.rs"
+
+[[ bin ]]
+name = "dshielda"
+path = "src/dshielda.rs"
+
+[[ bin ]]
+name = "magick"
+path = "src/magick.rs"
+
+[[ bin ]]
+name = "antimagick"
+path = "src/antimagick.rs"
+
+[[ bin ]]
+name = "hammeron"
+path = "src/hammeron.rs"
+
+[[ bin ]]
+name = "hammeroff"
+path = "src/hammeroff.rs"
+
+[[ bin ]]
+name = "anvil"
+path = "src/anvil.rs"
+
+[[ bin ]]
+name = "amuleton"
+path = "src/amuleton.rs"
+
+[[ bin ]]
+name = "amuletoff"
+path = "src/amuletoff.rs"
+
+[[ bin ]]
+name = "crown"
+path = "src/crown.rs"
+
+[[ bin ]]
+name = "crossbow"
+path = "src/crossbow.rs"
+
+[[ bin ]]
+name = "saw"
+path = "src/saw.rs"
+
+[[ bin ]]
+name = "catapult"
+path ="src/catapult.rs"
+
+[[ bin ]]
+name = "axe"
+path ="src/axe.rs"
+
+[[ bin ]]
+name = "stack"
+path ="src/stack.rs"
+
+[[ bin ]]
+name = "smash"
+path ="src/smash.rs"
+
+[[ bin ]]
+name = "scale"
+path = "src/scale.rs"
+
+[[ bin ]]
+name = "box"
+path = "src/box.rs"
+
+[[ bin ]]
+name = "unbox"
+path = "src/unbox.rs"
+
+[[ bin ]]
+name = "mattockon"
+path = "src/mattockon.rs"
+
+[[ bin ]]
+name = "mattockoff"
+path = "src/mattockoff.rs"
+
+[[ bin ]]
+name = "halberdon"
+path = "src/halberdon.rs"
+
+[[ bin ]]
+name = "halberdoff"
+path = "src/halberdoff.rs"
+
+[dependencies]
+uuid = { version = "0.4", features = ["serde", "v4"] }
+base64 = "0.21"
+bs58 = { version="0.4.0", features=["check"] }
+aes = "0.7.5"
+hex = "0.4.3"
+rand = "0.7"
+chacha20poly1305 = { version = "0.10", features = ["stream"] }
+zeroize = "1.4"
+ed25519-dalek = "1.0.1"
+blake3 = "1.4.0"
+blake2 = "0.10.6"
+sha3 = "0.10.8"
+sha2 = "0.10.6"
+digest = "0.10.7"
+block-modes = "0.8.1"
+flate2 = "1.0"
