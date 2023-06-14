@@ -120,12 +120,12 @@ name = "unbox"
 path = "src/unbox.rs"
 
 [[ bin ]]
-name = "unbox"
-path = "src/unbox.rs"
-
-[[ bin ]]
 name = "zbox"
 path = "src/zbox.rs"
+
+[[ bin ]]
+name = "zunbox"
+path = "src/zunbox.rs"
 
 [[ bin ]]
 name = "mattockon"
