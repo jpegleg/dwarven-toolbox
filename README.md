@@ -2,6 +2,8 @@
 
 The dwarven-toolbox is a collection of small and simple programs.
 
+⚠️ Security Warning: Hazmat! This module contains lower level permutations and abstractions.
+
 - iron - 32 byte string generate
 - silver - 64 byte string generate
 - gold - 96 byte string generate
@@ -19,12 +21,14 @@ The dwarven-toolbox is a collection of small and simple programs.
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
 - anvil - generate nonce, iv, and key (iv and key hammeron and hameroff, AES-128, nonce and key for mattockon and mattockoff)
-- hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) ⚠️ Security Warning: Hazmat! 
-- hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) ⚠️ Security Warning: Hazmat! 
-- mattockon - ChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
-- mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
-- halberdon - XChaCha20Poly1305 encrypt (encrypt strings) ⚠️ Security Warning: Hazmat! 
-- halberdoff - XChaCha20Poly1305 decrypt (decrypt strings) ⚠️ Security Warning: Hazmat!
+- hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) 
+- hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) 
+- warhammeron - AES-256 CBC encrypt (encrypt strings 127 bytes or less) 
+- warhammeroff - AES-256 CBC decrypt (decrypt string 127 bytes or less)
+- mattockon - ChaCha20Poly1305 encrypt (encrypt strings) 
+- mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) 
+- halberdon - XChaCha20Poly1305 encrypt (encrypt strings)  
+- halberdoff - XChaCha20Poly1305 decrypt (decrypt strings) 
 - amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
@@ -85,10 +89,10 @@ Example script leveraging the dwarven-toolbox programs:
 ```
 #!/usr/bin/env bash
 
-iv=$(anvil | grep IV | cut -d':' -f2)
-key=$(anvil | grep KEY | cut -d':' -f2)
-mercyv=$(anvil | grep IV | cut -d':' -f2)
-mercyk=$(anvil | grep KEY | cut -d':' -f2)
+iv=$(anvil | grep ^IV | cut -d':' -f2)
+key=$(anvil | grep ^KEY | cut -d':' -f2)
+mercyv=$(anvil | grep ^IV | cut -d':' -f2)
+mercyk=$(anvil | grep ^KEY | cut -d':' -f2)
 echo $mercyv | xargs shielda | xargs armore | xargs magick
 echo $mercyk | xargs shielda | xargs armore | rev | xargs magick
 
@@ -104,9 +108,9 @@ Here is another example that uses ChaCha20Poly1305 via `mattockon` instead of AE
 ```
 #!/usr/bin/env bash
 sesh=$(uidgen)
-nonce=$(anvil | grep NONCE | cut -d':' -f2)
+nonce=$(anvil | grep ^NONCE | cut -d':' -f2)
 plaintext=$(box "$(ps auxwww)")
-key=$(anvil | grep KEY | cut -d':' -f2)
+key=$(anvil | grep ^KEY | cut -d':' -f2)
 ciphertext=$(mattockon $nonce $plaintext $key)
 echo "$nonce $ciphertext" > "$sesh".asc
 shielda "$key" > "$sesh".key &&
