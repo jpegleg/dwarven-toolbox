@@ -2,7 +2,7 @@
 
 The dwarven-toolbox is a collection of small and simple programs.
 
-⚠️ Security Warning: Hazmat! This module contains lower level permutations and abstractions.
+⚠️ Security Warning: Hazmat! This collection contains lower level permutations and abstractions that may not have all of the desirable security properties for a given usage/situation.
 
 - iron - 32 byte string generate
 - silver - 64 byte string generate
