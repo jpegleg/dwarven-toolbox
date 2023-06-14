@@ -369,7 +369,7 @@ BASH math (which is in C) is actually very useful and we can of course write han
 We can perform gzip compression on strings with `box` and gzip decompression with `unbox`. The output is hex encoded, which may be much larger than the original. And of course, not all data will be smaller when compressed.
 
 ```
-$ echo -n "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t.gz
+$ echo -n "The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom. The great forges have made some of the most powerful weapons in the kingdom." > t
 $ stat t
   File: t
   Size: 615             Blocks: 8          IO Block: 4096   regular file
