@@ -20,7 +20,7 @@ fn encrypt_string(nonce: &[u8], plaintext: &str, key: &[u8]) -> Result<Vec<u8>, 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 4 {
-        println!("The first argument is the 24 byte hex nonce, the second is the message, and the third is the 32 byte hex key. If there is whitespace in the message input, surround in doublequotes.\n\nUsage example: halberdon A132CE71B1EDB942748ABBD7 \"The great forge awaits you!\" 09578F03D7F3FBEB0769A7A8AC35893 \n\nNote: don't use the example nonce and key, use newly generated ones and never repeat the same nonce! The \"anvil\" program can be used to generate a new nonce and key.");
+        println!("The first argument is the 24 byte hex nonce, the second is the message, and the third is the 32 byte hex key. If there is whitespace in the message input, surround in doublequotes.\n\nUsage example: halberdon 65E40574F31D51CF7F393F80 \"The great forge awaits you.\" 8C56563D45D51DE1FA59D3BA81513AD8\n\nNote: don't use the example nonce and key, use newly generated ones and never repeat the same nonce! The \"anvil\" program can be used to generate a new nonce and key.");
         std::process::exit(1);
     }
 
