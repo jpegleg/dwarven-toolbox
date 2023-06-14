@@ -67,7 +67,12 @@ The full collection of utilities compiled for x86 compiled for GNU/Linux is roug
 
 The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 13MB. Each those compiled utilties is ~500KB.
 
-Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If you the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach.
+Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If you the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
+
+```
+$ cp no-zlib_Cargo.toml Cargo.toml
+$ cargo build --release --all
+```
 
 ## Usage 
 
@@ -387,4 +392,4 @@ obigpsout=$(unbox $COMPRESSEDSTUFFS | xargs antimagick)
 
 We might also find forensic/IR use for `unbox`, such as when malware uses gzip compression or when we need to reverse engineer something and have to deal with ad-hoc gzip data. 
 
-TODO: add zlib versions, `zbox` and `zunbox`.
+There are also the `zbox` and `zunbox` tools, which are the same style but use zlib instead of gzip.
