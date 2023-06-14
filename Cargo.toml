@@ -143,14 +143,6 @@ path = "src/halberdon.rs"
 name = "halberdoff"
 path = "src/halberdoff.rs"
 
-[[ bin ]]
-name = "halberdon"
-path = "src/halberdon.rs"
-
-[[ bin ]]
-name = "halberdoff"
-path = "src/halberdoff.rs"
-
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
