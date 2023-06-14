@@ -68,6 +68,14 @@ name = "hammeroff"
 path = "src/hammeroff.rs"
 
 [[ bin ]]
+name = "warhammeron"
+path = "src/warhammeron.rs"
+
+[[ bin ]]
+name = "warhammeroff"
+path = "src/warhammeroff.rs"
+
+[[ bin ]]
 name = "anvil"
 path = "src/anvil.rs"
 
