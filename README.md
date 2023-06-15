@@ -80,7 +80,7 @@ Highest value: 4.30000000
 Range: 0.20000000
 Sum of all values: 137.80000000
 ```
-The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
+The collection of tools (not including the zlib tools `zbox` and `zunbox`) of compiled for x86 compiled for Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
 
 Using `scale` for some stats on the KB of each utility on x86 darwin (MacOS Ventura):
 ```
