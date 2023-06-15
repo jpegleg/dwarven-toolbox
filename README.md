@@ -68,7 +68,7 @@ done
 cargo clean
 ```
 
-The full collection of utilities compiled for x86 compiled for GNU/Linux is roughly 137.6MB. Each of those compiled utilities is currently ~4.2MB.
+The full collection of utilities compiled for x86 GNU/Linux is roughly 137.6MB. Each of those compiled utilities is currently ~4.2MB.
 
 Using `scale` for some stats on the MB of each utility on x86 linux:
 ```
@@ -80,7 +80,7 @@ Highest value: 4.30000000
 Range: 0.20000000
 Sum of all values: 137.80000000
 ```
-The collection of tools (not including the zlib tools `zbox` and `zunbox`) of compiled for x86 compiled for Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
+The collection of tools (not including the zlib tools `zbox` and `zunbox`) compiled for x86 Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
 
 Using `scale` for some stats on the KB of each utility on x86 darwin (MacOS Ventura):
 ```
