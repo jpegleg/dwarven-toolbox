@@ -35,7 +35,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
 - antimagick - hex decode
-- crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of an text (string/s) input
+- crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of text (string/s) input
 - saw - f64 log
 - axe - f64 division
 - catapult - f64 exponentiation
@@ -50,9 +50,9 @@ The encryption tools used directly on the CLI expose the key to the local system
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for the hammers!
 
-Use "rage" https://github.com/str4d/rage instead for more normal file encryption operations, or at least another tool designed for file encryption. 
+Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
 
-The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, although some of these tools are directly useful. The toolbox is not designed to work with files directly, however subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
+The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
 
 
 ## Installation example
@@ -66,13 +66,12 @@ for x in $(grep ^- README.md | grep -v 84 | cut -d'-' -f2); do
     sudo cp target/release/$x /usr/local/bin/ 
 done
 cargo clean
-
 ```
 
 The full collection of utilities compiled for x86 compiled for GNU/Linux is roughly 137.6MB. Each of those compiled utilities is currently ~4.2MB.
 
 Using `scale` for some stats on the MB of each utility on x86 linux:
-
+```
 Average: 4.17575758
 Mean: 4.17575758
 Median: 4.20000000
@@ -80,11 +79,11 @@ Lowest value: 4.10000000
 Highest value: 4.30000000
 Range: 0.20000000
 Sum of all values: 137.80000000
-
+```
 The full collection of utilities compiled for x86 compiled for Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
 
 Using `scale` for some stats on the KB of each utility on x86 darwin (MacOS Ventura):
-
+```
 Average: 525.72972973
 Mean: 525.72972973
 Median: 520.00000000
@@ -92,7 +91,7 @@ Lowest value: 496.00000000
 Highest value: 628.00000000
 Range: 132.00000000
 Sum of all values: 19452.00000000
-
+```
 
 Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
 
