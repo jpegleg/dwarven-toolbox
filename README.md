@@ -214,7 +214,7 @@ echo $r3
 
 Also note how we check to see if the hex is odd length before performing the bitshift. The hex output we use in dwarven-toolbox is raw, meaning that odd length values can occur. If we try to decode an odd length hex value, we'll get an error. The dwarven-toolbox utilties do not try to compensate for this, it is up to the higher level script or implementation to manage inputs in this way.
 
-To reverse this example permutation, we would perform an XOR against the same key, hex deocde, shift right, then XOR that result against the key, and then hex decode.
+To reverse this example permutation, we would perform an XOR against the same key, hex decode, shift right, then XOR that result against the key, and then hex decode.
 
 
 #### Forensic and research power!
