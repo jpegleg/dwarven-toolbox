@@ -1,13 +1,13 @@
-use num_bigint::BigInt;
+use num_bigint::BigUint;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 2 {
-        println!("Convert BigInt to hex. Usage: daggeroff data");
+        println!("Convert BigUint to hex. Usage: daggeroff data");
         return;
     } 
     if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<BigInt>() {
+        if let Ok(stro) = arg.parse::<BigUint>() {
             println!("{:X}", stro);
         }
     } else {
