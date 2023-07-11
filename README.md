@@ -12,13 +12,14 @@ The dwarven-toolbox is a collection of small and simple programs.
 - darmore - base64 decode
 - shielda - base58 encode
 - dshielda - base58 decode
-- daggeron - hex to u64
-- daggeroff - u64 to hex
+- daggeron - hex to BigUint
+- daggeroff - BigUint to hex
 - box - gzip compress strings (output as hex)
 - unbox - gzip decompress (hex encoded gzip) strings (output as hex)
 - zbox - zlib compress strings (output as hex)
 - zunbox - zlib decompress (hex encoded zlib) strings (output as hex)
 - axor - XOR two integers
+- gaxor - XOR two BigInts
 - hexor - XOR each byte of hex encoded strings, output as hex
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
@@ -38,11 +39,19 @@ The dwarven-toolbox is a collection of small and simple programs.
 - crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of text (string/s) input
 - saw - f64 log
 - axe - f64 division
+- greataxe - BigInt division
 - catapult - f64 exponentiation
+- trebuchet - BigInt expoentiation (u32 for the exponent)
 - crossbow - f64 multiplication
+- ballista - BigInt multiplication
 - stack - f64 addition
+- pile - BigInt addition
 - smash - f64 subtraction
+- crush - BigInt subtraction
 - scale - average, mean, median, softmax, lowest value, highest value, range, and sum
+- flip - reverse a string
+- helmet - HKDF
+- greathelmet - PBKDF2
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -266,7 +275,7 @@ Range: 3333333333333332.00000000
 Sum of all values: 3366666666667674.00000000
 ```
 
-The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two arguments.
+The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two f64 arguments.
 
 <b>Warning: current with regular rust maths, after 16 digits, we'll start to get some funny behavior:</b>
 
@@ -281,8 +290,10 @@ Because of this behavior, and not wanting/needing to pull in special handling fo
 $ stack 11111111111111111111111111111.99999 1
 Error: Argument longer than 16 bytes not supported!
 ```
+Alternately, if we want large numbers and don't need floats, we can use `greataxe`, `ballista`, `pile`, `crush`, and `trebuchet` which take BigInt values.
 
-Note that `saw`, `catapult`, and `crossbow` can handle the longer math arguments, however can still run into issues with some output larger than 18446744073709551615.
+
+Note that `saw`, `catapult`, and `crossbow` can input the longer math arguments, however can still run into issues with some output larger than 18446744073709551615.
 
 ```
 $ catapult 3243 33
@@ -292,7 +303,7 @@ $
 That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843!
  But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
 
-Large numbers can be handled using additional crate if you feel the need to implement support for that! See https://docs.rs/num-bigint/latest/num_bigint/ for more information on that subject.
+The `saw` program does not yet have a BigInt version. And the BigInt versions currently only take whole numbers. Implementing huge floating point numbers is a TODO.
 
 #### Pure BASH vs toolbox'd BASH
 
