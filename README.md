@@ -78,30 +78,9 @@ done
 cargo clean
 ```
 
-The full collection of utilities compiled for x86 GNU/Linux is roughly 137.6MB. Each of those compiled utilities is currently ~4.2MB.
+Standard compiling for x86 linux of the utilities is currently ~4.2MB per utility.
 
-Using `scale` for some stats on the MB of each utility on x86 linux:
-```
-Average: 4.17575758
-Mean: 4.17575758
-Median: 4.20000000
-Lowest value: 4.10000000
-Highest value: 4.30000000
-Range: 0.20000000
-Sum of all values: 137.80000000
-```
-The collection of tools (not including the zlib tools `zbox` and `zunbox`) compiled for x86 Darwin (MacOS) is roughly 19.5MB. Each those compiled utilties is ~525KB.
-
-Using `scale` for some stats on the KB of each utility on x86 darwin (MacOS Ventura):
-```
-Average: 525.72972973
-Mean: 525.72972973
-Median: 520.00000000
-Lowest value: 496.00000000
-Highest value: 628.00000000
-Range: 132.00000000
-Sum of all values: 19452.00000000
-```
+Standard compiling for x86 darwin (MacOS) of the utilities is ~525KB per utility.
 
 Note that zlib may fail to compile on some systems such as MacOS and others. Zlib is used for the zlib compression utilities `zbox` and `zunbox`. If the zlib compile fails, either install the required deps or remove zbox, zunbox, and the zlib feature of flate2 from the Cargo.toml, if you still want to use the "--all" approach. Included is a file called no-zlib_Cargo.toml which can be copied over the Cargo.toml if you want to quickly exclude the zlib tools and dependencies.
 
@@ -278,7 +257,7 @@ Sum of all values: 3366666666667674.00000000
 
 The programs `axe`, `crossbow`, `stack`, `smash`, `catapult`, and `saw` each take two f64 arguments.
 
-<b>Warning: current with regular rust maths, after 16 digits, we'll start to get some funny behavior:</b>
+<b>Warning: current with core rust maths, after 16 digits, we'll start to get some funny behavior:</b>
 
 ```
 11111111111111111111111111111.99999 + 1
@@ -291,7 +270,10 @@ Because of this behavior, and not wanting/needing to pull in special handling fo
 $ stack 11111111111111111111111111111.99999 1
 Error: Argument longer than 16 bytes not supported!
 ```
+
 Alternately, if we want large numbers and don't need floats, we can use `greataxe`, `ballista`, `pile`, `crush`, and `trebuchet` which take BigInt values.
+
+The BigInt tools can do very large numbers, like up to ~ `3.079 x 10^22212093154093428519` it seems, which is much much larger than the max f64 (64-bit integer) of 18446744073709551615, aka (2^64)-1.
 
 
 Note that `saw`, `catapult`, and `crossbow` can input the longer math arguments, however can still run into issues with some output larger than 18446744073709551615.
