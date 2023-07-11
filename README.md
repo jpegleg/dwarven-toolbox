@@ -41,7 +41,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - axe - f64 division
 - greataxe - BigInt division
 - catapult - f64 exponentiation
-- trebuchet - BigInt expoentiation (u32 for the exponent)
+- trebuchet - BigInt exponetiation (u32 for the exponent)
 - crossbow - f64 multiplication
 - ballista - BigInt multiplication
 - stack - f64 addition
