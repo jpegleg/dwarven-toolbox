@@ -62,7 +62,7 @@ The hammer tools also can only take 127 bytes of data as input to encrypt at a t
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
 
-The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with linux "xargs", we can pipe data into the utilities that way as well.
+The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
 
 
 ## Installation example
@@ -274,9 +274,9 @@ Error: Argument longer than 16 bytes not supported!
 Alternately, if we want large numbers and don't need floats, we can use `greataxe`, `ballista`, `pile`, `crush`, and `trebuchet` which take BigInt values.
 
 The BigInt tools can do very large numbers, like up to ~ `3.079 x 10^22212093154093428519` it seems, which is much much larger than the max f64 (64-bit integer) of 18446744073709551615, aka (2^64)-1.
+Although the max length of command line arguments in the millions of digits long will get a "command line argument too long" error before we reach the BigInt max.
 
-
-Note that `saw`, `catapult`, and `crossbow` can input the longer math arguments, however can still run into issues with some output larger than 18446744073709551615.
+Note that `saw`, `catapult`, and `crossbow` can input the longer math arguments, however can also run into issues with some output larger than 18446744073709551615 as they use 64 bit integers.
 
 ```
 $ catapult 3243 33
@@ -285,6 +285,14 @@ $
 ```
 That should be 72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843!
  But at least it is the right length and starts correctly haha. This occurs when exponentiation using (`powf`) output exceeds f64 size aka 18446744073709551615 aka 2^64. 
+
+ Our BigInt version `trebuchet` handles that correctly:
+
+```
+$ trebuchet 3243 33
+72652289731892424036412098202541310209361726602796135670284698733348436507686376801792853211158279959138140991212843
+$
+```
 
 The `saw` program does not yet have a BigInt version. And the BigInt versions currently only take whole numbers. Implementing huge floating point numbers is a TODO.
 
