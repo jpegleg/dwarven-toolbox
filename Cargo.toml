@@ -32,6 +32,10 @@ name = "axor"
 path = "src/axor.rs"
 
 [[ bin ]]
+name = "gaxor"
+path = "src/gaxor.rs"
+
+[[ bin ]]
 name = "hexor"
 path = "src/hexor.rs"
 
@@ -104,6 +108,10 @@ name = "crossbow"
 path = "src/crossbow.rs"
 
 [[ bin ]]
+name = "ballista"
+path = "src/ballista.rs"
+
+[[ bin ]]
 name = "saw"
 path = "src/saw.rs"
 
@@ -112,16 +120,32 @@ name = "catapult"
 path ="src/catapult.rs"
 
 [[ bin ]]
+name = "trebuchet"
+path ="src/trebuchet.rs"
+
+[[ bin ]]
 name = "axe"
 path ="src/axe.rs"
+
+[[ bin ]]
+name = "greataxe"
+path ="src/greataxe.rs"
 
 [[ bin ]]
 name = "stack"
 path ="src/stack.rs"
 
 [[ bin ]]
+name = "pile"
+path ="src/pile.rs"
+
+[[ bin ]]
 name = "smash"
 path ="src/smash.rs"
+
+[[ bin ]]
+name = "crush"
+path ="src/crush.rs"
 
 [[ bin ]]
 name = "scale"
@@ -159,6 +183,18 @@ path = "src/halberdon.rs"
 name = "halberdoff"
 path = "src/halberdoff.rs"
 
+[[ bin ]]
+name = "helmet"
+path = "src/helmet.rs"
+
+[[ bin ]]
+name = "greathelmet"
+path = "src/greathelmet.rs"
+
+[[ bin ]]
+name = "flip"
+path = "src/flip.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
@@ -176,3 +212,8 @@ sha2 = "0.10.6"
 digest = "0.10.7"
 block-modes = "0.8.1"
 flate2 = { version = "1.0", features = ["zlib-ng"] }
+num = "0.4.0"
+num-traits = "0.2"
+num-bigint = "0.4"
+hkdf = "0.12"
+pbkdf2 = "0.12.2"
