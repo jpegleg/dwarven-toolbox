@@ -50,6 +50,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 - crush - BigInt subtraction
 - scale - average, mean, median, softmax, lowest value, highest value, range, and sum
 - flip - reverse a string
+- chop - print a number of bytes from the front of a string
 - helmet - HKDF
 - greathelmet - PBKDF2
 
