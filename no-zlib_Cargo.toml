@@ -187,6 +187,10 @@ path = "src/greathelmet.rs"
 name = "flip"
 path = "src/flip.rs"
 
+[[ bin ]]
+name = "chop"
+path = "src/chop.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
