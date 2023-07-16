@@ -441,6 +441,9 @@ is that we are able to use "tweakable" and "scriptable" encryption.
 The input file is removed with the GNU/linux "shred" program, and the ciphertext file is created from the original file name + a_$(date +%Y%m%d%H%M%S%N), so 
 the ciphertext files have a timestamp built into the file name.
 
+The file can't be large as all of the data is read as an argument by halberdon, so max commandline argument length will stop larger files from being encrypted.
+<b>This will result in data loss in the example, as files too large will get shred and a ciphertext file with only a nonce in it will be created!</b>
+
 Use with caution, and enjoy!
 
 ```
