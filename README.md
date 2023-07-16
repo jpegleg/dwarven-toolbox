@@ -62,7 +62,8 @@ The hammer tools also can only take 127 bytes of data as input to encrypt at a t
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
 
-The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
+The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. 
+The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
 
 
 ## Installation example
@@ -423,3 +424,62 @@ obigpsout=$(unbox $COMPRESSEDSTUFFS | xargs antimagick)
 We might also find forensic/IR use for `unbox`, such as when malware uses gzip compression or when we need to reverse engineer something and have to deal with ad-hoc gzip data. 
 
 There are also the `zbox` and `zunbox` tools, which are the same style but use zlib instead of gzip.
+
+
+# Encryption script example
+
+This example bash script leverages the dwarven-toolbox utilities to perform XChaCha20Poly1305, with the symmetric password generated from 21,000 round PBKDF2.
+
+The salt to the PBKDF2 is sent in as an arg and not preserved in the file, so it must be remembered or recorded separately. Note that the salt is also leaked
+to history/process data because it is used as an argument for the process.
+
+The `gold` program from the dwarven-toolbox is used to generate an on-disk password seed, which is transformed with `daggeron`, `daggeroff`, and `greataxe` before
+used along with the salt in the PBKDF2. The division from greataxe technically weakens the strength of the input key material, but a calculated risk in this 
+case to increase the obfuscation of the input key material. This obfuscation can of course be removed or adjusted, one of the benefits of using dwarven-toolbox
+is that we are able to use "tweakable" and "scriptable" encryption.
+
+The input file is removed with the GNU/linux "shred" program, and the ciphertext file is created from the original file name + a_$(date +%Y%m%d%H%M%S%N), so 
+the ciphertext files have a timestamp built into the file name.
+
+Use with caution, and enjoy!
+
+```
+#!/usr/bin/env bash
+#
+
+alength=$(awk '{print length}' ~/.bound 2>/dev/null)
+if [ -z "$alength" ]; then 
+    echo "Mining new gold..."
+    gold | xargs -0 magick > ~/.bound
+fi
+
+alength=$(awk '{print length}' ~/.bound 2>/dev/null)
+if [ "$alength" -ne "194" ]; then
+    echo "Mining new gold..."
+    gold | xargs -0 magick > ~/.bound
+else
+    echo "Bound in gold!"
+fi
+
+gold=$(cat ~/.bound)
+intup=$(daggeron $gold)
+divider=$(greataxe $intup 127)
+inthex=$(daggeroff $divider)
+kdfm=$(greathelmet $inthex "$3" 21000)
+contents="$(cat $2)"
+nonce=$(anvil | grep ^XNONCE | xargs -0 flip | xargs -0 chop 24)
+
+if [ "$1" == "enc" ]; then
+    echo -n "$nonce " | tee "$2".a
+    halberdon $nonce "$contents" $kdfm | tee -a "$2".a &&
+    shred -n 25 -u -z "$2"
+    mv "$2".a "$2".a_$(date +%Y%m%d%H%M%S%N)
+else
+    echo -n "$contents" | cut -d' ' -f2 > "$2".2a
+    ciphertext="$(cat "$2".2a | tr -d '\n')"
+    enonce=$(chop 24 "$(cat $2 | tr -d '\n')")
+    halberdoff $enonce "$ciphertext" $kdfm
+    shred -n 25 -u -z "$2".2a
+fi
+
+```
