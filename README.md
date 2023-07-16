@@ -486,3 +486,21 @@ else
 fi
 
 ```
+
+Again, dwarven-toolbox tools are not really meant for file processing, but rather small CLI arg data, but this example shows that processing files can be done.
+Since we can hit a maximum length of CLI arguments, this could be further adjusted to chunk larger files so that they can be processed. Or instead, just rewritten
+in Rust, referencing the dwarven-toolbox, and then expanding the new impelementation to read and write files, etc. Rapid prototyping is another use for the dwarven-toolbox!
+
+### Aren't CLI args a bad place for secrets? Yes, args can leak! Let's talk about it.
+
+As mentioned several times, we do have potential process argument leakage, as process arguments are not designed to be hidden from the (GNU/Linux) default operating system. But for that matter, not much truly evades the "root trace view" on the standard linux local system. Even rage (age) has different types of leakage, such as from the password in the write syscall. And gpg can leak passphrases to the local system as well from arguments or read syscalls. In short, trying to hide from root-level tracing in linux is a lost game. We see many times that "EDR" and security systems will trace all executions and forward trace data off to a centralized logging system, which may contain exposed data!
+
+All that said, we should use caution about what is used in process arguments and how that is designed. Encapsulating the args within child processes that run quickly and also don't expose to history files is a start, which the above example does for the plaintext and the input key material, while exposing the salt to the history/parent args.
+
+Most threat models don't expect the attacker to have local access and be tracing things, however when we do model those scenarios, we should consider carefully which data can be collected this way. Using "strace -f" is a great way to hunt in this regard, and we can also use those same EDR tools which largely use kernel modules and eBPF to perform the call tracing. 
+
+Be aware of your CLI history files and the history/logging data usage, clean up after yourself when appropriate, and consider the risks. The dwarven-toolkit is scriptable and tweakable and does not guarantee security of implementation. In fact, not many tools, software, or systems can really claim that! Because people are involved, all systems can fail or be used incorrectly.
+
+
+
+
