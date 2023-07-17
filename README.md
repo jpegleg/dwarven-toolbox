@@ -495,12 +495,14 @@ in Rust, referencing the dwarven-toolbox, and then expanding the new impelementa
 
 As mentioned several times, we do have potential process argument leakage, as process arguments are not designed to be hidden from the (GNU/Linux) default operating system. But for that matter, not much truly evades the "root trace view" on the standard linux local system. Even rage (age) has different types of leakage, such as from the password in the write syscall. And gpg can leak passphrases to the local system as well from arguments or read syscalls. But process args are less protected than syscall trace exposures in default GNU/linux because non-root users can theoretically detect the process args more often than process syscall tracing. In short, trying to hide from root-level tracing in linux is a lost game, but we can take measures against process argument leakage. We see many times that "EDR" and security systems will trace all executions and forward trace data off to a centralized logging system, which may contain exposed data!
 
-All that said, we should use caution about what is used in process arguments and how that is designed. Encapsulating the args within child processes that run quickly and also don't expose to history files is a start, which the above example does for the plaintext and the input key material, while exposing the salt to the history/parent args.
+Another good reminder is that xargs does not hide process arguments either, they are still there. But changing the program to read from STDIN does not leak to args, although still has the read syscall leakage.
 
-Most threat models don't expect the attacker to have local access and be tracing things, however when we do model those scenarios, we should consider carefully which data can be collected this way. Using "strace -f" is a great way to hunt in this regard, and we can also use those same EDR tools which largely use kernel modules and eBPF to perform the call tracing. 
+All that said, we should use caution about what is used in process arguments and how that is designed. The dwarven-toolbox intentionally uses process arguments, and so we should expect local leakage if we use these tools. Encapsulating the args within child processes that run quickly and also don't expose to history files is a start, which the above example does for the plaintext and the input key material, while exposing the salt to the history/parent args. But the child process args still expose data.
+
+Another thing to note is that most of the time process args are truncated in tracing, so only the first 33 bytes or so are actually read. We can exercise this trickery but unfortnately tracing theoretically can capture the entire thing, and also leaking the first 32 bytes of a secret is, in some cases, fatal to the security of that secret.
+
+Most threat models don't expect the attacker to have local access and be tracing things, however when we do model those scenarios, we should consider carefully which data can be collected this way too, not just history file leaks. Using "strace -f" is a great way to hunt in this regard, and we can also use those same EDR tools which largely use kernel modules and eBPF to perform the call tracing. 
 
 Be aware of your CLI history files and the history/logging data usage, clean up after yourself when appropriate, and consider the risks. The dwarven-toolkit is scriptable and tweakable and does not guarantee security of implementation. In fact, not many tools, software, or systems can really claim that! Because people are involved, all systems can fail or be used incorrectly.
-
-
 
 
