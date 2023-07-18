@@ -270,7 +270,7 @@ $ review story.txt
   "Permissions": "100644",
   "Owner": "admin (uid: 1000)",
   "Group": "admin (gid: 1000)",
-  "open": "File is not open by another program.",
+  "Open": "File is not open by another program.",
   "BLAKE3": "a7fa0cfa9587aabd7cfb6506665c2f2475543b3c60da30d0e4e3c9ceb4e76dd7",
   "BLAKE2B-512": "561c9e2ea545ebdcc065243141382c17c63f07527f648648b63fed4ab6e1dba472cd30cf70f7c4e286ccd5f79303a3b9088b629c5a7eb1b5bcfd607a9e9e78a0",
   "SHA3-256": "3debb73ac91f7292c9d91eb98abf86c289d102654bdbab48ebc4ca1422f6a7c2",
