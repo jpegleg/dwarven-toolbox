@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [[ bin ]]
@@ -191,6 +191,30 @@ path = "src/flip.rs"
 name = "chop"
 path = "src/chop.rs"
 
+[[ bin ]]
+name = "rip"
+path = "src/rip.rs"
+
+[[ bin ]]
+name = "pop"
+path = "src/pop.rs"
+
+[[ bin ]]
+name = "order"
+path = "src/order.rs"
+
+[[ bin ]]
+name = "seek"
+path = "src/seek.rs"
+
+[[ bin ]]
+name = "inspect"
+path = "src/inspect.rs"
+
+[[ bin ]]
+name = "review"
+path = "src/review.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
@@ -207,9 +231,11 @@ sha3 = "0.10.8"
 sha2 = "0.10.6"
 digest = "0.10.7"
 block-modes = "0.8.1"
+flate2 = "1.0"
 num = "0.4.0"
 num-traits = "0.2"
-flate2 = "1.0"
 num-bigint = "0.4"
 hkdf = "0.12"
 pbkdf2 = "0.12.2"
+chrono = "0.4.26"
+users = "0.11.0"
