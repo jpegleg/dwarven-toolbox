@@ -511,13 +511,13 @@ Use with caution, and enjoy!
 #!/usr/bin/env bash
 #
 
-alength=$(awk '{print length}' ~/.bound 2>/dev/null)
+alength=$(rip "$(cat ~/.bound)" 2>/dev/null)
 if [ -z "$alength" ]; then 
     echo "Mining new gold..."
     gold | xargs -0 magick > ~/.bound
 fi
 
-alength=$(awk '{print length}' ~/.bound 2>/dev/null)
+alength=$(rip "$(cat ~/.bound)" 2>/dev/null)
 if [ "$alength" -ne "194" ]; then
     echo "Mining new gold..."
     gold | xargs -0 magick > ~/.bound
@@ -545,10 +545,9 @@ else
     halberdoff $enonce "$ciphertext" $kdfm
     shred -n 25 -u -z "$2".2a
 fi
-
 ```
 
-Again, dwarven-toolbox tools are not really meant for file processing, but rather small CLI arg data, but this example shows that processing files can be done.
+Tis example shows that processing files can be done even with the argument tools.
 Since we can hit a maximum length of CLI arguments, this could be further adjusted to chunk larger files so that they can be processed. Or instead, just rewritten
 in Rust, referencing the dwarven-toolbox, and then expanding the new impelementation to read and write files, etc. Rapid prototyping is another use for the dwarven-toolbox!
 
@@ -558,9 +557,9 @@ As mentioned several times, we do have potential process argument leakage, as pr
 
 Another good reminder is that xargs does not hide process arguments either, they are still there. But changing the program to read from STDIN does not leak to args, although still has the read syscall leakage.
 
-All that said, we should use caution about what is used in process arguments and how that is designed. The dwarven-toolbox intentionally uses process arguments, and so we should expect local leakage if we use these tools. Encapsulating the args within child processes that run quickly and also don't expose to history files is a start, which the above example does for the plaintext and the input key material, while exposing the salt to the history/parent args. But the child process args still expose data.
+All that said, we should use caution about what is used in process arguments and how that is designed. The dwarven-toolbox intentionally uses process arguments, and so we should expect local leakage if we use these tools and put secrets in the arguments. Encapsulating the args within child processes that run quickly and also don't expose to history files is a start, which the above example does for the plaintext and the input key material, while exposing the salt to the history/parent args. But the child process args still expose data.
 
-Another thing to note is that most of the time process args are truncated in tracing, so only the first 33 bytes or so are actually read. We can exercise this trickery but unfortnately tracing theoretically can capture the entire thing, and also leaking the first 32 bytes of a secret is, in some cases, fatal to the security of that secret.
+Another thing to note is that most of the time process args are truncated in tracing, so only the first 32 bytes or so are actually read. We can exercise this trickery but unfortnately tracing theoretically can capture the entire thing, and also leaking the first 32 bytes of a secret is, in some cases, fatal to the security of that secret.
 
 Most threat models don't expect the attacker to have local access and be tracing things, however when we do model those scenarios, we should consider carefully which data can be collected this way too, not just history file leaks. Using "strace -f" is a great way to hunt in this regard, and we can also use those same EDR tools which largely use kernel modules and eBPF to perform the call tracing. 
 
