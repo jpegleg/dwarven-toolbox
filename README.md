@@ -62,6 +62,9 @@ Argument tools:
 File tools:
 - inspect - print each byte of a file, along with the total bytes and bits read
 - review - print detailed UNIX file data, including permissions, ownership, hashes, if the file is currently open, and more, as JSON
+- makesigil - write an ed25519 keypair as binary to a file
+- makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
+- readrune - validate a detached ed25519 signature for a file
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
