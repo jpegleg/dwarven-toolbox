@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 
 [[ bin ]]
@@ -222,6 +222,18 @@ path = "src/inspect.rs"
 [[ bin ]]
 name = "review"
 path = "src/review.rs"
+
+[[ bin ]]
+name = "makesigil"
+path = "src/makesigil.rs"
+
+[[ bin ]]
+name = "makerune"
+path = "src/makerune.rs"
+
+[[ bin ]]
+name = "readrune"
+path = "src/readrune.rs"
 
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
