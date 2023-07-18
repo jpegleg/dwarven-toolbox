@@ -4,6 +4,7 @@ The dwarven-toolbox is a collection of small and simple programs.
 
 ⚠️ Security Warning: Hazmat! This collection contains lower level permutations and abstractions that may not have all of the desirable security properties for a given usage/situation.
 
+Argument tools:
 - iron - 32 byte string generate
 - silver - 64 byte string generate
 - gold - 96 byte string generate
@@ -53,6 +54,14 @@ The dwarven-toolbox is a collection of small and simple programs.
 - chop - print a number of bytes from the front of a string
 - helmet - HKDF
 - greathelmet - PBKDF2
+- rip - count bytes in a string
+- pop - pop bytes from the end of a string and prepend them back aka shift the bytes to the right by X
+- seek - match exact patterns or panic (sort of like grep -o but with an error exit and with arguments only)
+- order - data reduction to count the number of different bytes abcccc becomes 1a1b4c
+
+File tools:
+- inspect - print each byte of a file, along with the total bytes and bits read
+- review - print detailed UNIX file data, including permissions, ownership, hashes, if the file is currently open, and more, as JSON
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -62,8 +71,14 @@ The hammer tools also can only take 127 bytes of data as input to encrypt at a t
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
 
-The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations. 
-The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. While the toolbox is not designed to work with files directly, subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. The tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
+The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
+The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
+
+<b>The toolbox has two types of binaries, those that work with files and those that work with args.</b>
+
+The args tools can use subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. These tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
+
+The file tools read files from the disk and write data to files. Arguments to the file tools are paths aka file names, along with other optional args.
 
 
 ## Installation example
@@ -225,6 +240,52 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Utf8Erro
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 This is a huge blessing during brutefoce/batch research tasks attempting to extract plaintext, because success will have a good exit code!
+
+#### Detailed reporting with review and inspect
+
+Examine files closely with `review` and `inspect` file operation tools.
+
+```
+$ echo "down in the earth" > story.txt
+$ inspect story.txt
+Each byte as hex: 64 6F 77 6E 20 69 6E 20 74 68 65 20 65 61 72 74 68 A 
+Number of bytes: 18
+Number of bits: 144
+$ review story.txt
+{
+"story.txt": {
+  "Report time": "2023-07-18 02:59:21.583803826 UTC",
+  "Number of IO blocks": "8",
+  "Block size": "4096",
+  "Inode": "899901",
+  "Number of bytes": "18",
+  "Number of kilobytes": "0",
+  "Number of megabytes": "0",
+  "Number of bits": "144",
+  "Byte distribution": "0.6666666666666666",
+  "Created timestamp (UTC)": "2023-07-18 02:42:59.993219798 UTC",
+  "Modified timestamp (UTC)": "2023-07-18 02:45:58.244601146 UTC",
+  "Accessed timestamp (UTC)": "2023-07-18 02:46:16.302310484 UTC",
+  "Changed timestamp (UTC)": "2023-07-18 02:45:58.244601146 UTC",
+  "Permissions": "100644",
+  "Owner": "admin (uid: 1000)",
+  "Group": "admin (gid: 1000)",
+  "open": "File is not open by another program.",
+  "BLAKE3": "a7fa0cfa9587aabd7cfb6506665c2f2475543b3c60da30d0e4e3c9ceb4e76dd7",
+  "BLAKE2B-512": "561c9e2ea545ebdcc065243141382c17c63f07527f648648b63fed4ab6e1dba472cd30cf70f7c4e286ccd5f79303a3b9088b629c5a7eb1b5bcfd607a9e9e78a0",
+  "SHA3-256": "3debb73ac91f7292c9d91eb98abf86c289d102654bdbab48ebc4ca1422f6a7c2",
+  "SHA3-384": "5e0a873485771f77aba74430820f5f4fd320a332f6f299642f4bbf779826b493a8a2ca208e68dfc97eb911195cf614f9",
+  "SHA2": "6b3a3eb380b929fca01fbe6047fec6b4b3a225385dfe4ce9c68233635fdee61c"
+  }
+}
+$ 
+
+```
+
+The byte distribution is a float between 0 and 1 or NaN. The result is 1 if every byte is unique, and the will lower based on the ratio of repeating bytes, lower numbers mean more repeating characters. The value doesn't go below zero except for NaN for no data at all.
+
+The "open" check is to see if the file is currently open by another process. The `review` tool output is JSON for the file object, so it can be utilized by applications more easily.
+
 
 #### Maths!
 
@@ -505,4 +566,35 @@ Most threat models don't expect the attacker to have local access and be tracing
 
 Be aware of your CLI history files and the history/logging data usage, clean up after yourself when appropriate, and consider the risks. The dwarven-toolkit is scriptable and tweakable and does not guarantee security of implementation. In fact, not many tools, software, or systems can really claim that! Because people are involved, all systems can fail or be used incorrectly.
 
+#### So, the file tools solve these arg leak problems, right?
+
+There are tools in the toolbox that use files instead of args. These tools also make syscalls that can leak information, however the more likely attack vector here is access to the disk itself.
+
+The file reads also leak data in syscalls:
+
+```
+lseek(3, 0, SEEK_CUR)                   = 0
+read(3, "dang\n", 8)                    = 5
+read(3, "", 3)    
+```
+
+That said, file processing is useful for some things, so we can use the file tool instead of args if leaking args is an issue, or if we just want to work on files!
+
+Using files is slower performance, and creates more IO activity that can be avoided by working entirely with arguments.
+
+#### But what about STDIN piping?
+
+As of now, the dwarven-toolbox does not allow STDIN piping normally, without the aid of xargs etc. 
+
+But STDIN piping doesn't save us from syscall leakage either:
+
+```
+read(3, "dang\n", 131072)               = 5
+write(1, "dang\n", 5)                   = 5
+read(3, "", 131072)                     = 0
+```
+
+We have x2 the risk with STDIN on syscall leakage because we have two different syscalls that leak the data.
+
+Leaking data at some level is more than likely going to happen. It is about how we deal with it, what our overall controls are, and how the overall security of the system is designed.
 
