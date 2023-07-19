@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 
 [[ bin ]]
@@ -226,6 +226,14 @@ path = "src/makerune.rs"
 [[ bin ]]
 name = "readrune"
 path = "src/readrune.rs"
+
+[[ bin ]]
+name = "chiselon"
+path = "src/chiselon.rs"
+
+[[ bin ]]
+name = "chiseloff"
+path = "src/chiseloff.rs"
 
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
