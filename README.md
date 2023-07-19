@@ -65,6 +65,8 @@ File tools:
 - makesigil - write an ed25519 keypair as binary to a file
 - makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
 - readrune - validate a detached ed25519 signature for a file
+- chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, file input, ciphertext to STDOUT
+- chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, file input, plaintext to STDOUT
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -73,6 +75,7 @@ If that is a concern, we can use them indirectly in some cases, moving the sensi
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for the hammers!
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
+Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
@@ -554,6 +557,10 @@ Tis example shows that processing files can be done even with the argument tools
 Since we can hit a maximum length of CLI arguments, this could be further adjusted to chunk larger files so that they can be processed. Or instead, just rewritten
 in Rust, referencing the dwarven-toolbox, and then expanding the new impelementation to read and write files, etc. Rapid prototyping is another use for the dwarven-toolbox!
 
+This script in BASH using the utilities was the prototype for `chiselon` and `chiseloff` file utilties. Those utilities don't have the adjustable nature
+and the integer math tricks, but does do the XChaCha20Poly1305 via PBKDF2, working with files instead of arguments, and very quickly considering it does 2100 rounds in the PBKDF2. 
+
+
 ### Aren't CLI args a bad place for secrets? Yes, args can leak! Let's talk about it.
 
 As mentioned several times, we do have potential process argument leakage, as process arguments are not designed to be hidden from the (GNU/Linux) default operating system. But for that matter, not much truly evades the "root trace view" on the standard linux local system. Even rage (age) has different types of leakage, such as from the password in the write syscall. And gpg can leak passphrases to the local system as well from arguments or read syscalls. But process args are less protected than syscall trace exposures in default GNU/linux because non-root users can theoretically detect the process args more often than process syscall tracing. In short, trying to hide from root-level tracing in linux is a lost game, but we can take measures against process argument leakage. We see many times that "EDR" and security systems will trace all executions and forward trace data off to a centralized logging system, which may contain exposed data!
@@ -595,6 +602,8 @@ read(3, "dang\n", 131072)               = 5
 write(1, "dang\n", 5)                   = 5
 read(3, "", 131072)                     = 0
 ```
+STDIN piping is the GNU coreutils standard approach it seems, so we'll do something different with dwarven-toolbox and embrace arguments or use files instead.
+STDIN piping has less leakage than arguments,  because "ps" process data is more accessible than syscall trace data. Lower privileged users can access process data by default in GNU/linux, including the arguments.
 
 We have x2 the risk with STDIN on syscall leakage because we have two different syscalls that leak the data.
 
