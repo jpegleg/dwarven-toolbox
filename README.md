@@ -65,8 +65,8 @@ File tools:
 - makesigil - write an ed25519 keypair as binary to a file
 - makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
 - readrune - validate a detached ed25519 signature for a file
-- chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, file input, ciphertext to STDOUT
-- chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, file input, plaintext to STDOUT
+- chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, UTF-8 file input, ciphertext to STDOUT
+- chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, custom hex file input, plaintext to STDOUT
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -609,3 +609,24 @@ We have x2 the risk with STDIN on syscall leakage because we have two different 
 
 Leaking data at some level is more than likely going to happen. It is about how we deal with it, what our overall controls are, and how the overall security of the system is designed.
 
+
+## chisel file tools
+
+When using the `chiselon` and `chiseloff` tools, newlines will break the decryption because the entire file is read. So when writing the ciphertext files, take care to not let newlines in.
+
+```
+$ chiselon text.txt ~/.tmp/weekly.select 000000000000tank.985G.b | tr -d '\n' > text.enc
+```
+
+The ciphertext has mixed capitalization in the hex! This is because the NONCE (first 24 bytes) is upper hex, and the rest of the text is lower hex.
+When `chiseloff` reads these values, they are processed independently within the functionality.
+
+PBKDF2 is not ideal in some ways, however we are not using it for password hash storage, which is the context where PBKDF2 is good but not as good as Argon2.
+But in `chiselon` and `chiseloff`, PBKDF2 is used for permutation of key material at time of encryption and decryption and is not involved in storage at all.
+PBKDF2 used in this way is more like the HKDF, approach for ephemeral optimization of byte distribution in key material.
+
+The user supplied salt is an interesting choice in these tools. Having the salt in an argument like that is like adding a leaky password multiplier that still adds overall benefit, even if leaked. The salt in this case is not used in the encryption itself, but the PBKDF2 of the key material. So it's security isn't important to the overall security. But the fact that it does exist increases the security. Just don't forget your salt values! You need them to decrypt, and they are not in the output or in any file by default.
+
+When scripting with the chisel tools, some fun can be had with the salts being results of other permutations, etc.
+
+I would not recommend the chisel tools for large files, however small and medium files work great. The max size in this case is not known, but first tests showed that 40MB was still working great, but 96 MB was starting to cause failures. Whatever supplies the input to the chisels will need to judge how much to put in at once. Something like 48MB may be a reasonable max size for the `chiselon` and `chiseloff` files. I tested with a 1GB file and it got the emulator OOM killed. I tested it with a 96MB byte file that had a decoding error, so something started to fail on my test machine at that point and larger. This of course could be solved by streaming the data instead of reading and processing all of it, but that is what the chisel does. The intent is for encrypting config files and secrets on the disk, etc.
