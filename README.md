@@ -612,6 +612,8 @@ Leaking data at some level is more than likely going to happen. It is about how 
 
 ## chisel file tools
 
+<b>These tools work with text (UTF-8) files only! Binary files will encrypt, but refuse to decrypt as the default decryption parses plaintext to UTF-8.</b>
+
 When using the `chiselon` and `chiseloff` tools, newlines will break the decryption because the entire file is read. So when writing the ciphertext files, take care to not let newlines in.
 
 ```
