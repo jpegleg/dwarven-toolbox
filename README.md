@@ -77,7 +77,7 @@ If that is a concern, we can use them indirectly in some cases, moving the sensi
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for the hammers!
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
-Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well.
+Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
@@ -633,7 +633,9 @@ The user supplied salt is an interesting choice in these tools. Having the salt 
 
 When scripting with the chisel tools, some fun can be had with the salts being results of other permutations, etc.
 
-I would not recommend the chisel tools for large files, however small and medium files work great. The max size in this case is not known, but first tests showed that 40MB was still working great, but 96 MB was starting to cause failures. Whatever supplies the input to the chisels will need to judge how much to put in at once. Something like 48MB may be a reasonable max size for the `chiselon` and `chiseloff` files. I tested with a 1GB file and it got the emulator OOM killed. I tested it with a 96MB byte file that had a decoding error, so something started to fail on my test machine at that point and larger. This of course could be solved by streaming the data instead of reading and processing all of it, but that is what the chisel does. The intent is for encrypting config files and secrets on the disk, etc.
+I would not recommend the chisel tools for large files because the file is loaded into memory entirely with the chisels, however small and medium files work great. 
+
+Whatever supplies the input to the chisels will need to judge how much to put in at once. Something like 48MB may be a reasonable max size for the `chiselon` and `chiseloff` files. I tested with a 1GB file and it got the emulator OOM killed. The intent is for encrypting UTF-8 (text) config files and secrets on the disk, etc. If binary or larger files are needed, use the forge tools instead.
 
 ## forge file tools
 
