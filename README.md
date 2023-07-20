@@ -654,5 +654,5 @@ The forge tools have file output, so they can safely encrypt and decrypt any typ
 
 The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
 
-The files encrypted by `forgeon` are binary, not hex encoded.
+The files encrypted by `forgeon` and the files decrypted by `forgeoff` are binary, not hex encoded. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
 
