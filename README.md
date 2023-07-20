@@ -643,8 +643,8 @@ The "forge" file tools do not use the PBKDF2 rounds on the key material and inst
 The forge programs work with files that can be larger in size.
 
 ```
-$ forgeon data.txt ~/.keys/forge data.e
-$ forgeoff data.e ~/.keys/forge data.txt 
+$ forgeon data.txt ~/.keys/forge data.e # encrypt to data.e 
+$ forgeoff data.e ~/.keys/forge data.txt # decrypt to data.txt
 $
 
 ```
@@ -654,5 +654,5 @@ The forge tools have file output, so they can safely encrypt and decrypt any typ
 
 The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
 
-The file encrypted by `forgeon` are binary, not hex encoded.
+The files encrypted by `forgeon` are binary, not hex encoded.
 
