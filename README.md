@@ -65,8 +65,10 @@ File tools:
 - makesigil - write an ed25519 keypair as binary to a file
 - makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
 - readrune - validate a detached ed25519 signature for a file
-- chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, UTF-8 file input, ciphertext to STDOUT
+- chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, UTF-8 file input, ciphertext hex to STDOUT
 - chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, custom hex file input, plaintext to STDOUT
+- forgeon - XChaCha20Poly1305 encryption - file input, ciphertext to file output (binary)
+- forgeoff - XChaCha20Poly1305 decryption - file input, input NONCE, plaintext to file output (binary)
 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -632,3 +634,23 @@ The user supplied salt is an interesting choice in these tools. Having the salt 
 When scripting with the chisel tools, some fun can be had with the salts being results of other permutations, etc.
 
 I would not recommend the chisel tools for large files, however small and medium files work great. The max size in this case is not known, but first tests showed that 40MB was still working great, but 96 MB was starting to cause failures. Whatever supplies the input to the chisels will need to judge how much to put in at once. Something like 48MB may be a reasonable max size for the `chiselon` and `chiseloff` files. I tested with a 1GB file and it got the emulator OOM killed. I tested it with a 96MB byte file that had a decoding error, so something started to fail on my test machine at that point and larger. This of course could be solved by streaming the data instead of reading and processing all of it, but that is what the chisel does. The intent is for encrypting config files and secrets on the disk, etc.
+
+## forge file tools
+
+The "forge" file tools do not use the PBKDF2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
+The forge programs work with files that can be larger in size.
+
+```
+$ forgeon data.txt ~/.keys/forge data.e
+$ forgeoff data.e ~/.keys/forge data.txt 
+$
+
+```
+
+The forge tools can also handle non UTF-8 data, which the chisel tools cannot on decrypt by default to protect STDOUT.
+The forge tools have file output, so they can safely encrypt and decrypt any type of file, including binaries, etc.
+
+The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
+
+The file encrypted by `forgeon` are binary, not hex encoded.
+
