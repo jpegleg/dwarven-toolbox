@@ -69,7 +69,9 @@ File tools:
 - chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, custom hex file input, plaintext to STDOUT
 - forgeon - XChaCha20Poly1305 encryption - file input, ciphertext to file output (binary)
 - forgeoff - XChaCha20Poly1305 decryption - file input, plaintext to file output (binary)
-
+- steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
+- steelforgeoff - XChaCha20Poly1305 decryption + Argon2- file input, protected user password input km, plaintext to file output (binary)
+ 
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
 The encryption tools used directly on the CLI expose the key to the local system, like in history files and process lists.
@@ -77,7 +79,7 @@ If that is a concern, we can use them indirectly in some cases, moving the sensi
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remeber to always use new IV and KEY since we are in CBC mode for the hammers!
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
-Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations.
+Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
@@ -611,6 +613,7 @@ We have x2 the risk with STDIN on syscall leakage because we have two different 
 
 Leaking data at some level is more than likely going to happen. It is about how we deal with it, what our overall controls are, and how the overall security of the system is designed.
 
+So how can we optimize user supplied input without args, without piping between commands, and without expoosing plaintext to the disk? Well, there is still a read syscall, but we can use rpassword crate approach to interactively read a password from the user. This is a useful technique when we want to avoid the disk and avoid arg leakage. See the `steelforgeon` and `steelforgeoff` tools for an example which takes the user supplied password, then instead of using it directly, takes those bytes along with a salt and puts them through Argon2, to generate the final key material for the XChaCha20.
 
 ## chisel file tools
 
@@ -639,20 +642,39 @@ Whatever supplies the input to the chisels will need to judge how much to put in
 
 ## forge file tools
 
-The "forge" file tools do not use the PBKDF2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
+If you want to use an interactive password, then the `steelforgeon` and `steelforgeoff` tools are for that. Combining XChaCha20Poly1305 with Argon2, reading
+a user supplied password which is sent in to Argon2 along with a changing salt to create the key input material to XChaCha20. 
+
+Here is an example of the `steelforgeon` encrypting a key file and then `steelforgeoff` decrypting.
+
+```
+$ steelforgeon ~/.keys/forge ~/.keys/forge.e # encrypt key to forge.e 
+Password: 
+Encryption completed successfully.
+$ steelforgeoff ~/.keys/forge.e ~/.keys/forge # decrypt key from forge.e
+Password:
+Decryption completed successfully.
+```
+This is a strong approach that keeps the key input in the head of the user and away from the system. Encrypting user files this way can make sense.
+
+If you want a fully automated approach with a secret input on the disk, then `forgeon` and `forgeoff` are the tools to use instead.
+
+The "forge" file tools do not use the PBKDF2 or Argon2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
 The forge programs work with files that can be larger in size.
 
 ```
 $ forgeon data.txt ~/.keys/forge data.e # encrypt to data.e 
+Encryption completed successfully.
 $ forgeoff data.e ~/.keys/forge data.txt # decrypt to data.txt
+Decryption completed successfully.
 $
 
 ```
 
-The forge tools can also handle non UTF-8 data, which the chisel tools cannot on decrypt by default to protect STDOUT.
+The forge tools can also handle non-UTF-8 data, which the chisel tools cannot on decrypt by default to protect STDOUT.
 The forge tools have file output, so they can safely encrypt and decrypt any type of file, including binaries, etc.
 
 The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
 
-The files encrypted by `forgeon` and the files decrypted by `forgeoff` are binary, not hex encoded. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
+The files encrypted by the forge tools are binary, not hex encoded. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
 
