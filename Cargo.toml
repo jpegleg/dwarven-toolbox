@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 
 [[ bin ]]
@@ -251,6 +251,14 @@ path = "src/forgeon.rs"
 name = "forgeoff"
 path = "src/forgeoff.rs"
 
+[[ bin ]]
+name = "steelforgeon"
+path = "src/steelforgeon.rs"
+
+[[ bin ]]
+name = "steelforgeoff"
+path = "src/steelforgeoff.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
@@ -275,3 +283,5 @@ hkdf = "0.12"
 pbkdf2 = "0.12.2"
 chrono = "0.4.26"
 users = "0.11.0"
+rpassword = "7.2.0"
+argon2 = "0.5.1"
