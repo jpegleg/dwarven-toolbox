@@ -70,7 +70,7 @@ File tools:
 - forgeon - XChaCha20Poly1305 encryption - file input, ciphertext to file output (binary)
 - forgeoff - XChaCha20Poly1305 decryption - file input, plaintext to file output (binary)
 - steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
-- steelforgeoff - XChaCha20Poly1305 decryption + Argon2- file input, protected user password input km, plaintext to file output (binary)
+- steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
