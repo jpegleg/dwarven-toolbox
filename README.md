@@ -615,6 +615,20 @@ Leaking data at some level is more than likely going to happen. It is about how 
 
 So how can we optimize user supplied input without args, without piping between commands, and without expoosing plaintext to the disk? Well, there is still a read syscall, but we can use rpassword crate approach to interactively read a password from the user. This is a useful technique when we want to avoid the disk and avoid arg leakage. See the `steelforgeon` and `steelforgeoff` tools for an example which takes the user supplied password, then instead of using it directly, takes those bytes along with a salt and puts them through Argon2, to generate the final key material for the XChaCha20.
 
+But as I mentioned, that still leaks a read syscall (which is hard to avoid). Most software leaks at least a read. Age and gpg have at least as much leakage.
+
+```
+read(4, "dang\n", 8192)                 = 5
+```
+
+But the interactive read does prevent arg leak, so it is useful for that reason. It also theoretically avoids storing the secret on disk fully,
+although one could pipe into an "expect" and to automate the interactive prompt too.
+
+So don't let unauthorized people on the system in the first place, and none of these leaks are an issue :)
+And then further, if unauthorized people/things get in the system, args are potentially leaked, but they will typically need some more permissions to get a trace for syscall leakage.
+Most of the time that means root or the same user as the process at least. So if you do let unauthorized people in, don't let them be root.
+
+
 ## chisel file tools
 
 <b>These tools work with text (UTF-8) files only! Binary files will encrypt, but refuse to decrypt as the default decryption parses plaintext to UTF-8.</b>
