@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.5"
+version = "0.3.6"
 edition = "2021"
 
 [[ bin ]]
@@ -259,6 +259,18 @@ path = "src/hexon.rs"
 name = "hexoff"
 path = "src/hexoff.rs"
 
+[[ bin ]]
+name = "clean"
+path = "src/clean.rs"
+
+[[ bin ]]
+name = "toggle"
+path = "src/toggle.rs"
+
+[[ bin ]]
+name = "pack"
+path = "src/pack.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
@@ -285,3 +297,4 @@ chrono = "0.4.26"
 users = "0.11.0"
 rpassword = "7.2.0"
 argon2 = "0.5.1"
+atty = "0.2"
