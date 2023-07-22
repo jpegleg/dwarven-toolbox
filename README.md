@@ -73,9 +73,9 @@ File tools:
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
-- clean - remove newlines and returns from file or STDIN, output to file (binary)
-- toggle - flip bits in a file (binary)
-- pack - gzip compress or decompress (inflate) a file (binary)
+- clean - remove newlines and returns from file or STDIN, output to file (binary), inplace overwrite
+- toggle - flip bits in a file (binary), inplace overwrite
+- pack - gzip compress or decompress (inflate) a file (binary), inplace overwrite
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -260,6 +260,15 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Utf8Erro
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 This is a huge blessing during brutefoce/batch research tasks attempting to extract plaintext, because success will have a good exit code!
+
+We might find that malware flips bits of files in a weak attempt to hide or obscure. We can flip the bits of a file with the `toggle` tool.
+
+```
+$ toggle data.bin
+Bits flipped and written to file: data.bin
+```
+
+Toggle overwrites the original file with the flipped version. We can flip it back to the way it was by running the program again.
 
 #### Detailed reporting with review and inspect
 
@@ -506,6 +515,24 @@ We might also find forensic/IR use for `unbox`, such as when malware uses gzip c
 
 There are also the `zbox` and `zunbox` tools, which are the same style but use zlib instead of gzip.
 
+### Compression and decompression of files
+
+The `pack` tool does both gzip compression and decompression on files. It works in chunks so it can process large files, including binary. Pack will write out to a temporary file and then move the temporary file over the original.
+
+```
+$ pack mydata.txt
+Data compressed and written to file: mydata.txt
+```
+
+Note how `pack` does not change the file extension at all and overwrites the original target.
+
+To decompress (inflate), we'll pass the -u argument:
+
+```
+$ pack -u mydata.txt
+Data decompressed and written to file: mydata.txt
+```
+
 
 # Encryption script example
 
@@ -643,10 +670,10 @@ Most of the time that means root or the same user as the process at least. So if
 
 <b>These tools work with text (UTF-8) files only! Binary files will encrypt, but refuse to decrypt as the default decryption parses plaintext to UTF-8.</b>
 
-When using the `chiselon` and `chiseloff` tools, newlines will break the decryption because the entire file is read. So when writing the ciphertext files, take care to not let newlines in.
+When using the `chiselon` and `chiseloff` tools, newlines will break the decryption because the entire file is read. So when writing the ciphertext files, take care to not let newlines in. While we could use `tr -d '\n' > text.enc` here, we also have a tool for that in the toolbox called `clean`. Clean takes either piped data or processes files in place, writing out to the path specified.
 
 ```
-$ chiselon text.txt ~/.tmp/weekly.select 000000000000tank.985G.b | tr -d '\n' > text.enc
+$ chiselon text.txt ~/.tmp/weekly.select 000000000000tank.985G.b | clean text.enc
 ```
 
 The ciphertext has mixed capitalization in the hex! This is because the NONCE (first 24 bytes) is upper hex, and the rest of the text is lower hex.
