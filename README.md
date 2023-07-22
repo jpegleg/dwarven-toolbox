@@ -242,6 +242,14 @@ The `hexon` and `hexoff` tools do hex encoding and decoding of files (binary). I
 
 The `hexon` and `hexoff` tools read and write files in chunks so they can process files larger than the available RAM.
 
+If we don't use `hexon` to create the hex file, we might have extra newlines present in the file. To ensure no newlines or returns added in the file we can `clean` the file first, as `hexoff` will refuse to process newlines or anything that isn't hex.
+
+```
+$ vim something.hex
+$ clean something.hex
+$ hexoff something.hex something.bin
+```
+
 #### Forensic and research power!
 
 There are real situations when reverse engineering, researching, and performing ad-hoc operations where we may need to do some quick data butchery. The dwarven-toolbox is built to assist with such tasks. 
@@ -260,6 +268,10 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Utf8Erro
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 This is a huge blessing during brutefoce/batch research tasks attempting to extract plaintext, because success will have a good exit code!
+
+If we do want to output non-UTF8 on the decode, then we can use the file tool hexoff which will write out decoded binary to a file.
+
+There are many manipulation techniques, but some of the most common are XOR, encoding, and flipping bits.
 
 We might find that malware flips bits of files in a weak attempt to hide or obscure. We can flip the bits of a file with the `toggle` tool.
 
