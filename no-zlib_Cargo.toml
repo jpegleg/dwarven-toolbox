@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.6"
+version = "0.3.7"
 edition = "2021"
 
 [[ bin ]]
@@ -270,6 +270,18 @@ path = "src/toggle.rs"
 [[ bin ]]
 name = "pack"
 path = "src/pack.rs"
+
+[[ bin ]]
+name = "armor"
+path = "src/armor.rs"
+
+[[ bin ]]
+name = "shield"
+path = "src/shield.rs"
+
+[[ bin ]]
+name = "hex"
+path = "src/hex.rs"
 
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
