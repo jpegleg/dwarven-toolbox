@@ -73,6 +73,9 @@ File tools:
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
+- clean - remove newlines and returns from file or STDIN, output to file (binary)
+- toggle - flip bits in a file (binary)
+- pack - gzip compress or decompress (inflate) a file (binary)
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
