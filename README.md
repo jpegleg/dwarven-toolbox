@@ -71,6 +71,8 @@ File tools:
 - forgeoff - XChaCha20Poly1305 decryption - file input, plaintext to file output (binary)
 - steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
+- hexon - hex encode a file (binary) and write to a new hex file
+- hexoff - hex decode a hex file and write to a new file (binary)
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -230,6 +232,9 @@ echo $r3
 Also note how we check to see if the hex is odd length before performing the bitshift. The hex output we use in dwarven-toolbox is raw, meaning that odd length values can occur. If we try to decode an odd length hex value, we'll get an error. The dwarven-toolbox utilties do not try to compensate for this, it is up to the higher level script or implementation to manage inputs in this way.
 
 To reverse this example permutation, we would perform an XOR against the same key, hex decode, shift right, then XOR that result against the key, and then hex decode.
+
+
+The `hexon` and `hexoff` tools do hex encoding and decoding of files (binary). In this way, `hexoff` can perform the "hex compiler" trick that xxd can do, something most other tools lack as they refuse to write the binary output. The `hexoff` program can safely write the binary output because it writes it to a file, there is no risk of non-UTF8 to STDOUT. 
 
 
 #### Forensic and research power!
