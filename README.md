@@ -233,9 +233,11 @@ Also note how we check to see if the hex is odd length before performing the bit
 
 To reverse this example permutation, we would perform an XOR against the same key, hex decode, shift right, then XOR that result against the key, and then hex decode.
 
+#### Hex to non-UTF8 (binary)
 
 The `hexon` and `hexoff` tools do hex encoding and decoding of files (binary). In this way, `hexoff` can perform the "hex compiler" trick that xxd can do, something most other tools lack as they refuse to write the binary output. The `hexoff` program can safely write the binary output because it writes it to a file, there is no risk of non-UTF8 to STDOUT. 
 
+The `hexon` and `hexoff` tools read and write files in chunks so they can process files larger than the available RAM.
 
 #### Forensic and research power!
 
