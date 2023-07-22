@@ -76,6 +76,9 @@ File tools:
 - clean - remove newlines and returns from file or STDIN, output to file (binary), inplace overwrite
 - toggle - flip bits in a file (binary), inplace overwrite
 - pack - gzip compress or decompress (inflate) a file (binary), inplace overwrite
+- hex - hex encode and decode file (binary), inplace overwrite
+- shield - base58 encode and decode file (binary), inplace overwrite
+- armor - base64 encode and decode file (binary), inpalce overwrite
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -249,6 +252,16 @@ $ vim something.hex
 $ clean something.hex
 $ hexoff something.hex something.bin
 ```
+There is also `hex`, which overwrites the file with the hex version.
+
+```
+$ hex something.bin
+Data encoded in hex and written to file: something.bin
+$ hex -d something.bin
+Hex data decoded and written to file: something.bin
+```
+
+Much like `hex`, we also have `shield` for base58 and `armor` for base64 in-place overwrite file encoding.
 
 #### Forensic and research power!
 
