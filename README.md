@@ -73,12 +73,12 @@ File tools:
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
-- clean - remove newlines and returns from file or STDIN, output to file (binary), inplace overwrite
-- toggle - flip bits in a file (binary), inplace overwrite
-- pack - gzip compress or decompress (inflate) a file (binary), inplace overwrite
-- hex - hex encode and decode file (binary), inplace overwrite
-- shield - base58 encode and decode file (binary), inplace overwrite
-- armor - base64 encode and decode file (binary), inpalce overwrite
+- clean - remove newlines and returns from file or STDIN, output to file (binary), in-place overwrite
+- toggle - flip bits in a file (binary), in-place overwrite
+- pack - gzip compress or decompress (inflate) a file (binary), in-place overwrite
+- hex - hex encode and decode file (binary), in-place overwrite
+- shield - base58 encode and decode file (binary), in-place overwrite
+- armor - base64 encode and decode file (binary), in-palce overwrite
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
