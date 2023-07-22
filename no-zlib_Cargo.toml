@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.4"
+version = "0.3.5"
 edition = "2021"
 
 [[ bin ]]
@@ -250,6 +250,14 @@ path = "src/steelforgeon.rs"
 [[ bin ]]
 name = "steelforgeoff"
 path = "src/steelforgeoff.rs"
+
+[[ bin ]]
+name = "hexon"
+path = "src/hexon.rs"
+
+[[ bin ]]
+name = "hexoff"
+path = "src/hexoff.rs"
 
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
