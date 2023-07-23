@@ -161,6 +161,20 @@ $ cargo build --release --bin forge
 $ sudo cp target/release/forge /usr/local/bin/forge
 ```
 
+If we want to compile statically linked files, we might instead take an approach with docker. <b>musl builds do not have universally working UNIX timestamps, so `review` and `chk` will panic if compiled this way currently! `thread 'main' panicked at 'Failed to get created timestamp.: Error { kind: Unsupported, message: "creation time is not available on this platform currently" }', src/review.rs:54:68
+`</b>
+
+```
+$ docker run -v $PWD:/volume --rm -t clux/muslrust:stable cargo build --release --all
+...
+$ find  target/x86_64-unknown-linux-musl/release/ -type f | grep -v ".d\|.json\|.fingerprint\|.lock" | while read line; do cp $line /usr/local/bin/ ; done
+```
+
+This example above doesn't use the README.md to choose which files to install, instead uses find within the release directory.
+
+More installation and packaging options are coming soon! Stay tuned.
+
+
 ## Usage 
 
 We can compile each target: `cargo build --release all` and then install the resulting target/release/ binaries to /usr/local/bin/ 
@@ -610,7 +624,7 @@ To decompress (inflate), we'll pass the -u argument:
 $ pack -u mydata.txt
 Data decompressed and written to file: mydata.txt
 ```
-
+The `zpack` tool is the same as `pack` except that it uses zlib instead of gzip compression library.
 
 # Encryption script example
 
@@ -802,7 +816,6 @@ This is a strong approach that keeps the key input in the head of the user and a
 If you want a fully automated approach with a secret input on the disk, then `forgeon` and `forgeoff` are the tools to use instead.
 
 The `forgeon` and `forgeoff` file tools do not use the PBKDF2 or Argon2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
-The forge programs work with files that can be larger in size.
 
 ```
 $ forgeon data.txt ~/.keys/forge data.e # encrypt to data.e 
@@ -815,10 +828,11 @@ $
 
 The forge tools can also handle non-UTF-8 data, which the chisel tools cannot on decrypt by default to protect STDOUT.
 The forge tools have file output, so they can safely encrypt and decrypt any type of file, including binaries, etc.
+The forge tools are designed to process larger files. They are able to do this more effectively because of in-place AEAD processing, which does not need alloc or std.
 
 The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
 
-The files encrypted by the forge tools are binary, not hex encoded. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
+The files encrypted by the forge tools are binary, not hex encoded etc. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
 
 Here is an example base64 encoding the ciphertext file.
 
