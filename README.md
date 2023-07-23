@@ -128,6 +128,37 @@ Compile without zlib (and skip the zlib utilities) example:
 $ cp no-zlib_Cargo.toml Cargo.toml
 $ cargo build --release --all
 ```
+Before doing a git pull after copying over the Cargo.toml, move the modificatino out of the way:
+```
+$ mv Cargo.toml previous.toml
+$ git pull
+```
+If you want to use the for loop from the read me, but exclude some tools, we can edit the README.md first.
+
+```
+$ vim README.md # comment out the "- forge" or any tool summary line starting in "-"
+$ for x in $(grep ^- README.md | grep -v 84 | cut -d'-' -f2); do
+    echo "Installing $x"
+    sudo cp target/release/$x /usr/local/bin/ 
+done
+```
+Alternatively, add more exclusions in the grep! Here is an example to exclude the base58 programs:
+
+```
+$ for x in $(grep ^- README.md | grep -v "84\|shield" | cut -d'-' -f2); do
+    echo "Installing $x"
+    sudo cp target/release/$x /usr/local/bin/ 
+done
+```
+
+If we just want one tool, perhaps a modified version of `forge` for example:
+
+```
+$ vim src/forge.rs # Do your stuff, write the change.
+$ cargo build --release --bin forge
+...
+$ sudo cp target/release/forge /usr/local/bin/forge
+```
 
 ## Usage 
 
