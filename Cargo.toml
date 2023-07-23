@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.8"
+version = "0.3.9"
 edition = "2021"
 
 [[ bin ]]
@@ -222,6 +222,10 @@ path = "src/inspect.rs"
 [[ bin ]]
 name = "review"
 path = "src/review.rs"
+
+[[ bin ]]
+name = "chk"
+path = "src/chk.rs"
 
 [[ bin ]]
 name = "makesigil"
