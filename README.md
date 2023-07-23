@@ -751,7 +751,7 @@ This is a strong approach that keeps the key input in the head of the user and a
 
 If you want a fully automated approach with a secret input on the disk, then `forgeon` and `forgeoff` are the tools to use instead.
 
-The "forge" file tools do not use the PBKDF2 or Argon2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
+The `forgeon` and `forgeoff` file tools do not use the PBKDF2 or Argon2 rounds on the key material and instead use a BLAKE3 hash of the input key material to create the secret key used.
 The forge programs work with files that can be larger in size.
 
 ```
@@ -770,3 +770,10 @@ The choice to use the sigil files from `makesigil` is for interoperability with 
 
 The files encrypted by the forge tools are binary, not hex encoded. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
 
+Here is an example base64 encoding the ciphertext file.
+
+```
+$ armor data.e
+Data encoded in Base64 and written to file: data.e
+$
+```
