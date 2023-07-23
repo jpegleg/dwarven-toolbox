@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.3.7"
+version = "0.3.8"
 edition = "2021"
 
 [[ bin ]]
@@ -280,6 +280,10 @@ name = "pack"
 path = "src/pack.rs"
 
 [[ bin ]]
+name = "zpack"
+path = "src/zpack.rs"
+
+[[ bin ]]
 name = "armor"
 path = "src/armor.rs"
 
@@ -290,6 +294,10 @@ path = "src/shield.rs"
 [[ bin ]]
 name = "hex"
 path = "src/hex.rs"
+
+[[ bin ]]
+name = "forge"
+path = "src/forge.rs"
 
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
