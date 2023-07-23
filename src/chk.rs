@@ -34,7 +34,7 @@ fn review(file_path: &str) {
     let mut hasher = blake3::Hasher::new();
     hasher.update(&bytes);
     let blake3 = hasher.finalize();
-    println!("  \"BLAKE3\": \"{}\",", blake3);
+    println!("  \"BLAKE3\": \"{}\"", blake3);
     println!("  }}");
     println!("}}");
 }
