@@ -90,10 +90,11 @@ If that is a concern, we can use them indirectly in some cases, moving the sensi
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remember to always use new IV and KEY since we are in CBC mode for the hammers!
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
-Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input.
+Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tool `forge` does both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
-The utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
+
+All of these utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
 
 <b>The toolbox has two types of binaries, those that work with files and those that work with args.</b>
 
