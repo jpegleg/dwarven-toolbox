@@ -216,6 +216,10 @@ name = "review"
 path = "src/review.rs"
 
 [[ bin ]]
+name = "chk"
+path = "src/chk.rs"
+
+[[ bin ]]
 name = "makesigil"
 path = "src/makesigil.rs"
 
