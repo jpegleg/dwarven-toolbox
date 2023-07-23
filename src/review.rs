@@ -27,7 +27,7 @@ fn review(file_path: &str) {
     let num_bits = num_bytes * 8;
     let byte_distribution = bytes.iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
     
-  let file_is_open = match OpenOptions::new()
+    let file_is_open = match OpenOptions::new()
         .read(true)
         .write(true)
         .open(file_path)
