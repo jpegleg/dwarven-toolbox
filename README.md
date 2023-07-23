@@ -62,6 +62,7 @@ Argument tools:
 File tools:
 - inspect - print each byte of a file, along with the total bytes and bits read
 - review - print detailed UNIX file data, including permissions, ownership, hashes, if the file is currently open, and more, as JSON
+- chk - the condensed version of "review": report time, bytes, timestamps, and BLAKE3, as JSON
 - makesigil - write an ed25519 keypair as binary to a file
 - makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
 - readrune - validate a detached ed25519 signature for a file
@@ -375,6 +376,23 @@ The byte distribution is a float between 0 and 1 or NaN. The result is 1 if ever
 
 The "open" check is to see if the file is currently open by another process. The `review` tool output is JSON for the file object, so it can be utilized by applications more easily.
 
+The tool `chk` is like a condensed version of `review`, which is more a more focused output, leaner computations, and can handle larger files and output faster than `review` can because of that.
+
+```
+$  chk story.txt
+{
+"story.txt": {
+  "Report time": "2023-07-23 03:13:51.190472088 UTC",
+  "Number of bytes": "18",
+  "Created timestamp (UTC)": "2023-07-23 03:13:48.704125247 UTC",
+  "Modified timestamp (UTC)": "2023-07-23 03:13:48.704125247 UTC",
+  "Accessed timestamp (UTC)": "2023-07-23 03:13:48.704125247 UTC",
+  "Changed timestamp (UTC)": "2023-07-23 03:13:48.704125247 UTC",
+  "BLAKE3": "a7fa0cfa9587aabd7cfb6506665c2f2475543b3c60da30d0e4e3c9ceb4e76dd7"
+  }
+}
+$
+```
 
 #### Maths!
 
