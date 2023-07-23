@@ -71,14 +71,17 @@ File tools:
 - forgeoff - XChaCha20Poly1305 decryption - file input, plaintext to file output (binary)
 - steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
+- forge - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, file is overwritten (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
 - clean - remove newlines and returns from file or STDIN, output to file (binary), file overwrite
 - toggle - flip bits in a file (binary), file overwrite
 - pack - gzip compress or decompress (inflate) a file (binary), file overwrite
+- zpack - zlib compress or decompress (inflate) a file (binary), file overwrite
 - hex - hex encode and decode file (binary), file overwrite
 - shield - base58 encode and decode file (binary), file overwrite
 - armor - base64 encode and decode file (binary), file overwrite
+
  
 <b>Some of the included utilities do not ensure privacy, security, or quality. Use for (educational|research) purposes unless you really know what you are doing.</b>
 
@@ -718,7 +721,7 @@ Whatever supplies the input to the chisels will need to judge how much to put in
 
 ## forge file tools
 
-If you want to use an interactive password, then the `steelforgeon` and `steelforgeoff` tools are for that. Combining XChaCha20Poly1305 with Argon2, reading
+If you want to use an interactive password, then the either `forge` or the `steelforgeon` and `steelforgeoff` tools are for that. Combining XChaCha20Poly1305 with Argon2, reading
 a user supplied password which is sent in to Argon2 along with a changing salt to create the key input material to XChaCha20. 
 
 Here is an example of the `steelforgeon` encrypting a key file and then `steelforgeoff` decrypting.
@@ -731,6 +734,19 @@ $ steelforgeoff ~/.keys/forge.e ~/.keys/forge # decrypt key from forge.e
 Password:
 Decryption completed successfully.
 ```
+
+And here is an example `forge` for both encryption and decryption, overwriting the original file.
+
+```
+$ forge data.txt
+Password: 
+Data encrypted and written to file: data.txt
+$ forge -d data.txt
+Password: 
+Data decrypted and written to file: data.txt
+$ 
+```
+
 This is a strong approach that keeps the key input in the head of the user and away from the system. Encrypting user files this way can make sense.
 
 If you want a fully automated approach with a secret input on the disk, then `forgeon` and `forgeoff` are the tools to use instead.
