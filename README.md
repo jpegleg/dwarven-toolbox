@@ -71,7 +71,7 @@ File tools:
 - forgeoff - XChaCha20Poly1305 decryption - file input, plaintext to file output (binary)
 - steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
-- forge - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, file is overwritten (binary)
+- forge - XChaCha20Poly1305 encryption and decryption + Argon2 - file input, protected user password input km, file is overwritten (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
 - clean - remove newlines and returns from file or STDIN, output to file (binary), file overwrite
