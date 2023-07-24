@@ -8,7 +8,7 @@ use chacha20poly1305::{
 };
 use chacha20poly1305::aead::generic_array::GenericArray;
 
-mod keyhash;
+mod hashkey;
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
