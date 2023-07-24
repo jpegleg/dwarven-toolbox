@@ -30,19 +30,13 @@ mod tests {
        use rand::Rng;
        use rand::SeedableRng;
        use rand::rngs::StdRng;
-       let mut key_file = File::open("keytest1.bin").expect("Failed to open the keytest.bin file.");
-       let mut key_data = Vec::new();
-       let _ = key_file.read_to_end(&mut key_data);
-       let mut rng = StdRng::from_entropy();
-       let mut nonce = [0u8; 24];
-       rng.fill(&mut nonce);
-       let bnon = hex::encode(&nonce);
-       let binding = "00000000".to_owned() + &bnon;
+       let key_data: Vec<u8> = [55, 99, 53, 102, 51, 48, 52, 50, 55, 97, 50, 49, 53, 49, 50, 52, 52, 57, 50, 101, 53, 53, 51, 55, 51, 102, 53, 51, 54, 56, 53, 101, 53, 57, 54, 51, 50, 53, 54, 52, 55, 101, 53, 51, 50, 102, 53, 100, 51, 55, 55, 48, 52, 50, 50, 56, 50, 48, 50, 53, 55, 101, 50, 49].to_vec();
+       let binding = "00000000ffff8888ffff".to_owned();
        let salt = binding.as_bytes();
        use argon2::Argon2;
        let mut okm = [0u8; 32];
        let _ = Argon2::default().hash_password_into(&key_data, salt, &mut okm);
-       assert_eq!(okm.is_empty(), false);
+       assert_eq!(hex::encode(okm), "13e247a3039e9499072cb57dfb4ad9283e5ffa7f8306b8945d3d8e8b2f235751");
     }
 
    #[allow(unused_imports)]
@@ -54,14 +48,12 @@ mod tests {
        use rand::Rng;
        use rand::SeedableRng;
        use rand::rngs::StdRng;
-       let mut key_file = File::open("keytest1.bin").expect("Failed to open the keytest.bin file.");
-       let mut key_data = Vec::new();
-       let _ = key_file.read_to_end(&mut key_data);
+       let key_data: Vec<u8> = [55, 99, 53, 102, 51, 48, 52, 50, 55, 97, 50, 49, 53, 49, 50, 52, 52, 57, 50, 101, 53, 53, 51, 55, 51, 102, 53, 51, 54, 56, 53, 101, 53, 57, 54, 51, 50, 53, 54, 52, 55, 101, 53, 51, 50, 102, 53, 100, 51, 55, 55, 48, 52, 50, 50, 56, 50, 48, 50, 53, 55, 101, 50, 49].to_vec();
        use blake3::Hasher;
        let mut hasher = Hasher::new();
        hasher.update(&key_data);
        let hashed_key = hasher.finalize();
        let hk = hex::encode(hashed_key.as_bytes());
-       assert_eq!(hk, "445816183a03a9249ad0064609daf14f8a02afe378713bb6c02fd801254be5f5");
+       assert_eq!(hk, "ea534ab07986b9e1c52f9b2d5d811c4dcb368589c03fa9dfe9844ae78cfcd0a3");
     }
 }
