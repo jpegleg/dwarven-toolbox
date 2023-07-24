@@ -13,11 +13,7 @@ use rand::rngs::StdRng;
 use hex;
 use uuid::Uuid;
 
-fn hash_key(password: &[u8], salt: &[u8]) -> [u8; 32] {
-    let mut okm = [0u8; 32];
-    let _ = Argon2::default().hash_password_into(password, salt, &mut okm);
-    okm
-}
+mod keyhash;
 
 fn forge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
     let mut rng = StdRng::from_entropy();
@@ -28,7 +24,7 @@ fn forge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
     let salt = binding.as_bytes();
     let strpassword = rpassword::prompt_password("Password: ")?;
     let password = strpassword.as_bytes();
-    let hashed_key = hash_key(&password, &salt);
+    let hashed_key = hashkey::hash_key(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext = Vec::new();
     let _ = input.read_to_end(&mut ciphertext);
@@ -51,7 +47,7 @@ fn unforge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
     let salt = binding.as_bytes();
     let strpassword = rpassword::prompt_password("Password: ")?;
     let password = strpassword.as_bytes();
-    let hashed_key = hash_key(&password, &salt);
+    let hashed_key = hashkey::hash_key(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     aead.decrypt_in_place_detached(&nonce, &[], &mut plaintext, &tag)
         .expect("Error: Decryption failed.");
