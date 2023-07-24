@@ -13,7 +13,7 @@ use rand::rngs::StdRng;
 use hex;
 use uuid::Uuid;
 
-mod keyhash;
+mod hashkey;
 
 fn forge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
     let mut rng = StdRng::from_entropy();
