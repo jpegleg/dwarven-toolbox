@@ -88,6 +88,14 @@ name = "warhammeroff"
 path = "src/warhammeroff.rs"
 
 [[ bin ]]
+name = "steelhammeron"
+path = "src/steelhammeron.rs"
+
+[[ bin ]]
+name = "steelhammeroff"
+path = "src/steelhammeroff.rs"
+
+[[ bin ]]
 name = "anvil"
 path = "src/anvil.rs"
 
@@ -330,3 +338,4 @@ users = "0.11.0"
 rpassword = "7.2.0"
 argon2 = "0.5.1"
 atty = "0.2"
+aes-gcm-siv = "0.11.1"
