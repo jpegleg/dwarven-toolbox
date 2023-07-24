@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
 use std::io::{self, Read, Write};
-use blake3::Hasher;
 use chacha20poly1305::{
     aead::{AeadInPlace, KeyInit},
     XChaCha20Poly1305,
