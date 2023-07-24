@@ -10,11 +10,7 @@ use chacha20poly1305::{
 };
 use chacha20poly1305::aead::generic_array::GenericArray;
 
-fn hash_key(password: &[u8], salt: &[u8]) -> [u8; 32] {
-    let mut okm = [0u8; 32];
-    let _ = Argon2::default().hash_password_into(password, salt, &mut okm);
-    okm
-}
+mod hashkey;
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -36,7 +32,7 @@ fn main() -> io::Result<()> {
     let salt = binding.as_bytes();
     let strpassword = rpassword::prompt_password("Password: ")?;
     let password = strpassword.as_bytes();
-    let hashed_key = hash_key(&password, &salt);
+    let hashed_key = hashkey::hash_key(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext_file = File::create(ciphertext_file_path)?;
     let mut ciphertext = plaintext.to_vec();
