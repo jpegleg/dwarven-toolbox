@@ -32,7 +32,7 @@ fn main() -> io::Result<()> {
     let salt = binding.as_bytes();
     let strpassword = rpassword::prompt_password("Password: ")?;
     let password = strpassword.as_bytes();
-    let hashed_key = hashkey::hash_key(&password, &salt);
+    let hashed_key = hashkey::a2(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext_file = File::create(ciphertext_file_path)?;
     let mut ciphertext = plaintext.to_vec();
