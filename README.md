@@ -726,7 +726,17 @@ Using files is slower performance, and creates more IO activity that can be avoi
 
 #### But what about STDIN piping?
 
-As of now, the dwarven-toolbox does not allow STDIN piping normally, without the aid of xargs etc. 
+As of now, the dwarven-toolbox does not allow STDIN piping normally, without the aid of xargs etc. The only exception to this currenlty is `clean`, which accepts STDIN piping and
+will write out to the file passed as the first argument.
+
+```
+$ cat somefile.txt | clean somefile.flat
+Newlines and returns removed from piped data and written to file: somefile.flat
+$
+$ clean anotherfile.txt
+Newlines and returns removed from file: anotherfile.txt
+```
+Back to the subject, so does data piping help security? Most coreutils allow data piping, and this is the UNIX way to pipe commands around...
 
 But STDIN piping doesn't save us from syscall leakage either:
 
@@ -742,7 +752,7 @@ We have x2 the risk with STDIN on syscall leakage because we have two different 
 
 Leaking data at some level is more than likely going to happen. It is about how we deal with it, what our overall controls are, and how the overall security of the system is designed.
 
-So how can we optimize user supplied input without args, without piping between commands, and without expoosing plaintext to the disk? Well, there is still a read syscall, but we can use rpassword crate approach to interactively read a password from the user. This is a useful technique when we want to avoid the disk and avoid arg leakage. See the `steelforgeon` and `steelforgeoff` tools for an example which takes the user supplied password, then instead of using it directly, takes those bytes along with a salt and puts them through Argon2, to generate the final key material for the XChaCha20.
+So how can we optimize user supplied input without args, without piping between commands, and without expoosing plaintext to the disk? Well, there is still a read syscall, but we can use rpassword crate approach to interactively read a password from the user. This is a useful technique when we want to avoid the disk and avoid arg leakage. See the `forge`, `steelforgeon`, and `steelforgeoff` tools for an example which takes the user supplied password, then instead of using it directly, takes those bytes along with a salt and puts them through Argon2, to generate the final key material for the XChaCha20.
 
 But as I mentioned, that still leaks a read syscall (which is hard to avoid). Most software leaks at least a read. Age and gpg have at least as much leakage.
 
@@ -760,7 +770,7 @@ Most of the time that means root or the same user as the process at least. So if
 
 ## chisel file tools
 
-<b>These tools work with text (UTF-8) files only! Binary files will encrypt, but refuse to decrypt as the default decryption parses plaintext to UTF-8.</b>
+<b>These chisel tools work with text (UTF-8) files only! Binary files will encrypt, but refuse to decrypt as the default decryption parses plaintext to UTF-8.</b>
 
 When using the `chiselon` and `chiseloff` tools, newlines will break the decryption because the entire file is read. So when writing the ciphertext files, take care to not let newlines in. While we could use `tr -d '\n' > text.enc` here, we also have a tool for that in the toolbox called `clean`. Clean takes either piped data or processes files in place, writing out to the path specified.
 
