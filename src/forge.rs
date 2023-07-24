@@ -23,7 +23,7 @@ fn forge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
     let salt = binding.as_bytes();
     let strpassword = rpassword::prompt_password("Password: ")?;
     let password = strpassword.as_bytes();
-    let hashed_key = hashkey::argon2(&password, &salt);
+    let hashed_key = hashkey::a2(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext = Vec::new();
     let _ = input.read_to_end(&mut ciphertext);
