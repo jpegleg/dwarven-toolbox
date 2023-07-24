@@ -735,6 +735,8 @@ Newlines and returns removed from piped data and written to file: somefile.flat
 $
 $ clean anotherfile.txt
 Newlines and returns removed from file: anotherfile.txt
+$ silver | clean new.key
+Newlines and returns removed from piped data and written to file: new.key
 ```
 Back to the subject, so does data piping help security? Most coreutils allow data piping, and this is the UNIX way to pipe commands around...
 
