@@ -1,6 +1,19 @@
 # dwarven-toolbox 🧰
 
-The dwarven-toolbox is a collection of small and simple programs.
+The dwarven-toolbox is a collection of small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
+
+Priorities for the toolbox:
+- UNIX-based compatibility
+- simple code
+- fast and energy efficient execution
+- careful supply chain (audit in progress)
+- enable CLI usage of modern and strong cryptographic primitives in GNU/Linux and Darwin (MacOS)
+- enable shell scripts to leverage utilities for cryptographic actions without disk usage
+- provide UNIX-based system security education through the README.md and included tools
+- no main.rs (each tool has a .rs file)
+
+Contributing and more information can be found in CONTRIBUTING.md and CODE_OF_CONDUCT.md.
+
 
 ⚠️ Security Warning: Hazmat! This collection contains lower level permutations and abstractions that may not have all of the desirable security properties for a given usage/situation.
 
