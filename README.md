@@ -8,9 +8,6 @@ Priorities for the toolbox:
  simple code
  fast and energy efficient execution
  careful supply chain (audit in progress)
- enable CLI usage of modern and strong cryptographic primitives in GNU/Linux and Darwin (MacOS)
- enable shell scripts to leverage utilities for cryptographic actions without disk usage
- provide UNIX-based system security education through the README.md and included tools
  no main.rs (each tool has a .rs file)
 ```
 Contributing and more information can be found in CONTRIBUTING.md and CODE_OF_CONDUCT.md.
