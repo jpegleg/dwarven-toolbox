@@ -10,12 +10,7 @@ use chacha20poly1305::{
 };
 use chacha20poly1305::aead::generic_array::GenericArray;
 
-fn hash_key(key_data: &[u8]) -> [u8; 32] {
-    let mut hasher = Hasher::new();
-    hasher.update(key_data);
-    let hashed_key = hasher.finalize();
-    *hashed_key.as_bytes()
-}
+mod hashkey;
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -36,7 +31,7 @@ fn main() -> io::Result<()> {
     let mut rng = StdRng::from_entropy();
     let mut nonce = [0u8; 24];
     rng.fill(&mut nonce);
-    let hashed_key = hash_key(&key_data);
+    let hashed_key = hashkey::hash_key(&key_data);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext_file = File::create(ciphertext_file_path)?;
     let mut ciphertext = plaintext.to_vec();
