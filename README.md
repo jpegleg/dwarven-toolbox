@@ -84,6 +84,7 @@ File tools:
 - steelforgeon - XChaCha20Poly1305 encryption + Argon2 - file input, protected user password input km, ciphertext to file output (binary)
 - steelforgeoff - XChaCha20Poly1305 decryption + Argon2 - file input, protected user password input km, plaintext to file output (binary)
 - forge - XChaCha20Poly1305 encryption and decryption + Argon2 - file input, protected user password input km, file is overwritten (binary)
+- ore - XChaCha20Poly1305 encryption and decryption + Argon2 - file input, environment variable key input, file is overwritten (binary)
 - hexon - hex encode a file (binary) and write to a new hex file
 - hexoff - hex decode a hex file and write to a new file (binary)
 - clean - remove newlines and returns from file or STDIN, output to file (binary), file overwrite
@@ -102,7 +103,7 @@ If that is a concern, we can use them indirectly in some cases, moving the sensi
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remember to always use new IV and KEY since we are in CBC mode for the hammers!
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
-Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tool `forge` does both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
+Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tools `ore` and `forge` do both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 
@@ -780,6 +781,11 @@ So don't let unauthorized people on the system in the first place, and none of t
 And then further, if unauthorized people/things get in the system, args are potentially leaked, but they will typically need some more permissions to get a trace for syscall leakage.
 Most of the time that means root or the same user as the process at least. So if you do let unauthorized people in, don't let them be root.
 
+### What about ENV variables?
+
+Environment variables are another place some people will stick secrets. Environment variables also leak in differnt ways. The most obvious is that the user which has the ENV var can print their ENV vars. The less obvious is that systemd also reads all the environment variables. Many different software configurations or debug setups may dump all the environment variables, which then exposes any secrets set there.
+
+In the dwarven-toolbox we have the `ore` tool which uses input key material in an environment variable, so we have this as an option. While there are obvious risks depending on the local system configuration, ENV variables have the advantage of being able to avoid the disk and process arguments. If we do choose to put secrets into environment variables, then we likely want to ensure that the operating system is configured to not expose it unexpectedly, or at least we should be aware of how it can get exposed. In a cloud native context inside a minimized container, environment variables are stronger: there is no systemd, there is not even a shell or debug mechanism, so leakage is small.
 
 ## chisel file tools
 
@@ -862,5 +868,31 @@ Here is an example base64 encoding the ciphertext file.
 ```
 $ armor data.e
 Data encoded in Base64 and written to file: data.e
+$
+```
+## ore file tool
+
+Much like `forge`, `ore` leverages XChaCha20Poly1305 and Aron2, however `ore` is not interactive, nor does it read the input key material from disk. This tool reads an environment variable on the system "DWARF", taking the value along with a salt as the input key material to Argon2. This tool is great for automation approaches. We might choose to expose our input material to the disk or a secret management system so we don't lose it, if that is important to us.
+
+Here we'll set the "DWARF" value to a UUIDv4.
+
+```
+$ export DWARF=$(uidgen)
+$ echo "$DWARF" | clean loader.dwarf
+Newlines and returns removed from piped data and written to file: loader.dwarf
+$
+```
+
+Then to load that key material to the system later:
+
+```
+$ export DWARF=$(cat loader.dwarf)
+```
+
+Using `ore` example:
+
+```
+$ ore somedata.csv
+Data encrypted and written to file: somedata.csv
 $
 ```
