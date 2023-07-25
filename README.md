@@ -7,7 +7,6 @@ Priorities for the toolbox:
  UNIX-based compatibility
  simple code
  fast and energy efficient execution
- careful supply chain (audit in progress)
  no main.rs (each tool has a .rs file)
 ```
 Contributing and more information can be found in CONTRIBUTING.md and CODE_OF_CONDUCT.md.
@@ -40,6 +39,8 @@ Argument tools:
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) 
 - warhammeron - AES-256 CBC encrypt (encrypt strings 127 bytes or less) 
 - warhammeroff - AES-256 CBC decrypt (decrypt string 127 bytes or less)
+- steelhammeron - AES-256 GCM SIV encrypt (encrypt strings 127 bytes or less) with OTK (one time key)
+- steelhammeroff - AES-256 GCM SIV decrypt (decrypt strings 127 bytes or less)
 - mattockon - ChaCha20Poly1305 encrypt (encrypt strings) 
 - mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) 
 - halberdon - XChaCha20Poly1305 encrypt (encrypt strings)  
@@ -872,7 +873,7 @@ $
 ```
 ## ore file tool
 
-Much like `forge`, `ore` leverages XChaCha20Poly1305 and Aron2, however `ore` is not interactive, nor does it read the input key material from disk. This tool reads an environment variable on the system "DWARF", taking the value along with a salt as the input key material to Argon2. This tool is great for automation approaches. We might choose to expose our input material to the disk or a secret management system so we don't lose it, if that is important to us.
+Much like `forge`, `ore` leverages XChaCha20Poly1305 and Aron2, however `ore` is not interactive, nor does it read the input key material from disk. This tool reads an environment variable from "DWARF" in the OS, taking the value along with a salt as the input key material to Argon2. This tool is great for automation approaches. We might choose to expose our input material to the disk or a secret management system so we don't lose it, if that is important to us.
 
 Here we'll set the "DWARF" value to a UUIDv4.
 
