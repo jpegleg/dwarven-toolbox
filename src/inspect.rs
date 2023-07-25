@@ -13,7 +13,7 @@ fn inspect(file_path: &str) {
     let num_bytes = bytes.len();
     let num_bits = num_bytes * 8;
 
-    print!("Byte vector: {:?}\n\n", bytes);
+    print!("Byte vector: {:?}\n", bytes);
     print!("Each byte as hex: ");
     for byte in &bytes {
         print!("{:X} ", byte);
