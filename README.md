@@ -1,6 +1,6 @@
 # dwarven-toolbox 🧰
 
-The dwarven-toolbox is a collection of small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
+The dwarven-toolbox is a collection (monorepo) of 78 small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
 
 ```
 Priorities for the toolbox:
@@ -101,7 +101,7 @@ File tools:
 
 The encryption tools used directly on the CLI expose the key to the local system, like in history files and process lists.
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
-The hammer tools also can only take 127 bytes of data as input to encrypt at a time. Also, remember to always use new IV and KEY since we are in CBC mode for the hammers!
+The hammer tools also can only take 127 bytes of data as input to encrypt at a time.
 
 Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
 Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tools `ore` and `forge` do both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
@@ -110,11 +110,11 @@ The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to l
 
 All of these utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
 
-<b>The toolbox has two types of binaries, those that work with files and those that work with args.</b>
+<b>The toolbox is organized into two types of binaries, those that work with files and those that work with args.</b>
 
 The args tools can use subshell concatenation aka "$(cat mything.txt)" and redirects aka "shielda $(gold) > something.dat" can be used effectively. These tools are designed for working with arguments passed into the programs. Combined with "xargs", we can pipe data into the utilities that way as well.
 
-The file tools read files from the disk and write data to files. Arguments to the file tools are paths aka file names, along with other optional args.
+The file tools read files from the disk and write data to files. Arguments to the file tools are paths aka file names, along with other optional args. The tool `clean` also allows STDIN piping, while the tool `ore` works with a file and an environment variable.
 
 
 ## Installation example
@@ -228,7 +228,7 @@ rage -p -o "$sesh".key.age "$sesh".key &&
 rm "$sesh".key
 ```
 
-The mattock can process much larger chunks per encryption than the hammer, but they both have uses. If the hammer is to be used on larger data, the data can be broken up into smaller pieces and the encryption performed on each chunk, although in those cases the mattock is probably a better choice.
+The mattock can process much larger chunks per encryption than the hammer, but they both have uses. If the hammer is to be used on larger data, the data can be broken up into smaller pieces and the encryption performed on each chunk, although in those cases the mattock is probably a better choice. And if really large, a file tool such as `forgeon` would be better.
 
 The `halberdon` and `halberdoff` are stronger than the `mattockon` and `mattockoff` because the nonce is longer. The XNONCE output from `anvil` is the larger nonce used by XChaCha20Poly1305.
 
