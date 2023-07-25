@@ -299,6 +299,10 @@ path = "src/hex.rs"
 name = "forge"
 path = "src/forge.rs"
 
+[[ bin ]]
+name = "ore"
+path = "src/ore.rs"
+
 [dependencies]
 uuid = { version = "0.4", features = ["serde", "v4"] }
 base64 = "0.21"
