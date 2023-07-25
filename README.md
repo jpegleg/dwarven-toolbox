@@ -365,6 +365,7 @@ Examine files closely with `review` and `inspect` file operation tools.
 ```
 $ echo "down in the earth" > story.txt
 $ inspect story.txt
+Byte vector: [100, 111, 119, 110, 32, 105, 110, 32, 116, 104, 101, 32, 101, 97, 114, 116, 104, 10]
 Each byte as hex: 64 6F 77 6E 20 69 6E 20 74 68 65 20 65 61 72 74 68 A 
 Number of bytes: 18
 Number of bits: 144
