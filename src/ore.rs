@@ -23,7 +23,7 @@ fn orecrypt<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> 
     let salt = binding.as_bytes();
     let strpassword = env::var("DWARF").expect("DWARF env var not set");
     let password = strpassword.as_bytes();
-    let hashed_key = hashkey::hash_key(&password, &salt);
+    let hashed_key = hashkey::a2(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     let mut ciphertext = Vec::new();
     let _ = input.read_to_end(&mut ciphertext);
@@ -46,7 +46,7 @@ fn unorecrypt<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()
     let salt = binding.as_bytes();
     let strpassword = env::var("DWARF").expect("DWARF env var not set");
     let password = strpassword.as_bytes();
-    let hashed_key = hashkey::hash_key(&password, &salt);
+    let hashed_key = hashkey::a2(&password, &salt);
     let aead = XChaCha20Poly1305::new(GenericArray::from_slice(&hashed_key));
     aead.decrypt_in_place_detached(&nonce, &[], &mut plaintext, &tag)
         .expect("Error: Decryption failed.");
