@@ -782,11 +782,14 @@ So don't let unauthorized people on the system in the first place, and none of t
 And then further, if unauthorized people/things get in the system, args are potentially leaked, but they will typically need some more permissions to get a trace for syscall leakage.
 Most of the time that means root or the same user as the process at least. So if you do let unauthorized people in, don't let them be root.
 
-### What about ENV variables?
+### What about environment variables?
 
 Environment variables are another place some people will stick secrets. Environment variables also leak in differnt ways. The most obvious is that the user which has the ENV var can print their ENV vars. The less obvious is that systemd also reads all the environment variables. Many different software configurations or debug setups may dump all the environment variables, which then exposes any secrets set there.
 
-In the dwarven-toolbox we have the `ore` tool which uses input key material in an environment variable, so we have this as an option. While there are obvious risks depending on the local system configuration, ENV variables have the advantage of being able to avoid the disk and process arguments. If we do choose to put secrets into environment variables, then we likely want to ensure that the operating system is configured to not expose it unexpectedly, or at least we should be aware of how it can get exposed. In a cloud native context inside a minimized container, environment variables are stronger: there is no systemd, there is not even a shell or debug mechanism, so leakage is small.
+In the dwarven-toolbox we have the `ore` tool which uses input key material in an environment variable, so we have this as an option. While there are obvious risks depending on the local system configuration, Environment variables have the advantage of being able to avoid the disk and process arguments. If we do choose to put secrets into environment variables, then we likely want to ensure that the operating system is configured to not expose it unexpectedly, or at least we should be aware of how it can get exposed. In a cloud native context inside a minimized container, environment variables are stronger: there is no systemd, there is not even a shell or debug mechanism, so leakage is small... until a tracer or debugger is attached at least. We might have eBPF or kernel based tracing within the containers of a cluster. We might also have debugging tools that may attach to processes and additionally leak information from environment variables. Any type of debug shell will expose the environment variables of at least the given user.
+
+So things leak, local access is local access, which means a lot in a default GNU/Linux system. Systems that properly implement MAC (mandatory access controls) may be able to further limit leakage by blocking access at the kernel level.  
+
 
 ## chisel file tools
 
