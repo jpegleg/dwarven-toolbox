@@ -27,3 +27,18 @@ fn main() {
     println!("Verification: {}", veri);
 
 }
+
+#[test]
+fn test() {
+    let input = "The great and powerful dwarven amulet!";
+    let public = "2Cq1BiSQoYc02poHHiq/J8mJs0JXtFQBsbtid+dDhRQ";
+    let signat = "3D43A341D7813FDC97E439645662C23BF2F4A520E61B54557E9E80A36C190D5C179B4D539D1AF963CCAE8971296619D7E7B502D960D2A9BF5B409118FB19C408";
+    let message: &[u8] = input.as_bytes();
+    let upubkey = base64::engine::general_purpose::STANDARD_NO_PAD.decode(public).unwrap();
+    let pubkey = PublicKey::from_bytes(&upubkey).unwrap();
+    let sigproc = signat.as_bytes();
+    let dehexsign = hex::decode(sigproc).unwrap();
+    let esigna: Signature = Signature::from_bytes(&dehexsign).unwrap();
+    let veri = pubkey.verify(message, &esigna).is_ok();
+    assert_eq!(true, veri);
+}
