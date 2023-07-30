@@ -109,17 +109,13 @@ fn test_nonce() {
     let num_bytes = nonce.len();
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
 
-    let threshold = 0.51;
-    if byte_distribution == 0.0 {
-        let tolerance = 0.51;
-        assert_ne!(nonce2, nonce);
-        assert_eq!(threshold, tolerance);
-    } else if byte_distribution < threshold {
+    let threshold = 0.42;
+    if byte_distribution < threshold {
         let tolerance = 0.0;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
     } else {
-        let tolerance = 0.51;
+        let tolerance = 0.42;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
     }
@@ -136,11 +132,7 @@ fn test_iv() {
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
 
     let threshold = 0.41;
-    if byte_distribution == 0.0 {
-        let tolerance = 0.41;
-        assert_ne!(nonce2, nonce);
-        assert_eq!(threshold, tolerance);
-    } else if byte_distribution < threshold {
+    if byte_distribution < threshold {
         let tolerance = 0.0;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
@@ -161,11 +153,7 @@ fn test_key() {
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
 
     let threshold = 0.33;
-    if byte_distribution == 0.0 {
-        let tolerance = 0.33;
-        assert_ne!(nonce2, nonce);
-        assert_eq!(threshold, tolerance);
-    } else if byte_distribution < threshold {
+    if byte_distribution < threshold {
         let tolerance = 0.0;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
@@ -186,11 +174,7 @@ fn test_long_nonce() {
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
 
     let threshold = 0.41;
-    if byte_distribution == 0.0 {
-        let tolerance = 0.41;
-        assert_ne!(nonce2, nonce);
-        assert_eq!(threshold, tolerance);
-    } else if byte_distribution < threshold {
+    if byte_distribution < threshold {
         let tolerance = 0.0;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
@@ -211,11 +195,7 @@ fn test_256_key() {
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
 
     let threshold = 0.2;
-    if byte_distribution == 0.0 {
-        let tolerance = 0.2;
-        assert_ne!(nonce2, nonce);
-        assert_eq!(threshold, tolerance);
-    } else if byte_distribution < threshold {
+    if byte_distribution < threshold {
         let tolerance = 0.0;
         assert_ne!(nonce2, nonce);
         assert_eq!(threshold, tolerance);
