@@ -27,9 +27,6 @@ fn main() {
         let average = sum / count as f64;
         println!("Average: {:.8}", average);
 
-        let mean = sum / count as f64;
-        println!("Mean: {:.8}", mean);
-
         let median = calculate_median(&mut numbers);
         println!("Median: {:.8}", median);
 
