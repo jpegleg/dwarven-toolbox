@@ -71,7 +71,7 @@ fn genkey() -> String {
     hex_chars
 }
 
-fn genkey256() -> String {
+fn genkey512() -> String {
     let mut rng = StdRng::from_entropy();
     let hex_chars: String = iter::repeat(())
         .map(|()| {
@@ -97,8 +97,8 @@ fn main() {
     println!("KEYor256IV: {}", key);
     let noncex = gennoncex();
     println!("XNONCE: {}", noncex);
-    let key2 = genkey256();
-    println!("256KEY: {}", key2);
+    let key2 = genkey512();
+    println!("512KEY: {}", key2);
 }
 
 #[test]
@@ -187,9 +187,9 @@ fn test_long_nonce() {
 }
 
 #[test]
-fn test_256_key() {
-    let nonce = genkey256();
-    let nonce2 = genkey256();
+fn test_512_key() {
+    let nonce = genkey512();
+    let nonce2 = genkey512();
 
     let num_bytes = nonce.len();
     let byte_distribution = nonce.as_bytes().iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
