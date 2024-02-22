@@ -71,6 +71,7 @@ fn genkey() -> String {
     hex_chars
 }
 
+// the usage of this can be for 256 bit keys (hex decode before use)
 fn genkey512() -> String {
     let mut rng = StdRng::from_entropy();
     let hex_chars: String = iter::repeat(())
