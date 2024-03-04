@@ -35,7 +35,7 @@ Argument tools:
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
 - anvil - generate nonce, iv, and key strings (for the encryption utilities, etc)
-- aegis - generate hex values like anvil, but only output 512 bytes (for encryption utilities, etc)
+- aegis - generate hex values like anvil, but only output 256 random bits as 512 bit hex (for encryption utilities, etc)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) 
 - warhammeron - AES-256 CBC encrypt (encrypt strings 127 bytes or less) 
