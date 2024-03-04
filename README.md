@@ -35,6 +35,7 @@ Argument tools:
 - swordleft - bitshift each byte left by 1, input as hex string
 - swordright - bitshift each byte right by 1, input as hex string
 - anvil - generate nonce, iv, and key strings (for the encryption utilities, etc)
+- aegis - generate hex values like anvil, but only output 512 bytes (for encryption utilities, etc)
 - hammeron - AES-128 CBC encrypt (encrypt strings 127 bytes or less) 
 - hammeroff - AES-128 CBC decrypt (decrypt string 127 bytes or less) 
 - warhammeron - AES-256 CBC encrypt (encrypt strings 127 bytes or less) 
@@ -64,6 +65,7 @@ Argument tools:
 - scale - average, mean, median, softmax, lowest value, highest value, range, and sum
 - flip - reverse a string
 - chop - print a number of bytes from the front of a string
+- shave - print a number of bytes from the end of a string
 - helmet - HKDF
 - greathelmet - PBKDF2
 - rip - count bytes in a string
