@@ -213,7 +213,7 @@ path = "src/chop.rs"
 
 [[ bin ]]
 name = "shave"
-path = "src/shave.rs
+path = "src/shave.rs"
 
 [[ bin ]]
 name = "rip"
