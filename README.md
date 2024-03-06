@@ -118,6 +118,7 @@ The args tools can use subshell concatenation aka "$(cat mything.txt)" and redir
 
 The file tools read files from the disk and write data to files. Arguments to the file tools are paths aka file names, along with other optional args. The tool `clean` also allows STDIN piping, while the tool `ore` works with a file and an environment variable.
 
+<b>See [elvish-pathway](https://github.com/jpegleg/elvish-pathway/) as an example of [Elvish](https://elv.sh/) script using the dwarven-toolbox.</b>
 
 ## Installation example
 
