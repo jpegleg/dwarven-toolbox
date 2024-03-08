@@ -104,10 +104,6 @@ name = "aegis"
 path = "src/aegis.rs"
 
 [[ bin ]]
-name = "aegis"
-path = "src/aegis.rs"
-
-[[ bin ]]
 name = "amuleton"
 path = "src/amuleton.rs"
 
