@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.4.0"
+version = "0.4.2"
 edition = "2021"
 
 [[ bin ]]
@@ -98,6 +98,14 @@ path = "src/steelhammeroff.rs"
 [[ bin ]]
 name = "anvil"
 path = "src/anvil.rs"
+
+[[ bin ]]
+name = "aegis"
+path = "src/aegis.rs"
+
+[[ bin ]]
+name = "aegis"
+path = "src/aegis.rs"
 
 [[ bin ]]
 name = "amuleton"
@@ -198,6 +206,10 @@ path = "src/flip.rs"
 [[ bin ]]
 name = "chop"
 path = "src/chop.rs"
+
+[[ bin ]]
+name = "shave"
+path = "src/shave.rs"
 
 [[ bin ]]
 name = "rip"
