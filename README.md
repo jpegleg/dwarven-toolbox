@@ -613,10 +613,10 @@ We can use `box` and `unbox` within our other programs to shrink some large vari
 
 ```
 bigpsout="$(ps auxwww)"
-gpsout=$(box "$BIGSTUFFS")
+gpsout=$(box "$bigpsout")
 unset bigpsout # empty the original
 # some time later when we need to inflate the data again
-obigpsout=$(unbox $COMPRESSEDSTUFFS | xargs antimagick)
+obigpsout=$(unbox $gpsout | xargs antimagick)
 
 ```
 
@@ -880,7 +880,7 @@ $
 ```
 ## ore file tool
 
-Much like `forge`, `ore` leverages XChaCha20Poly1305 and Aron2, however `ore` is not interactive, nor does it read the input key material from disk. This tool reads an environment variable from "DWARF" in the OS, taking the value along with a salt as the input key material to Argon2. This tool is great for automation approaches. We might choose to expose our input material to the disk or a secret management system so we don't lose it, if that is important to us.
+Much like `forge`, `ore` leverages XChaCha20Poly1305 and Argon2, however `ore` is not interactive, nor does it read the input key material from disk. This tool reads an environment variable from "DWARF" in the OS, taking the value along with a salt as the input key material to Argon2. This tool is great for automation approaches. We might choose to expose our input material to the disk or a secret management system so we don't lose it, if that is important to us.
 
 Here we'll set the "DWARF" value to a UUIDv4.
 
