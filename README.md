@@ -432,7 +432,6 @@ There are a number of basic math operations as individual utilities. The program
 ```
 $ scale 234 3 23 43 
 Average: 75.75000000
-Mean: 75.75000000
 Median: 33.00000000
 Lowest value: 3.00000000
 Highest value: 234.00000000
@@ -447,7 +446,6 @@ Removing the softmax functionality will lift the max up to the 16 byte length. I
 ```
 $ scale 1 2 3 999 3 33333333333333 3333333333333333 2>/dev/null
 Average: 480952380952524.87500000
-Mean: 480952380952524.87500000
 Median: 3.00000000
 Lowest value: 1.00000000
 Highest value: 3333333333333333.00000000
