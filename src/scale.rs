@@ -61,7 +61,7 @@ fn calculate_median(numbers: &mut Vec<f64>) -> f64 {
     }
 }
 
-fn calculate_softmax(numbers: &[f64] -> Vec<f64> {
+fn calculate_softmax(numbers: &[f64]) -> Vec<f64> {
     if numbers.is_empty() {
         return Vec::new();
     }
