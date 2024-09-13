@@ -61,9 +61,24 @@ fn calculate_median(numbers: &mut Vec<f64>) -> f64 {
     }
 }
 
-fn calculate_softmax(numbers: &[f64]) -> Vec<f64> {
-    let exp_sum: f64 = numbers.iter().map(|x| x.exp()).sum();
-    numbers.iter().map(|x| x.exp() / exp_sum).collect()
+fn calculate_softmax(numbers: &[f64] -> Vec<f64> {
+    if numbers.is_empty() {
+        return Vec::new();
+    }
+    let max_value = numbers
+        .iter()
+        .cloned()
+        .fold(f64::NEG_INFINITY, f64::max);
+    let mut exp_sum = 0.0;
+    let exp_values: Vec<f64> = numbers
+        .iter()
+        .map(|&x| {
+            let exp_value = (x - max_value).exp();
+            exp_sum += exp_value;
+            exp_value
+        })
+        .collect();
+    exp_values.iter().map(|&x| x / exp_sum).collect()
 }
 
 fn normalize_softmax(softmax: &[f64]) -> Vec<f64> {
