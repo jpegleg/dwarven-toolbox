@@ -2,6 +2,8 @@ use std::env;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
+use std::os::unix::fs::PermissionsExt;
+use std::fs::set_permissions;
 use rand::rngs::OsRng;
 use base64::{Engine as _};
 use ed25519_dalek::{Keypair, PUBLIC_KEY_LENGTH};
@@ -33,6 +35,7 @@ fn main() {
     let pub64 = base64::engine::general_purpose::STANDARD_NO_PAD.encode(public_key_bytes);
 
     datafile.write_all(&databytes).expect("Failed to read the file");
+    set_permissions(&datafile_path, PermissionsExt::from_mode(0o600)).unwrap();
     println!("Public key: {:?}\nKeypair binary created at: {:?}", pub64, datafile_path);
     databytes.zeroize();
 
