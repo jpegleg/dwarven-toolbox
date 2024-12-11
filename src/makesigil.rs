@@ -33,9 +33,9 @@ fn main() {
 
     let public_key_bytes: [u8; PUBLIC_KEY_LENGTH] = keypair.public.to_bytes();
     let pub64 = base64::engine::general_purpose::STANDARD_NO_PAD.encode(public_key_bytes);
-
-    datafile.write_all(&databytes).expect("Failed to read the file");
     set_permissions(&datafile_path, PermissionsExt::from_mode(0o600)).unwrap();
+    datafile.write_all(&databytes).expect("Failed to read the file");
+
     println!("Public key: {:?}\nKeypair binary created at: {:?}", pub64, datafile_path);
     databytes.zeroize();
 
