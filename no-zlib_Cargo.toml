@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.4.2"
+version = "0.4.3"
 edition = "2021"
 
 [[ bin ]]
@@ -66,6 +66,14 @@ path = "src/antimagick.rs"
 [[ bin ]]
 name = "daggeron"
 path = "src/daggeron.rs"
+
+[[ bin ]]
+name = "enchant"
+path = "src/enchant.rs"
+
+[[ bin ]]
+name = "disenchant"
+path = "src/disenchant.rs"
 
 [[ bin ]]
 name = "daggeroff"
