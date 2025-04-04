@@ -23,6 +23,8 @@ Argument tools:
 - darmore - base64 decode
 - shielda - base58 encode
 - dshielda - base58 decode
+- enchant - convert int to u32 or u64 hex (for rust programs)
+- disenchant - convert u32 or u64 hex (from rust programs) to int
 - daggeron - hex to BigUint
 - daggeroff - BigUint to hex
 - box - gzip compress strings (output as hex)
