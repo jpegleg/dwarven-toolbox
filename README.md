@@ -1,6 +1,6 @@
 # dwarven-toolbox 🧰
 
-The dwarven-toolbox is a collection (monorepo) of 80 small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
+The dwarven-toolbox is a collection (monorepo) of 82 small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
 
 ```
 Priorities for the toolbox:
