@@ -39,7 +39,7 @@ fn main() -> io::Result<()> {
         return Ok(());
     }
 
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let decode_flag = args.iter().any(|arg| arg == "-d");
 
     if decode_flag {
