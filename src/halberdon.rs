@@ -25,7 +25,7 @@ fn main() {
     }
 
     let smessage = args[2].clone();
-    
+
     let nonce = args[1].clone();
     let binding = String::from(nonce);
     let snonce = binding.as_bytes();
@@ -38,7 +38,7 @@ fn main() {
     let mut buffer2 = [0u8; 32];
     let pos2 = skey.len();
     buffer2[..pos2].copy_from_slice(&skey);
-    
+
     let result = encrypt_string(&mut buffer, &smessage, &mut buffer2);
     match result {
         Ok(ciphertext) => {
