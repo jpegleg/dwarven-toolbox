@@ -9,7 +9,6 @@ Issues opened in this github project have no SLA or guarantee of response at all
 Dwarven-toolbox PRs that are more likely accepted:
 
 - keep source code files clear and compact, with no or few comments
-- include or improve tests
 - optimize without ruining clarity
 - provide bug fixes
 - fix typos
