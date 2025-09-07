@@ -24,21 +24,20 @@ fn main() {
         std::process::exit(1);
     }
 
-    let smessage = args[2].clone();
-    
-    let nonce = args[1].clone();
+    let smessage = &args[2];
+    let nonce = &args[1];
     let binding = String::from(nonce);
     let snonce = binding.as_bytes();
     let pos = snonce.len();
     let mut buffer = [0u8; 12];
     buffer[..pos].copy_from_slice(snonce);
 
-    let key = args[3].clone();
+    let key = &args[3];
     let mut skey = hex::decode(key).expect("Failed to decode provided key!");
     let mut buffer2 = [0u8; 32];
     let pos2 = skey.len();
     buffer2[..pos2].copy_from_slice(&skey);
-    
+
     let result = encrypt_string(&mut buffer, &smessage, &mut buffer2);
     match result {
         Ok(ciphertext) => {
