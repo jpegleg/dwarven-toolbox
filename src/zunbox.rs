@@ -19,13 +19,14 @@ fn main() {
     if args.len() != 2 {
         println!("Zlib decompress some data. If there are spaces, surround in double quotes. Usage: zunbox 789c0bc94855482f4a4d2c5128c82f4f2d52c84f5348294f2c2a4bcd53c8cd4ccf28510400cc640c08");
         return;
-    } 
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<String>() {
-            let encoded = hex_decode_gzip(&stro).unwrap();
-            println!("{}", encoded);
-        }
-    } else {
-        println!("No argument provided. The data must be hex encoded zlib data such produced by \"zbox\".\n\nUsage:\n\nzunbox 789c0bc94855482f4a4d2c5128c82f4f2d52c84f5348294f2c2a4bcd53c8cd4ccf28510400cc640c08\n\n");
     }
+    let stro = &args[1];
+    let encoded = match hex_decode_gzip(&stro) {
+        Ok(_) => hex_decode_gzip(&stro).expect("failed to decode"),
+        _ => {
+           eprintln!("Failed to decompres data.");
+           return
+        }
+    };
+    println!("{}", encoded);
 }
