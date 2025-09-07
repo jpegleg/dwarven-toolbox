@@ -4,6 +4,7 @@ fn main() {
         println!("XOR two whole numbers (u64) and print the resulting number. Usage: axor num1 num2");
         return;
     }
+    
     let first: u64 = match args[1].parse::<u64>() {
       Ok(_) => args[1].parse::<u64>().expect("failed to parse u64"),
       _ => {
