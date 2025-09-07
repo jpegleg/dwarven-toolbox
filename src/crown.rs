@@ -14,29 +14,26 @@ fn main() {
         std::process::exit(1);
     }
 
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<String>() {
-            let data = stro.as_bytes();
-            let mut hasher = blake3::Hasher::new();          
-            hasher.update(data);
-            let blake3 = hasher.finalize();
-            println!("BLAKE3: {}", blake3);
-            let mut hasher = Blake2b512::new();     
-            hasher.update(data);
-            let blake2b512 = hasher.finalize();
-            println!("BLAKE2B-512: {:x}", blake2b512);
-            let mut hasher = Sha3_256::new();          
-            hasher.update(data);
-            let sha3256 = hasher.finalize();
-            println!("SHA3-256: {:x}", sha3256);
-            let mut hasher = Sha3_384::new();          
-            hasher.update(data);
-            let sha3384 = hasher.finalize();
-            println!("SHA3-384: {:x}", sha3384);
-            let mut hasher = Sha256::new();         
-            hasher.update(data);
-            let sha2 = hasher.finalize();
-            println!("SHA2: {:x}", sha2);
-        }
-    } 
+    let stro = &args[1];
+    let data = stro.as_bytes();
+    let mut hasher = blake3::Hasher::new();
+    hasher.update(data);
+    let blake3 = hasher.finalize();
+    println!("BLAKE3: {}", blake3);
+    let mut hasher = Blake2b512::new();
+    hasher.update(data);
+    let blake2b512 = hasher.finalize();
+    println!("BLAKE2B-512: {:x}", blake2b512);
+    let mut hasher = Sha3_256::new();
+    hasher.update(data);
+    let sha3256 = hasher.finalize();
+    println!("SHA3-256: {:x}", sha3256);
+    let mut hasher = Sha3_384::new();
+    hasher.update(data);
+    let sha3384 = hasher.finalize();
+    println!("SHA3-384: {:x}", sha3384);
+    let mut hasher = Sha256::new();
+    hasher.update(data);
+    let sha2 = hasher.finalize();
+    println!("SHA2: {:x}", sha2);
 }
