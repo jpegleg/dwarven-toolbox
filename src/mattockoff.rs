@@ -37,9 +37,9 @@ fn main() {
         std::process::exit(1);
     }
 
-    let smessage = args[2].clone();
-    
-    let nonce = args[1].clone();
+    let smessage = &args[2];
+
+    let nonce = &args[1];
     let binding = String::from(nonce);
     let snonce = binding.as_bytes();
     let pos = snonce.len();
@@ -51,7 +51,7 @@ fn main() {
     let mut buffer2 = [0u8; 32];
     let pos2 = skey.len();
     buffer2[..pos2].copy_from_slice(&skey);
-    
+
     let result = decrypt_string(&mut buffer, &smessage, &mut buffer2);
     match result {
         Ok(output) => {
