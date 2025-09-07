@@ -12,13 +12,13 @@ fn main() {
         println!("The first argument is the 16 byte hex IV, the second is the message, and the third is the 32 byte encoded (16 bytes decoded) hex key. If there is whitespace in the message input, surround in doublequotes.\n\nUsage example: hammeron 5EC4E2032363E027 \"The great forge awaits you!\" 28083A716B0BA8A85F9E0A116FF2EDB7 \n\nNote: don't use the example IV and key, use newly generated ones and never repeat the same IV! The \"anvil\" program can be used to generate a new IV and key.");
         std::process::exit(1);
     }
-    let siv = args[1].clone();
+    let siv = &args[1];
     let binding = String::from(siv);
     let iv = binding.as_bytes();
-    let smessage = args[2].clone();
+    let smessage = &args[2];
     let messbind = String::from(smessage);
     let plaintext = messbind.as_bytes();
-    let key = args[3].clone();
+    let key = &args[3];
     let mut skey = hex::decode(key).expect("Failed to decode private key provided!");
     let cipher = Aes128Cbc::new_from_slices(&skey, &iv).unwrap();
     let pos = plaintext.len();
