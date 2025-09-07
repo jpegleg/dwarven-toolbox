@@ -1,6 +1,18 @@
 fn hexor(string1: &str, string2: &str) -> String {
-    let bytes1 = hex::decode(string1).unwrap();
-    let bytes2 = hex::decode(string2).unwrap();
+    let bytes1 = match hex::decode(string1) {
+        Ok(_) => hex::decode(string1).expect("failed to decode hex"),
+        _ => {
+           eprintln!("Error decoding hex.");
+           return Default::default()
+        }
+    };
+    let bytes2 = match hex::decode(string2) {
+        Ok(_) => hex::decode(string2).expect("failed to decode hex"),
+        _ => {
+           eprintln!("Error decoding hex.");
+           return Default::default()
+        }
+    };
     let result_bytes: Vec<u8> = bytes1
         .iter()
         .zip(bytes2.iter())
