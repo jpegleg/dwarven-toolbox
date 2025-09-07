@@ -6,7 +6,7 @@ fn main() {
         println!("Pass in a string to check the length in bytes of.");
         std::process::exit(1);
     }
-    let umb = args[1].clone();
+    let umb = &args[1];
     let clen = umb.len();
     println!("{}", clen);
 }
