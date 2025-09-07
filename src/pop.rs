@@ -21,7 +21,7 @@ fn main() {
         println!("Wrong number of args. First arg is a usize for the number of bytes to pop, and the second arg is the string to pop with.");
         std::process::exit(1);
     }
-    let numb = args[1].clone();
+    let numb = &args[1];
     let snumb = match numb.parse::<usize>() {
         Ok(length) => length,
         Err(_) => {
@@ -29,8 +29,7 @@ fn main() {
             1
         }
     };
-    let data = args[2].clone();
-    let sdata = String::from(data);
-    let retrb = popper(&sdata, snumb);
+    let data = &args[2];
+    let retrb = popper(data, snumb);
     println!("{}", retrb);
 }
