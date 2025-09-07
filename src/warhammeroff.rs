@@ -13,11 +13,11 @@ fn main() {
  ");
         std::process::exit(1);
     }
-    let siv = args[1].clone();
+    let siv = &args[1];
     let iv = hex::decode(siv).expect("Failed to decode IV provided!");
-    let smessage = args[2].clone();
+    let smessage = &args[2];
     let ciphertext = hex::decode(smessage).unwrap();
-    let key = args[3].clone();
+    let key = &args[3];
     let mut skey = hex::decode(key).expect("Failed to decode private key provided!");
     let cipher = Aes256Cbc::new_from_slices(&skey, &iv).unwrap();
     let mut buf = ciphertext.to_vec();
