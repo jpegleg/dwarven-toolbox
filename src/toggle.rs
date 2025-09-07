@@ -11,7 +11,7 @@ fn main() -> io::Result<()> {
         return Ok(());
     }
 
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let mut file_content = Vec::new();
     let mut input_file = File::open(file_path)?;
     input_file.read_to_end(&mut file_content)?;
