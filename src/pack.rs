@@ -41,7 +41,7 @@ fn main() -> io::Result<()> {
         return Ok(());
     }
 
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let decompress_flag = args.iter().any(|arg| arg == "-u");
 
     if decompress_flag {
