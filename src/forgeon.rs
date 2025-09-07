@@ -1,8 +1,7 @@
 use std::env;
 use std::fs::File;
 use std::io::{self, Read, Write};
-use rand::{Rng, SeedableRng};
-use rand::rngs::StdRng;
+use rand::Rng;
 use chacha20poly1305::{
     aead::{AeadInPlace, KeyInit},
     XChaCha20Poly1305,
@@ -27,7 +26,7 @@ fn main() -> io::Result<()> {
     let mut key_file = File::open(key_file_path)?;
     let mut key_data = Vec::new();
     key_file.read_to_end(&mut key_data)?;
-    let mut rng = StdRng::from_entropy();
+    let mut rng = rand::rng();
     let mut nonce = [0u8; 24];
     rng.fill(&mut nonce);
     let hashed_key = hashkey::b3(&key_data);
