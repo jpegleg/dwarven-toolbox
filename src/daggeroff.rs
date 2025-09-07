@@ -5,12 +5,16 @@ fn main() {
     if args.len() != 2 {
         println!("Convert BigUint to hex. Usage: daggeroff data");
         return;
-    } 
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<BigUint>() {
-            println!("{:X}", stro);
-        }
-    } else {
-        println!("No argument provided. \n\nUsage:\n\ndaggeroff 100\n\n");
     }
+    let arg = &args[1];
+    match arg.parse::<BigUint>() {
+       Ok(_) => {
+           let stro = arg.parse::<BigUint>().expect("failed to parse BigUint");
+           println!("{:X}", stro)
+       }
+       _ => {
+           eprintln!("Failed to decode BigUint.");
+           return
+       }
+    };
 }
