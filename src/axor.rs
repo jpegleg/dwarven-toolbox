@@ -14,7 +14,7 @@ fn main() {
     };
 
     let second: u64 = match args[2].parse::<u64>() {
-      Ok(_) => args[1].parse::<u64>().expect("failed to parse u64"),
+      Ok(_) => args[2].parse::<u64>().expect("failed to parse u64"),
       _ => {
         eprintln!("Use u64 numbers in the two arguments");
         return
