@@ -2,23 +2,15 @@ use std::env;
 use zeroize::Zeroize;
 use aes_gcm_siv::{
     aead::{Aead, KeyInit, OsRng},
-    Aes256GcmSiv, Nonce 
+    Aes256GcmSiv, Nonce
 };
-use rand::{Rng, SeedableRng};
-use rand::rngs::StdRng;
-use rand::distributions::Uniform;
-use std::iter;
+
+#[path = "./generate.rs"]
+mod generate;
+use generate::hexgen;
 
 fn genon() -> String {
-    let mut rng = StdRng::from_entropy();
-    let genonchar: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(32..127);
-            rng.sample(char_range) as u8 as char
-        })
-        .take(12)
-        .collect();
-    genonchar
+   hexgen(12)
 }
 
 fn main() {
@@ -31,9 +23,8 @@ fn main() {
     let binding = String::from(siv);
     let bnon = &binding.as_bytes();
     let nonce = Nonce::from_slice(bnon);
-    let smessage = args[1].clone();
-    let messbind = String::from(smessage);
-    let plaintext = messbind.as_bytes();
+    let smessage = &args[1];
+    let plaintext = smessage.as_bytes();
     let pos = plaintext.len();
     let mut buffer = [0u8; 128];
     buffer[..pos].copy_from_slice(plaintext);
