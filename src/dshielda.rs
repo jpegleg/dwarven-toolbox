@@ -6,15 +6,21 @@ fn main() {
         println!("Base58 decode some data. If there are spaces, surround in double quotes. Usage: dshielda base58data");
         return;
     }
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<String>() {
-            let decoded = bs58::decode(stro).into_vec().unwrap();
-            let stringa = std::str::from_utf8(&decoded).unwrap(); 
-            println!("{}", stringa);
-        } else {
-            println!("Invalid argument! Use a single argument.");
+    let stro = &args[1];
+    let decoded = match bs58::decode(stro).into_vec() {
+        Ok(_) => bs58::decode(stro).into_vec().expect("failed to decode"),
+        _ => {
+           eprintln!("Failed to decode base58 text.");
+           return
         }
-    } else {
-        println!("No argument provided. If white space is needed, surround the input with doublequotes.\n\nUsage:\n\ndshielda 3QTA1HZx89uB6L2x4aLax8Cet3Hm9zQk\n\n");
-    }
+    };
+    let stringa = match std::str::from_utf8(&decoded) {
+        Ok(_) => std::str::from_utf8(&decoded).expect("failed to decode to UTF-8"),
+         _ => {
+           eprintln!("Failed to decode base58 text to UTF-8.");
+           return
+        }
+    };
+
+    println!("{}", stringa);
 }
