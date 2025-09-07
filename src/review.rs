@@ -15,18 +15,19 @@ extern crate digest;
 extern crate sha2;
 extern crate sha3;
 
+#[allow(deprecated)]
 fn review(file_path: &str) {
     let file_path = Path::new(file_path);
     let metadata = file_path.metadata().expect("Failed to read file metadata");
     let mut file = File::open(&file_path).expect("Failed to open the file");
     let mut bytes = Vec::new();
-  
+
     file.read_to_end(&mut bytes).expect("Failed to read the file");
-  
+
     let num_bytes = bytes.len();
     let num_bits = num_bytes * 8;
     let byte_distribution = bytes.iter().collect::<std::collections::HashSet<_>>().len() as f64 / num_bytes as f64;
-    
+
     let file_is_open = match OpenOptions::new()
         .read(true)
         .write(true)
@@ -35,7 +36,7 @@ fn review(file_path: &str) {
         Ok(_) => false,
         Err(_) => true,
     };
-  
+
     let chronox: String = Utc::now().to_string();
     println!("{{");
     println!("{:?}: {{", file_path);
@@ -72,20 +73,20 @@ fn review(file_path: &str) {
 
     let uid = metadata.uid();
     let gid = metadata.gid();
-  
+
     let owner = match get_user_by_uid(uid) {
         Some(user) => user.name().to_string_lossy().into_owned(),
         None => "-".to_string(),
     };
-  
+
     let group = match get_group_by_gid(gid) {
         Some(group) => group.name().to_string_lossy().into_owned(),
         None => "-".to_string(),
     };
-  
+
     println!("  \"Owner\": \"{} (uid: {})\",", owner, uid);
     println!("  \"Group\": \"{} (gid: {})\",", group, gid);
-    
+
     if file_is_open {
         println!("  \"Open\": \"File is currently open by another program...\",");
     } else {
@@ -112,7 +113,7 @@ fn review(file_path: &str) {
     hasher.update(&bytes);
     let sha2 = hasher.finalize();
     println!("  \"SHA2\": \"{:x}\"", sha2);
-    
+
     println!("  }}");
     println!("}}");
 }
@@ -123,7 +124,6 @@ fn main() {
         println!("{{\"ERROR\": \"Wrong number of args. The only arg is a file path to review.\"}}");
         std::process::exit(1);
     }
-    let data = args[1].clone();
-    let sdata = String::from(data);
-    review(&sdata);
+    let data = &args[1];
+    review(&data);
 }
