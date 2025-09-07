@@ -1,105 +1,46 @@
-use rand::{Rng, SeedableRng};
-use rand::rngs::StdRng;
-use rand::distributions::Uniform;
-use std::iter;
+use zeroize::Zeroize;
+
+#[path = "./generate.rs"]
+mod generate;
+use generate::hexgen;
 
 fn gennonce() -> String {
-    let mut rng = StdRng::from_entropy();
-    let hex_chars: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(0..16);
-            let value = match rng.sample(char_range) {
-                0..=9 => (b'0' + rng.sample(Uniform::from(0..10))) as char,
-                10..=15 => (b'A' + rng.sample(Uniform::from(0..6))) as char,
-                _ => unreachable!(),
-            };
-            value
-        })
-        .take(12)
-        .collect();
-    hex_chars
+  hexgen(12)
 }
 
 fn gennoncex() -> String {
-    let mut rng = StdRng::from_entropy();
-    let hex_chars: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(0..16);
-            let value = match rng.sample(char_range) {
-                0..=9 => (b'0' + rng.sample(Uniform::from(0..10))) as char,
-                10..=15 => (b'A' + rng.sample(Uniform::from(0..6))) as char,
-                _ => unreachable!(),
-            };
-            value
-        })
-        .take(24)
-        .collect();
-    hex_chars
+  hexgen(24)
 }
 
 fn geniv() -> String {
-    let mut rng = StdRng::from_entropy();
-    let hex_chars: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(0..16);
-            let value = match rng.sample(char_range) {
-                0..=9 => (b'0' + rng.sample(Uniform::from(0..10))) as char,
-                10..=15 => (b'A' + rng.sample(Uniform::from(0..6))) as char,
-                _ => unreachable!(),
-            };
-            value
-        })
-        .take(16)
-        .collect();
-    hex_chars
+  hexgen(16)
 }
 
 fn genkey() -> String {
-    let mut rng = StdRng::from_entropy();
-    let hex_chars: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(0..16);
-            let value = match rng.sample(char_range) {
-                0..=9 => (b'0' + rng.sample(Uniform::from(0..10))) as char,
-                10..=15 => (b'A' + rng.sample(Uniform::from(0..6))) as char,
-                _ => unreachable!(),
-            };
-            value
-        })
-        .take(32)
-        .collect();
-    hex_chars
+  hexgen(32)
 }
 
 // the usage of this can be for 256 bit keys (hex decode before use)
 fn genkey512() -> String {
-    let mut rng = StdRng::from_entropy();
-    let hex_chars: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(0..16);
-            let value = match rng.sample(char_range) {
-                0..=9 => (b'0' + rng.sample(Uniform::from(0..10))) as char,
-                10..=15 => (b'A' + rng.sample(Uniform::from(0..6))) as char,
-                _ => unreachable!(),
-            };
-            value
-        })
-        .take(64)
-        .collect();
-    hex_chars
+  hexgen(64)
 }
 
 fn main() {
-    let nonce = gennonce();
+    let mut nonce = gennonce();
     println!("NONCE: {}", nonce);
-    let iv = geniv();
+    nonce.zeroize();
+    let mut iv = geniv();
     println!("IV: {}", iv);
-    let key = genkey();
+    iv.zeroize();
+    let mut key = genkey();
     println!("KEYor256IV: {}", key);
-    let noncex = gennoncex();
+    key.zeroize();
+    let mut noncex = gennoncex();
     println!("XNONCE: {}", noncex);
-    let key2 = genkey512();
+    noncex.zeroize();
+    let mutkey2 = genkey512();
     println!("512KEY: {}", key2);
+    key2.zeroize();
 }
 
 #[test]
