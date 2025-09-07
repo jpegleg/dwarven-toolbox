@@ -36,7 +36,7 @@ fn main() {
         println!("Wrong number of args. The arg is a u32 or u64 integer to convert to hex.");
         std::process::exit(1);
     }
-    let input = args[1].clone();
+    let input = &args[1];
     let conv = parse_u32_or_u64(&input);
     match conv {
         Ok(IntOrLong::U32(n)) => println!("{}", int_to_hex(n)),
