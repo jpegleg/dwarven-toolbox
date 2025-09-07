@@ -37,7 +37,7 @@ fn main() -> io::Result<()> {
         println!("Usage: {} <file_path> [-d]", args[0]);
         return Ok(());
     }
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let decode_flag = args.iter().any(|arg| arg == "-d");
     if decode_flag {
         let mut input_file = File::open(file_path)?;
