@@ -4,18 +4,22 @@ fn main() {
         println!("XOR two whole numbers (u64) and print the resulting number. Usage: axor num1 num2");
         return;
     }
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(first) = arg.parse::<u64>() {
-            if let Some(arg2) = std::env::args().nth(2) {
-                if let Ok(second) = arg2.parse::<u64>() {
-                    let axor = first ^ second;
-                    println!("{}", axor);
-                } else {
-                    println!("Use two whole (u64) numbers for the arguments.");
-                }
-            } else {
-                println!("Use two whole (u64) numbers for the arguments.");
-            }
-        }
-    }
+    let first: u64 = match args[1].parse::<u64>() {
+      Ok(_) => args[1].parse::<u64>().expect("failed to parse u64"),
+      _ => {
+        eprintln!("Use u64 numbers in the two arguments");
+        return
+      }
+    };
+
+    let second: u64 = match args[2].parse::<u64>() {
+      Ok(_) => args[1].parse::<u64>().expect("failed to parse u64"),
+      _ => {
+        eprintln!("Use u64 numbers in the two arguments");
+        return
+      }
+    };
+
+    let axor = first ^ second;
+    println!("{}", axor);
 }
