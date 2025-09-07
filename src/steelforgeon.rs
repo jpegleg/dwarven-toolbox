@@ -23,7 +23,7 @@ fn main() -> io::Result<()> {
     let mut plaintext_file = File::open(plaintext_file_path)?;
     let mut plaintext = Vec::new();
     plaintext_file.read_to_end(&mut plaintext)?;
-    let mut rng = StdRng::from_entropy();
+    let mut rng = StdRng::from_os_rng();
     let mut nonce = [0u8; 24];
     rng.fill(&mut nonce);
     let bnon = hex::encode(&nonce);
