@@ -19,13 +19,8 @@ fn main() {
     if args.len() != 2 {
         println!("Gzip decompress some data. If there are spaces, surround in double quotes. Usage: unbox 1f8b08000000000000ff0bc9485548294f2c2a4bcd53c8cd4ccf2851040000b9c2c112000000");
         return;
-    } 
-    if let Some(arg) = std::env::args().nth(1) {
-        if let Ok(stro) = arg.parse::<String>() {
-            let encoded = hex_decode_gzip(&stro).unwrap();
-            println!("{}", encoded);
-        }
-    } else {
-        println!("No argument provided. The data must be hex encoded gzip data such produced by \"box\".\n\nUsage:\n\nunbox 1f8b08000000000000ff0bc9485548294f2c2a4bcd53c8cd4ccf2851040000b9c2c112000000\n\n");
     }
+    let stro = &args[1];
+    let encoded = hex_decode_gzip(&stro).unwrap();
+    println!("{}", encoded);
 }
