@@ -1,7 +1,7 @@
 use std::env;
 use aes_gcm_siv::{
     aead::{Aead, KeyInit},
-    Aes256GcmSiv, Nonce 
+    Aes256GcmSiv, Nonce
 };
 
 fn main() {
@@ -11,12 +11,12 @@ fn main() {
 ");
         std::process::exit(1);
     }
-    let siv = args[1].clone();
+    let siv = &args[1];
     let binding = String::from(siv);
     let bnon = hex::decode(binding).unwrap();
     let nonce = Nonce::from_slice(&bnon);
-    let smessage = args[2].clone();
-    let akey = args[3].clone();
+    let smessage = &args[2];
+    let akey = &args[3];
     let mut bkey = hex::decode(akey).unwrap();
     let ciphertext = hex::decode(smessage).unwrap();
     let pos = ciphertext.len();
@@ -25,6 +25,6 @@ fn main() {
 
     let cipher = Aes256GcmSiv::new_from_slice(&mut bkey);
     let plaintext = cipher.expect("Failed to decrypt ciphertext.").decrypt(nonce, ciphertext.as_ref());
-    let printtext = String::from_utf8(plaintext.unwrap()).map_err(|_| "Invalid UTF-8").unwrap(); 
+    let printtext = String::from_utf8(plaintext.unwrap()).map_err(|_| "Invalid UTF-8").unwrap();
     println!("{}", printtext);
 }
