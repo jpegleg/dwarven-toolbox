@@ -10,13 +10,13 @@ fn main() {
         println!("First arg is the input key, the second arg is the salt, and the third arg is the info field for HKDF.\n\nUsage: helmet something 00000001 dangstuffhere");
         std::process::exit(1);
     }
-    let ikm = args[1].clone();
+    let ikm = &args[1];
     let skim = String::from(ikm);
     let bskim = skim.as_bytes();
-    let salt = args[2].clone();
+    let salt = &args[2];
     let ssalt = String::from(salt);
     let bssalt = ssalt.as_bytes();
-    let info = args[3].clone();
+    let info = &args[3];
     let sinfo = String::from(info);
     let bsinfo = sinfo.as_bytes();
     let hk = Hkdf::<Sha256>::new(Some(&bssalt[..]), &bskim);
