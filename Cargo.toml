@@ -316,7 +316,7 @@ name = "zunbox"
 path = "src/zunbox.rs"
 
 [dependencies]
-uuid = { version = "0.18.1", features = ["serde", "v4"] }
+uuid = { version = "1.18.1", features = ["serde", "v4"] }
 base64 = "0.22.1"
 bs58 = { version="0.5.1", features=["check"] }
 aes = "0.7.5"
