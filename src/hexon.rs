@@ -28,9 +28,9 @@ fn main() {
         println!("Wrong number of args. The first arg is the file to encode to hex, while the second arg is the output hex file to write.");
         std::process::exit(1);
     }
-    let data = args[1].clone();
+    let data = &args[1];
     let sdata = String::from(data);
-    let outdata = args[2].clone();
+    let outdata = &args[2];
     let soutdata = String::from(outdata);
     hexon(&sdata, &soutdata);
 }
