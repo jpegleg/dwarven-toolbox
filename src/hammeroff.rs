@@ -12,12 +12,12 @@ fn main() {
         println!("The first argument is the 16 byte hex IV, the second is the ciphertext, and the third is the 32 byte encoded hex (16 bytes decoded) key. \n\nUsage example: hammeroff 5EC4E2032363E027 8de9e8e397c8cd15bfb088dd714f4b88bbd2e78ca6606f71604ddbb6300fcb27  28083A716B0BA8A85F9E0A116FF2EDB7 ");
         std::process::exit(1);
     }
-    let siv = args[1].clone();
+    let siv = &args[1];
     let binding = String::from(siv);
     let iv = binding.as_bytes();
-    let smessage = args[2].clone();
+    let smessage = &args[2];
     let ciphertext = hex::decode(smessage).unwrap();
-    let key = args[3].clone();
+    let key = &args[3];
     let mut skey = hex::decode(key).expect("Failed to decode private key provided!");
     let cipher = Aes128Cbc::new_from_slices(&skey, &iv).unwrap();
     let mut buf = ciphertext.to_vec();
