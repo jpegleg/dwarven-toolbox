@@ -32,8 +32,7 @@ fn main() {
         println!("Wrong number of args. The only arg is a string to sort the bytes from.");
         std::process::exit(1);
     }
-    let data = args[1].clone();
-    let sdata = String::from(data);
-    let retrb = sort_bytes(&sdata);
+    let data = &args[1];
+    let retrb = sort_bytes(data);
     println!("{}", retrb);
 }
