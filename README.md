@@ -1,6 +1,6 @@
 # dwarven-toolbox 🧰
 
-The dwarven-toolbox is a collection (monorepo) of 82 small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
+The dwarven-toolbox is a collection (monorepo) of 80 small and simple utility programs. Functionality ranges from CLI cryptography to system script optimizations.
 
 ```
 Priorities for the toolbox:
@@ -12,7 +12,7 @@ Priorities for the toolbox:
 Contributing and more information can be found in CONTRIBUTING.md and CODE_OF_CONDUCT.md.
 
 
-⚠️ Security Warning: Hazmat! This collection contains lower level permutations and abstractions that may not have all of the desirable security properties for a given usage/situation.
+⚠️ Security Warning: Hazmat! This collection contains various modes and options for encryption that may not have all of the desirable security properties for a given usage/situation.
 
 Argument tools:
 - iron - 32 byte string generate
@@ -79,9 +79,7 @@ File tools:
 - inspect - print each byte of a file, along with the total bytes and bits read
 - review - print detailed UNIX file data, including permissions, ownership, hashes, if the file is currently open, and more, as JSON
 - chk - the condensed version of "review": report time, bytes, timestamps, and BLAKE3, as JSON
-- makesigil - write an ed25519 keypair as binary to a file
-- makerune - make a detached ed25519 signature from provided (makesigil) keypair file and target file
-- readrune - validate a detached ed25519 signature for a file
+- makesigil - write a random (key file) from system CSPRNG
 - chiselon - XChaCha20Poly1305 encryption + PBKDF2 with user supplied salt, UTF-8 file input, ciphertext hex to STDOUT
 - chiseloff - XChaCha20Poly1305 decryption + PBKDF2 with user supplied salt, custom hex file input, plaintext to STDOUT
 - forgeon - XChaCha20Poly1305 encryption - file input, ciphertext to file output (binary)
@@ -107,12 +105,11 @@ The encryption tools used directly on the CLI expose the key to the local system
 If that is a concern, we can use them indirectly in some cases, moving the sensitive data to files, RAM, etc.
 The hammer tools also can only take 127 bytes of data as input to encrypt at a time.
 
-Use "rage" https://github.com/str4d/rage instead for more normal interactive file encryption operations, etc.  
-Or if you feel like using the file encryption tools in the dwarven-toolbox, there are some here as well. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tools `ore` and `forge` do both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
+If you feel like using the file encryption tools in the dwarven-toolbox, there are some here. The dwarven-toolbox tools `forgeon` and `forgeoff` can be used for normal file encryption operations in an automated way, or `steelforgeon` and `steelforgeoff` for using interactive password prompt for Argon2 key material input. The tools `ore` and `forge` do both encryption and decryption, and overwrites the input file. The overwriting can be useful if that is what you intend on doing anyway, so some of the file tools use that approach to save time.
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 
-All of these utilities enable tweakable and scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
+All of these utilities enable scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
 
 <b>The toolbox is organized into two types of binaries, those that work with files and those that work with args.</b>
 
@@ -135,7 +132,7 @@ done
 cargo clean
 ```
 
-Standard compiling for x86 linux of the utilities is currently ~4.2MB per utility.
+Standard compiling for x86 linux of the utilities is currently ~450KB per utility.
 
 Standard compiling for x86 darwin (MacOS) of the utilities is ~525KB per utility.
 
@@ -179,18 +176,7 @@ $ cargo build --release --bin forge
 $ sudo cp target/release/forge /usr/local/bin/forge
 ```
 
-If we want to compile statically linked files, we might instead take an approach with docker. <b>musl builds do not have universally working UNIX timestamps, so `review` and `chk` will panic if compiled this way currently! `thread 'main' panicked at 'Failed to get created timestamp.: Error { kind: Unsupported, message: "creation time is not available on this platform currently" }', src/review.rs:54:68
-`</b>
-
-```
-$ docker run -v $PWD:/volume --rm -t clux/muslrust:stable cargo build --release --all
-...
-$ find  target/x86_64-unknown-linux-musl/release/ -type f | grep -v ".d\|.json\|.fingerprint\|.lock" | while read line; do cp $line /usr/local/bin/ ; done
-```
-
-This example above doesn't use the README.md to choose which files to install, instead uses find within the release directory.
-
-More installation and packaging options are coming soon! Stay tuned.
+If we want to compile statically linked files, we might instead take an approach with docker. <b>Alpine linux and some other systems don't have support for all of the file metadata, so `review` and `chk` will error if attempted there!</b>
 
 
 ## Usage 
@@ -342,13 +328,7 @@ $ dshielda NZ1USWfjfFYuJ5wetRMLxtv6vjWn8p
 Oh this was something!
 ```
 
-One of the interesting properties of the encoding/decoding utilities in the dwarven-toolbox is that they refuse to output non-utf8 to STDOUT. This can be useful when examining malicous data, avoiding various scenarios where binary in STDOUT might do something such as attempt execute an exploit or trigger a bug/crash. While such an exploit is unlikely, another reason this property is useful is that only "successful" string decoding will output from our decode, which is what we want when we are hunting for plaintext. Normal utilities like base64 and xxd will just happily output whatever, while `darmore`,`antimagick`, and `dshielda` will intentionally panic:
-
-```
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Utf8Error { valid_up_to: 2, error_len: Some(1) }', src/dshielda.rs:7:57
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-```
-This is a huge blessing during brutefoce/batch research tasks attempting to extract plaintext, because success will have a good exit code!
+One of the interesting properties of the encoding/decoding utilities in the dwarven-toolbox is that they refuse to output non-utf8 to STDOUT. This can be useful when examining malicous data, avoiding various scenarios where binary in STDOUT might do something such as attempt execute an exploit or trigger a bug/crash. While such an exploit is unlikely, another reason this property is useful is that only "successful" string decoding will output from our decode, which is what we want when we are hunting for plaintext. Normal utilities like base64 and xxd will just happily output whatever, while `darmore`,`antimagick`, and `dshielda` will intentionally refuse to decode.
 
 If we do want to output non-UTF8 on the decode, then we can use the file tool hexoff which will write out decoded binary to a file.
 
@@ -653,7 +633,7 @@ to history/process data because it is used as an argument for the process.
 The `gold` program from the dwarven-toolbox is used to generate an on-disk password seed, which is transformed with `daggeron`, `daggeroff`, and `greataxe` before
 used along with the salt in the PBKDF2. The division from greataxe technically weakens the strength of the input key material, but a calculated risk in this 
 case to increase the obfuscation of the input key material. This obfuscation can of course be removed or adjusted, one of the benefits of using dwarven-toolbox
-is that we are able to use "tweakable" and "scriptable" encryption.
+is that we are able to use encrypt within our scripts effectively.
 
 The input file is removed with the GNU/linux "shred" program, and the ciphertext file is created from the original file name + a_$(date +%Y%m%d%H%M%S%N), so 
 the ciphertext files have a timestamp built into the file name.
@@ -808,10 +788,6 @@ $ chiselon text.txt ~/.tmp/weekly.select 000000000000tank.985G.b | clean text.en
 The ciphertext has mixed capitalization in the hex! This is because the NONCE (first 24 bytes) is upper hex, and the rest of the text is lower hex.
 When `chiseloff` reads these values, they are processed independently within the functionality.
 
-PBKDF2 is not ideal in some ways, however we are not using it for password hash storage, which is the context where PBKDF2 is good but not as good as Argon2.
-But in `chiselon` and `chiseloff`, PBKDF2 is used for permutation of key material at time of encryption and decryption and is not involved in storage at all.
-PBKDF2 used in this way is more like the HKDF, approach for ephemeral optimization of byte distribution in key material.
-
 The user supplied salt is an interesting choice in these tools. Having the salt in an argument like that is like adding a leaky password multiplier that still adds overall benefit, even if leaked. The salt in this case is not used in the encryption itself, but the PBKDF2 of the key material. So it's security isn't important to the overall security. But the fact that it does exist increases the security. Just don't forget your salt values! You need them to decrypt, and they are not in the output or in any file by default.
 
 When scripting with the chisel tools, some fun can be had with the salts being results of other permutations, etc.
@@ -867,7 +843,7 @@ The forge tools can also handle non-UTF-8 data, which the chisel tools cannot on
 The forge tools have file output, so they can safely encrypt and decrypt any type of file, including binaries, etc.
 The forge tools are designed to process larger files. They are able to do this more effectively because of in-place AEAD processing, which does not need alloc or std.
 
-The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 512 bit file that is desired.
+The choice to use the sigil files from `makesigil` is for interoperability with the dwarven-toolbox file tools. The key input can be any 256 bit file that is desired.
 
 The files encrypted by the forge tools are binary, not hex encoded etc. This reduces disk usage compared to encoded, and they can always be encoded later if needed etc.
 
