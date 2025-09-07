@@ -30,7 +30,7 @@ fn main() {
         println!("Wrong number of args. The only arg is a file to inspect as hex and count the bits and bytes.");
         std::process::exit(1);
     }
-    let data = args[1].clone();
+    let data = &args[1];
     let sdata = String::from(data);
     inspect(&sdata);
 }
