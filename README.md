@@ -109,7 +109,7 @@ If you feel like using the file encryption tools in the dwarven-toolbox, there a
 
 The "dwarven-toolbox" technique with the hammers, mattocks, and halberds is to layer these tools together within scripts or other programs, designed for not relying on files to perform the operations so that we can process on script variables without writing to disk if we don't want to. We also have tools that work specifically with files. 
 
-All of these utilities enable scriptable encryption, hashing, signing, and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
+All of these utilities enable scriptable encryption, hashing and some maths. While some of the utilities are better with layers, others are more directly useful on the CLI. 
 
 <b>The toolbox is organized into two types of binaries, those that work with files and those that work with args.</b>
 
