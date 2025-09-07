@@ -6,7 +6,7 @@ fn hexor(string1: &str, string2: &str) -> String {
         .zip(bytes2.iter())
         .map(|(&byte1, &byte2)| byte1 ^ byte2)
         .collect();
-    let hex_string = hex::encode(result_bytes);    
+    let hex_string = hex::encode(result_bytes);
     hex_string
 }
 
@@ -16,8 +16,8 @@ fn main() {
         println!("XOR two strings and print the resulting hex. Usage: hexor string1 string2");
         return;
     }
-    let string1 = args[1].clone();
-    let string2 = args[2].clone();
-    let hexout = hexor(&string1, &string2);
+    let string1 = &args[1];
+    let string2 = &args[2];
+    let hexout = hexor(string1, string2);
     println!("{}", hexout);
 }
