@@ -55,7 +55,13 @@ fn main() {
         println!("Wrong number of args. The arg is a u32 or u64 integer to convert to hex.");
         std::process::exit(1);
     }
-    let input = args[1].clone();
-    let rezult = parse_hex_to_decimal_str(&input).unwrap();
+    let input = &args[1];
+    let rezult = match parse_hex_to_decimal_str(input) {
+        Ok(out) => out,
+        Err(e) => {
+            eprintln!("ERROR: {e}");
+            return
+        }
+    };
     println!("{}", &rezult);
 }
