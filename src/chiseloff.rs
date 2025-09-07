@@ -3,11 +3,6 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use std::convert::TryInto;
-use ed25519_dalek::Keypair;
-
-extern crate base64;
-extern crate ed25519_dalek;
-
 use chacha20poly1305::aead::{Aead, KeyInit};
 use chacha20poly1305::Key;
 use chacha20poly1305::XNonce;
@@ -32,7 +27,7 @@ fn decrypt_string(nonce: &[u8], cipher_hex: &str, key: &[u8; 32]) -> Result<Stri
         } else {
             nonce
         };
- 
+
         let plaintext = cipher
             .decrypt(XNonce::from_slice(nonce), &*received_ciphertext)
             .map_err(|_| "[as-is hex] Decryption failed")?;
@@ -91,9 +86,7 @@ fn main() {
     let mut keyfile = File::open(&keyfile_path).expect("Failed to open the file.");
     let mut keybytes = Vec::new();
     keyfile.read_to_end(&mut keybytes).expect("Failed to read the file.");
-    let keypair: Keypair = Keypair::from_bytes(&keybytes).expect("Failed to read bytes to keypair.");
-    let mut private_key_bytes: [u8; 64] = keypair.to_bytes();
-
+    let mut private_key_bytes: &[u8] = &keybytes.as_slice();
     let usitern: u32 = 2100;
     let salt = args[3].clone();
     let ssalt = String::from(salt);
