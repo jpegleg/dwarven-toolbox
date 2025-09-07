@@ -38,7 +38,7 @@ fn main() {
     let mut noncex = gennoncex();
     println!("XNONCE: {}", noncex);
     noncex.zeroize();
-    let mutkey2 = genkey512();
+    let mut key2 = genkey512();
     println!("512KEY: {}", key2);
     key2.zeroize();
 }
