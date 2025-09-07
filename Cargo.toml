@@ -303,6 +303,18 @@ path = "src/disenchant.rs"
 name = "enchant"
 path = "src/enchant.rs"
 
+[[ bin ]]
+name = "zpack"
+path = "src/zpack.rs"
+
+[[ bin ]]
+name = "zbox"
+path = "src/zbox.rs"
+
+[[ bin ]]
+name = "zunbox"
+path = "src/zunbox.rs"
+
 [dependencies]
 uuid = { version = "0.18.1", features = ["serde", "v4"] }
 base64 = "0.22.1"
@@ -330,3 +342,4 @@ rpassword = "7.2.0"
 argon2 = "0.5.1"
 atty = "0.2.14"
 aes-gcm-siv = "0.11.1""
+flate2 = { version = "1.0", features = ["zlib-ng"] }
