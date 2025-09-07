@@ -48,8 +48,6 @@ Argument tools:
 - mattockoff - ChaCha20Poly1305 decrypt (decrypt strings) 
 - halberdon - XChaCha20Poly1305 encrypt (encrypt strings)  
 - halberdoff - XChaCha20Poly1305 decrypt (decrypt strings) 
-- amuleton - create a one-time-use ed25519 keypair and sign an input and immediately throw away the private key
-- amuletoff - validate any ed25519 detached signature with original data, public key, and the detached signature
 - magick - hex encode
 - antimagick - hex decode
 - crown - BLAKE2, BLAKE3, SHA3, SHA2 hashes of text (string/s) input
