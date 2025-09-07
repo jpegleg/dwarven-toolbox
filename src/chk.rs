@@ -4,8 +4,8 @@ use std::io::Read;
 use std::path::Path;
 use chrono::{NaiveDateTime, DateTime, Utc};
 use std::os::unix::fs::MetadataExt;
-extern crate digest;
 
+#[allow(deprecated)]
 fn review(file_path: &str) {
     let file_path = Path::new(file_path);
     let metadata = file_path.metadata().expect("Failed to read file metadata");
@@ -46,7 +46,7 @@ fn main() {
         println!("{{\"ERROR\": \"Wrong number of args. The only arg is a file path to review.\"}}");
         std::process::exit(1);
     }
-    let data = args[1].clone();
+    let data = &args[1];
     let sdata = String::from(data);
     review(&sdata);
 }
