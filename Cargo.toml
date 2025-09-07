@@ -1,6 +1,6 @@
 [package]
 name = "dwarven-toolbox"
-version = "0.4.3"
+version = "0.5.0"
 edition = "2021"
 
 [[ bin ]]
@@ -64,14 +64,6 @@ name = "antimagick"
 path = "src/antimagick.rs"
 
 [[ bin ]]
-name = "enchant"
-path = "src/enchant.rs"
-
-[[ bin ]]
-name = "disenchant"
-path = "src/disenchant.rs"
-
-[[ bin ]]
 name = "daggeron"
 path = "src/daggeron.rs"
 
@@ -110,14 +102,6 @@ path = "src/anvil.rs"
 [[ bin ]]
 name = "aegis"
 path = "src/aegis.rs"
-
-[[ bin ]]
-name = "amuleton"
-path = "src/amuleton.rs"
-
-[[ bin ]]
-name = "amuletoff"
-path = "src/amuletoff.rs"
 
 [[ bin ]]
 name = "crown"
@@ -178,14 +162,6 @@ path = "src/box.rs"
 [[ bin ]]
 name = "unbox"
 path = "src/unbox.rs"
-
-[[ bin ]]
-name = "zbox"
-path = "src/zbox.rs"
-
-[[ bin ]]
-name = "zunbox"
-path = "src/zunbox.rs"
 
 [[ bin ]]
 name = "mattockon"
@@ -252,26 +228,6 @@ name = "chk"
 path = "src/chk.rs"
 
 [[ bin ]]
-name = "makesigil"
-path = "src/makesigil.rs"
-
-[[ bin ]]
-name = "makerune"
-path = "src/makerune.rs"
-
-[[ bin ]]
-name = "readrune"
-path = "src/readrune.rs"
-
-[[ bin ]]
-name = "chiselon"
-path = "src/chiselon.rs"
-
-[[ bin ]]
-name = "chiseloff"
-path = "src/chiseloff.rs"
-
-[[ bin ]]
 name = "forgeon"
 path = "src/forgeon.rs"
 
@@ -308,10 +264,6 @@ name = "pack"
 path = "src/pack.rs"
 
 [[ bin ]]
-name = "zpack"
-path = "src/zpack.rs"
-
-[[ bin ]]
 name = "armor"
 path = "src/armor.rs"
 
@@ -331,31 +283,50 @@ path = "src/forge.rs"
 name = "ore"
 path = "src/ore.rs"
 
+[[ bin ]]
+name = "makesigil"
+path = "src/makesigil.rs"
+
+[[ bin ]]
+name = "chiselon"
+path = "src/chiselon.rs"
+
+[[ bin ]]
+name = "chiseloff"
+path = "src/chiseloff.rs"
+
+[[ bin ]]
+name = "disenchant"
+path = "src/disenchant.rs"
+
+[[ bin ]]
+name = "enchant"
+path = "src/enchant.rs"
+
 [dependencies]
-uuid = { version = "0.4", features = ["serde", "v4"] }
-base64 = "0.21"
-bs58 = { version="0.4.0", features=["check"] }
+uuid = { version = "0.18.1", features = ["serde", "v4"] }
+base64 = "0.22.1"
+bs58 = { version="0.5.1", features=["check"] }
 aes = "0.7.5"
 hex = "0.4.3"
-rand = "0.7"
-chacha20poly1305 = { version = "0.10", features = ["stream"] }
-zeroize = "1.4"
-ed25519-dalek = "1.0.1"
-blake3 = "1.4.0"
+rand = "0.9.2"
+chacha20poly1305 = { version = "0.10.1", features = ["stream"] }
+zeroize = "1.8.1"
+blake3 = "1.8.2"
 blake2 = "0.10.6"
 sha3 = "0.10.8"
-sha2 = "0.10.6"
+sha2 = "0.10.9"
 digest = "0.10.7"
 block-modes = "0.8.1"
-flate2 = { version = "1.0", features = ["zlib-ng"] }
-num = "0.4.0"
-num-traits = "0.2"
-num-bigint = "0.4"
-hkdf = "0.12"
+flate2 = "1.1.2"
+num = "0.4.3"
+num-traits = "0.2.19"
+num-bigint = "0.4.6"
+hkdf = "0.12.4"
 pbkdf2 = "0.12.2"
 chrono = "0.4.26"
 users = "0.11.0"
 rpassword = "7.2.0"
 argon2 = "0.5.1"
-atty = "0.2"
-aes-gcm-siv = "0.11.1"
+atty = "0.2.14"
+aes-gcm-siv = "0.11.1""
