@@ -2,10 +2,10 @@ use zeroize::Zeroize;
 
 #[path = "./generate.rs"]
 mod generate;
-use generate::hexgen;
+use generate::utfgen;
 
 fn main() {
-    let mut silverchar = hexgen(64);
+    let mut silverchar = utfgen(64);
     println!("{}", &silverchar);
     silverchar.zeroize();
 }
