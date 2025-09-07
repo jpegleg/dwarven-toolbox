@@ -15,7 +15,7 @@ use uuid::Uuid;
 mod hashkey;
 
 fn forge<R: Read, W: Write>(input: &mut R, output: &mut W) -> io::Result<()> {
-    let mut rng = StdRng::from_entropy();
+    let mut rng = StdRng::from_os_rng();
     let mut nonce = [0u8; 24];
     rng.fill(&mut nonce);
     let bnon = hex::encode(&nonce);
@@ -62,7 +62,7 @@ fn main() -> io::Result<()> {
         return Ok(());
     }
 
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let decrypt_flag = args.iter().any(|arg| arg == "-d");
 
     if decrypt_flag {
