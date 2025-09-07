@@ -7,12 +7,12 @@ const CHUNK_SIZE: usize = 4096;
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
+    if args.len() != 2 {
         println!("Usage: {} <file_path>", args[0]);
         return Ok(());
     }
 
-    let file_path = &args[args.len() - 1];
+    let file_path = &args[1];
     let stdin_is_piped = !atty::is(Stream::Stdin);
 
     if stdin_is_piped {
