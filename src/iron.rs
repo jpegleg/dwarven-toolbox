@@ -1,22 +1,11 @@
-use rand::{Rng, SeedableRng};
-use rand::rngs::StdRng;
-use rand::distributions::Uniform;
-use std::iter;
 use zeroize::Zeroize;
 
-fn iron() {
-    let mut rng = StdRng::from_entropy();
-    let mut ironchar: String = iter::repeat(())
-        .map(|()| {
-            let char_range = Uniform::from(32..127);
-            rng.sample(char_range) as u8 as char
-        })
-        .take(32)
-        .collect();
-    println!("{}", &ironchar);
-    ironchar.zeroize();
-}
+#[path = "./generate.rs"]
+mod generate;
+use generate::hexgen;
 
 fn main() {
-    iron();
+    let mut ironchar = hexgen(32);
+    println!("{}", &ironchar);
+    ironchar.zeroize();
 }
