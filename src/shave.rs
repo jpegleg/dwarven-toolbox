@@ -19,7 +19,7 @@ fn main() {
         println!("Wrong number of args. First arg is a usize for the number of bytes to shave from the end, and the second arg is the string to shave from.");
         std::process::exit(1);
     }
-    let numb = args[1].clone();
+    let numb = &args[1];
     let snumb = match numb.parse::<usize>() {
         Ok(length) => length,
         Err(_) => {
@@ -27,8 +27,7 @@ fn main() {
             1
         }
     };
-    let data = args[2].clone();
-    let sdata = String::from(data);
-    let retrb = shaver(&sdata, snumb);
+    let data = &args[2];
+    let retrb = shaver(data, snumb);
     println!("{}", retrb);
 }
