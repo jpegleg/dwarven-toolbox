@@ -13,7 +13,7 @@ fn grep(filter: &str, input: &str) -> String {
     }
 
     if !found {
-        panic!("Pattern '{}' not found in input.", filter);
+        eprintln!("Pattern '{}' not found in input.", filter);
     }
 
     result
@@ -25,10 +25,8 @@ fn main() {
         println!("Wrong number of args. The first arg is a filter to seek and the second arg is the string to seek from.");
         std::process::exit(1);
     }
-    let filt = args[1].clone();
-    let sfilt = String::from(filt);
-    let data = args[2].clone();
-    let sdata = String::from(data);
-    let retrb = grep(&sfilt, &sdata);
+    let filt = &args[1];
+    let data = &args[2];
+    let retrb = grep(filt, data);
     println!("{}", retrb);
 }
